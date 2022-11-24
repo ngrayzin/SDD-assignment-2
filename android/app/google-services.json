@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "797884859033",
+    "firebase_url": "https://sdd-assignment-2-default-rtdb.firebaseio.com",
+    "project_id": "sdd-assignment-2",
+    "storage_bucket": "sdd-assignment-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797884859033:android:352af6d6c140f45f71ae08",
+        "android_client_info": {
+          "package_name": "com.example.sdd_assignment_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797884859033-akeai5c296llm2dalpev9g6ecj0lsmlv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFBzqqUDBSicgCViM1PzCRjX8Y739eBUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "797884859033-akeai5c296llm2dalpev9g6ecj0lsmlv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
