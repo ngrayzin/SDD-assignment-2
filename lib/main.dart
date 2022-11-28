@@ -37,11 +37,11 @@ class MyApp extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 90, top:10, right: 90, bottom: 20),
+                  padding: const EdgeInsets.only(left: 80, top:10, right: 80, bottom: 20),
                   child: Image.asset("assets/images/logo.png"),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 50, top:20, right: 50, bottom: 20),
+                  padding: const EdgeInsets.only(left: 45, top:20, right: 45, bottom: 20),
                   child: Image.asset("assets/images/name.png"),
                 ),
 
@@ -52,11 +52,11 @@ class MyApp extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {},
                       style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
                           foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(15.0),
                                   side: BorderSide(color: colours.AppColor.main,width: 3)
                               )
                           )
@@ -76,11 +76,11 @@ class MyApp extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {},
                       style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
                           foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(15.0),
                                   side: BorderSide(color: colours.AppColor.main,width: 3)
                               )
                           )
@@ -99,11 +99,11 @@ class MyApp extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {},
                       style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
                           foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(15.0),
                                   side: BorderSide(color: colours.AppColor.main,width: 3)
                               )
                           )
@@ -122,11 +122,11 @@ class MyApp extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {SystemNavigator.pop();},
                       style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
                           foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(15.0),
                                   side: BorderSide(color: colours.AppColor.main,width: 3)
                               )
                           )
