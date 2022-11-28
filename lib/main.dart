@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
-
+import 'colours.dart' as colours;
 import 'firebase_options.dart';
 
 void main() {
@@ -29,15 +29,118 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle:  true,
-          title: const Text(
-            'This is Google Fonts',
-            style: TextStyle(fontFamily: 'StickNoBills'),
-          ),
-        ),
-        body: const Center(
-          child: Icon(Icons.exit_to_app_rounded)
+        backgroundColor: colours.AppColor.background,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 90, top:10, right: 90, bottom: 20),
+                  child: Image.asset("assets/images/logo.png"),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 50, top:20, right: 50, bottom: 20),
+                  child: Image.asset("assets/images/name.png"),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: SizedBox(
+                    width: 275,
+                    child: TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(color: colours.AppColor.main,width: 3)
+                              )
+                          )
+                      ),
+
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("START NEW GAME", style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: 'StickNoBills')),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: SizedBox(
+                    width: 275,
+                    child: TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(color: colours.AppColor.main,width: 3)
+                              )
+                          )
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("LOAD SAVE GAME", style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: 'StickNoBills')),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: SizedBox(
+                    width: 275,
+                    child: TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(color: colours.AppColor.main,width: 3)
+                              )
+                          )
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("LEADERBOARD", style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: 'StickNoBills')),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: SizedBox(
+                    width: 275,
+                    child: TextButton(
+                      onPressed: () {SystemNavigator.pop();},
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(color: colours.AppColor.main,width: 3)
+                              )
+                          )
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("EXIT GAME", style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: 'StickNoBills')),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         )
       ),
     );
