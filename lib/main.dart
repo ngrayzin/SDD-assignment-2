@@ -38,14 +38,15 @@ class MyApp extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 80, top: 10, right: 80, bottom: 20),
+                      left: 90, top: 10, right: 90, bottom: 20),
                   child: Image.asset("assets/images/logo.png"),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 45, top: 20, right: 45, bottom: 20),
+                      left: 50, top: 20, right: 50, bottom: 20),
                   child: Image.asset("assets/images/name.png"),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
                   child: SizedBox(
@@ -54,13 +55,13 @@ class MyApp extends StatelessWidget {
                       onPressed: () {},
                       style: ButtonStyle(
                           padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(12)),
+                              EdgeInsets.all(15)),
                           foregroundColor: MaterialStateProperty.all<Color>(
                               colours.AppColor.background),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
+                                      borderRadius: BorderRadius.circular(10.0),
                                       side: BorderSide(
                                           color: colours.AppColor.main,
                                           width: 3)))),
@@ -83,13 +84,13 @@ class MyApp extends StatelessWidget {
                       onPressed: () {},
                       style: ButtonStyle(
                           padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(12)),
+                              EdgeInsets.all(15)),
                           foregroundColor: MaterialStateProperty.all<Color>(
                               colours.AppColor.background),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
+                                      borderRadius: BorderRadius.circular(10.0),
                                       side: BorderSide(
                                           color: colours.AppColor.main,
                                           width: 3)))),
@@ -112,13 +113,13 @@ class MyApp extends StatelessWidget {
                       onPressed: () {},
                       style: ButtonStyle(
                           padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(12)),
+                              EdgeInsets.all(15)),
                           foregroundColor: MaterialStateProperty.all<Color>(
                               colours.AppColor.background),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
+                                      borderRadius: BorderRadius.circular(10.0),
                                       side: BorderSide(
                                           color: colours.AppColor.main,
                                           width: 3)))),
@@ -133,35 +134,36 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
+                // Original TextButton for EXIT GAME
+                /*Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: SizedBox(
                     width: 275,
                     child: TextButton(
-                      onPressed: () {
-                        SystemNavigator.pop();
-                      },
+                      onPressed: () {SystemNavigator.pop();},
                       style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.all(12)),
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              colours.AppColor.background),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      side: BorderSide(
-                                          color: colours.AppColor.main,
-                                          width: 3)))),
+                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                          foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  side: BorderSide(color: colours.AppColor.main,width: 3)
+                              )
+                          )
+                      ),
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text("EXIT GAME",
-                            style: TextStyle(
-                                fontSize: 32,
-                                color: Colors.white,
-                                fontFamily: 'StickNoBills')),
+                        child: Text("EXIT GAME", style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: 'StickNoBills')),
                       ),
                     ),
+                  ),
+                ),*/
+                //Exit Game Button
+                const Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ExitGameDialog(),
                   ),
                 ),
               ],
@@ -252,6 +254,97 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+// Dialog Box for Exit Game
+class ExitGameDialog extends StatelessWidget {
+  const ExitGameDialog({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+          padding:
+              MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(15)),
+          foregroundColor:
+              MaterialStateProperty.all<Color>(colours.AppColor.background),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: BorderSide(color: colours.AppColor.main, width: 3)))),
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text(
+            'EXIT GAME?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 50,
+              fontFamily: 'StickNoBills',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => SystemNavigator.pop(),
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(const Size(80, 50)),
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                    const EdgeInsets.all(5)),
+                foregroundColor: MaterialStateProperty.all<Color>(
+                    colours.AppColor.buttonBackground),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(colours.AppColor.main),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                ),
+              ),
+              child: const Text('YES',
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'StickNoBills',
+                      fontWeight: FontWeight.bold)),
+            ),
+            const SizedBox(width: 25),
+            TextButton(
+                onPressed: () => Navigator.pop(context, 'NO'),
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(const Size(80, 20)),
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                      const EdgeInsets.all(5)),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      colours.AppColor.buttonBackground),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(colours.AppColor.main),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                  ),
+                ),
+                child: const Text('NO',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'StickNoBills',
+                        fontWeight: FontWeight.bold))),
+          ],
+        ),
+      ),
+      child: const SizedBox(
+        width: 240,
+        height: 40,
+        child: Text("EXIT GAME",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 32,
+              color: Colors.white,
+              fontFamily: 'StickNoBills',
+            )),
+      ),
     );
   }
 }
