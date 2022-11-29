@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
+import 'package:sdd_assignment_2/GamePage.dart';
 import 'colours.dart' as colours;
 import 'firebase_options.dart';
 
@@ -41,7 +42,9 @@ class _MainMenuState extends State<MainMenu>{
                     child: SizedBox(
                       width: 275,
                       child: TextButton(
-                        onPressed: () {},
+                          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const GamePage();
+                          })),
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
                             foregroundColor: MaterialStateProperty.all<Color>(colours.AppColor.background),
