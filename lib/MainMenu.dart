@@ -22,7 +22,9 @@ class _MainMenuState extends State<MainMenu>{
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: colours.AppColor.background,
-        body: Center(
+        body: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
