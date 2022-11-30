@@ -51,7 +51,9 @@ class _MainMenuState extends State<MainMenu> {
                     child: SizedBox(
                       width: 275,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const GamePage();
+                        })),
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
                                 EdgeInsets.all(12)),
