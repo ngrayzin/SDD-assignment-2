@@ -22,9 +22,9 @@ class _GameBoardState extends State<GameBoard>{
   @override
   Widget build(BuildContext context){
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 75, 0, 0),
+      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
         child: SizedBox(
-          height: 500,
+          height: 400,
           //margin: const EdgeInsets.only(top: 10.0),
           child:
           Expanded(
