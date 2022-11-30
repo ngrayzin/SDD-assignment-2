@@ -52,7 +52,7 @@ class _GamePageState extends State<GamePage>{
                 iconSize: 50,
                 icon: const Icon(Icons.close),
                 color: colours.AppColor.main,
-                onPressed: (){},
+                onPressed: () => Navigator.pop(context),
               ),
             ],
           ),
@@ -65,7 +65,6 @@ class _GamePageState extends State<GamePage>{
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget> [

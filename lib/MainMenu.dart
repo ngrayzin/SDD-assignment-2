@@ -149,6 +149,7 @@ class _MainMenuState extends State<MainMenu> {
                         onPressed: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
+                                  insetPadding: EdgeInsets.all(10),
                                   title: const Text(
                                     'EXIT GAME?',
                                     textAlign: TextAlign.center,
@@ -159,6 +160,7 @@ class _MainMenuState extends State<MainMenu> {
                                     ),
                                   ),
                                   shape: RoundedRectangleBorder(
+                                      side: BorderSide(width: MediaQuery.of(context).size.width*0.9),
                                       borderRadius: BorderRadius.circular(12)),
                                   actionsAlignment: MainAxisAlignment.center,
                                   actions: <Widget>[
@@ -221,6 +223,7 @@ class _MainMenuState extends State<MainMenu> {
                                                 fontSize: 30,
                                                 fontFamily: 'StickNoBills',
                                                 fontWeight: FontWeight.bold))),
+                                  Padding(padding: EdgeInsets.only(bottom: 85)),
                                   ],
                                 )),
                         style: ButtonStyle(

@@ -21,10 +21,10 @@ class LeaderBoard extends StatelessWidget {
           bottomOpacity: 0.0,
           elevation: 0.0,
           title: const Text(
-            "N.A.C's",
+            "LEADERBOARD",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 48,
+                fontSize: 32,
                 color: Colors.white,
                 fontFamily: 'StickNoBills'),
             textAlign: TextAlign.center,
@@ -32,7 +32,7 @@ class LeaderBoard extends StatelessWidget {
       body: Center(
           child: Column(
         children: [
-          Container(
+          /*Container(
             margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
             padding: const EdgeInsets.all(5.0),
             decoration: const BoxDecoration(
@@ -47,7 +47,7 @@ class LeaderBoard extends StatelessWidget {
                   fontFamily: 'StickNoBills'),
               textAlign: TextAlign.center,
             ),
-          ), //Container for leaderboard title
+          ),*/ //Container for leaderboard title
           Container(
             margin: const EdgeInsets.fromLTRB(10.0, 10, 10, 2),
             padding: const EdgeInsets.all(5.0),
