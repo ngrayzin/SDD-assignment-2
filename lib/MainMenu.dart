@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
+import 'package:sdd_assignment_2/GamePage.dart';
 import 'colours.dart' as colours;
 import 'firebase_options.dart';
 import "Leaderboard.dart";
@@ -21,7 +22,9 @@ class _MainMenuState extends State<MainMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: colours.AppColor.background,
-        body: Center(
+        body: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
