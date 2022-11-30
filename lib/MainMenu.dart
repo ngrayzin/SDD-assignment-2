@@ -6,6 +6,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/GamePage.dart';
+import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'colours.dart' as colours;
 import 'firebase_options.dart';
 import "Leaderboard.dart";
@@ -25,9 +26,7 @@ class _MainMenuState extends State<MainMenu> {
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
+            child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
@@ -148,84 +147,7 @@ class _MainMenuState extends State<MainMenu> {
                       child: TextButton(
                         onPressed: () => showDialog<String>(
                             context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                  insetPadding: EdgeInsets.all(10),
-                                  title: const Text(
-                                    'EXIT GAME?',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 50,
-                                      fontFamily: 'StickNoBills',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      side: BorderSide(width: MediaQuery.of(context).size.width*0.9),
-                                      borderRadius: BorderRadius.circular(12)),
-                                  actionsAlignment: MainAxisAlignment.center,
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () => SystemNavigator.pop(),
-                                      style: ButtonStyle(
-                                        minimumSize: MaterialStateProperty.all(
-                                            const Size(80, 50)),
-                                        padding: MaterialStateProperty.all<
-                                                EdgeInsets>(
-                                            const EdgeInsets.all(5)),
-                                        foregroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                colours
-                                                    .AppColor.buttonBackground),
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                colours.AppColor.main),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0)),
-                                        ),
-                                      ),
-                                      child: const Text('YES',
-                                          style: TextStyle(
-                                              fontSize: 30,
-                                              fontFamily: 'StickNoBills',
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                    const SizedBox(width: 25),
-                                    TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, 'NO'),
-                                        style: ButtonStyle(
-                                          minimumSize:
-                                              MaterialStateProperty.all(
-                                                  const Size(80, 20)),
-                                          padding: MaterialStateProperty.all<
-                                                  EdgeInsets>(
-                                              const EdgeInsets.all(5)),
-                                          foregroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  colours.AppColor
-                                                      .buttonBackground),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  colours.AppColor.main),
-                                          shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0)),
-                                          ),
-                                        ),
-                                        child: const Text('NO',
-                                            style: TextStyle(
-                                                fontSize: 30,
-                                                fontFamily: 'StickNoBills',
-                                                fontWeight: FontWeight.bold))),
-                                  Padding(padding: EdgeInsets.only(bottom: 85)),
-                                  ],
-                                )),
+                            builder: (BuildContext context) => PopUpMessage()),
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
                                 EdgeInsets.all(12)),
@@ -251,6 +173,6 @@ class _MainMenuState extends State<MainMenu> {
                   ),
                 ],
               ),
-            )));
+            ));
   }
 }

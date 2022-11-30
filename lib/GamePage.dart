@@ -33,7 +33,7 @@ class _GamePageState extends State<GamePage>{
             backgroundColor: colours.AppColor.background,
             centerTitle: true,
             leading: IconButton(
-              iconSize: 50,
+              iconSize: 30,
               icon: const Icon(Icons.info_outline),
               color: colours.AppColor.main,
               onPressed: (){},
@@ -41,7 +41,7 @@ class _GamePageState extends State<GamePage>{
             title: Text(
               'N.A.C',
               style: TextStyle(
-                fontSize: 50,
+                fontSize: 32,
                 fontFamily: 'StickNoBills',
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -49,7 +49,7 @@ class _GamePageState extends State<GamePage>{
             ),
             actions: <Widget>[
               IconButton(
-                iconSize: 50,
+                iconSize: 30,
                 icon: const Icon(Icons.close),
                 color: colours.AppColor.main,
                 onPressed: () => Navigator.pop(context),
