@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,8 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
+import 'Building.dart';
+import 'BuildingTile.dart';
 import 'colours.dart' as colours;
-import 'firebase_options.dart';
+import 'Firebase_options.dart';
 
 class GameBoard extends StatefulWidget{
   final BoardSettings boardSettings;
@@ -19,16 +23,22 @@ class GameBoard extends StatefulWidget{
 }
 
 class _GameBoardState extends State<GameBoard>{
-  final List<Widget> widgets = [];
+  final List<List<Widget>> widgets = [];
+  List<Widget> list2 = [];
   @override
   void initState(){
     super.initState();
-    for (var row = 0; row < widget.boardSettings.totalTiles(); row++){
-      for (var column = 0; column < widget.boardSettings.totalTiles(); column++){
-        widgets.add(BoardTile(boardIndex: row, boardSettings: widget.boardSettings));
+    for (var row = 0; row < 10; row++){
+      list2.clear();
+      for (var column = 0; column < 10; column++){
+        list2.add(BoardTile(boardIndex: row, boardSettings: widget.boardSettings));
       }
+      widgets.add(list2);
     }
+    print("ficiiafoaf");
+    print(widgets);
   }
+
 
   @override
   Widget build(BuildContext context){
@@ -53,6 +63,7 @@ class _GameBoardState extends State<GameBoard>{
 
                  */
                   BoardTile(boardIndex: i, boardSettings: widget.boardSettings)
+                  //BuildingTile(boardIndex: i, boardSettings: widget.boardSettings, name: "P")
 
               ],
             ),
@@ -60,4 +71,9 @@ class _GameBoardState extends State<GameBoard>{
         ),
     );
   }
+}
+
+class Board extends ChangeNotifier{
+  List<Building> buildings = [];
+
 }

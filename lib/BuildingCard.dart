@@ -7,8 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
+import 'package:sdd_assignment_2/Building.dart';
 import 'colours.dart' as colours;
-import 'firebase_options.dart';
+import 'Firebase_options.dart';
 
 class BuildingCard extends StatefulWidget{
   const BuildingCard({Key? key}) : super (key:key);
@@ -18,10 +19,19 @@ class BuildingCard extends StatefulWidget{
 }
 
 class _BuildingCard extends State<BuildingCard> {
+  final Map buildingList = {
+    0 : "park",
+    1 : "factory",
+    2 : "house",
+    3 : "motorway",
+    4 : "shopping center"
+  };
+  //randomizer here ig???????
+  Building building = Building(name: 'park');
   @override
   Widget build(BuildContext context) {
-    return Draggable<String>(
-      data: 'road',
+    return Draggable<Building>(
+      data: building,
       feedback: SizedBox(
         width: 40,
         height: 40,
@@ -35,7 +45,7 @@ class _BuildingCard extends State<BuildingCard> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'P',
+                      building.name,
                       style: TextStyle(
                         fontSize: 10,
                         fontFamily: 'StickNoBills',
@@ -48,14 +58,14 @@ class _BuildingCard extends State<BuildingCard> {
             )
         ),
       ),
-      child: Building(building: 'park'),
       childWhenDragging: const SizedBox(width: 20),
+      child: _Building(building: building.name),
     );
   }
 }
 
-class Building extends StatelessWidget{
-  const Building({key, required this.building}) : super(key:key);
+class _Building extends StatelessWidget{
+  const _Building({key, required this.building}) : super(key:key);
 
   final String building;
 
@@ -95,4 +105,5 @@ class Building extends StatelessWidget{
   }
 
 }
+
 
