@@ -19,6 +19,17 @@ class GameBoard extends StatefulWidget{
 }
 
 class _GameBoardState extends State<GameBoard>{
+  final List<Widget> widgets = [];
+  @override
+  void initState(){
+    super.initState();
+    for (var row = 0; row < widget.boardSettings.totalTiles(); row++){
+      for (var column = 0; column < widget.boardSettings.totalTiles(); column++){
+        widgets.add(BoardTile(boardIndex: row, boardSettings: widget.boardSettings));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     return Container(
@@ -42,6 +53,7 @@ class _GameBoardState extends State<GameBoard>{
 
                  */
                   BoardTile(boardIndex: i, boardSettings: widget.boardSettings)
+
               ],
             ),
           ),
