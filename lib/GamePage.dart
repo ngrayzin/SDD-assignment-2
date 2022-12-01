@@ -20,7 +20,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage>{
-  final BoardSettings boardSettings = BoardSettings(cols: 20, rows: 20);
+  final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
