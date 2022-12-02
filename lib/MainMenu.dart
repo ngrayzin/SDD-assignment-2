@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'colours.dart' as colours;
-import 'firebase_options.dart';
+import 'Firebase_options.dart';
 import "Leaderboard.dart";
 
 class MainMenu extends StatefulWidget {

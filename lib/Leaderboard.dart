@@ -6,7 +6,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'colours.dart' as colours;
-import 'firebase_options.dart';
+import 'Firebase_options.dart';
 
 class LeaderBoard extends StatelessWidget {
   const LeaderBoard({super.key});

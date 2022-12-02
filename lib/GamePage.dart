@@ -9,7 +9,7 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
 import 'colours.dart' as colours;
-import 'firebase_options.dart';
+import 'Firebase_options.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -20,7 +20,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage>{
-  final BoardSettings boardSettings = BoardSettings(cols: 20, rows: 20);
+  final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
