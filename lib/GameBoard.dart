@@ -23,15 +23,15 @@ class GameBoard extends StatefulWidget{
 }
 
 class _GameBoardState extends State<GameBoard>{
-  final List<List<Widget>> widgets = [];
-  List<Widget> list2 = [];
+  final List<List<String>> widgets = [];
+  List<String> list2 = [];
   @override
   void initState(){
     super.initState();
     for (var row = 0; row < 10; row++){
       list2.clear();
       for (var column = 0; column < 10; column++){
-        list2.add(BoardTile(boardIndex: row, boardSettings: widget.boardSettings));
+        list2.add("-");
       }
       widgets.add(list2);
     }
@@ -64,7 +64,7 @@ class _GameBoardState extends State<GameBoard>{
                  */
                   BoardTile(boardIndex: i, boardSettings: widget.boardSettings)
                   //BuildingTile(boardIndex: i, boardSettings: widget.boardSettings, name: "P")
-
+                  //replace boardtile with buildingtile in boardtile file
               ],
             ),
           ),
