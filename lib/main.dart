@@ -7,14 +7,15 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'MainMenu.dart';
 import 'colours.dart' as colours;
-import 'firebase_options.dart';
+import 'Firebase_options.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: [SystemUiOverlay.bottom]);
   runApp(const MyApp());
 }
 

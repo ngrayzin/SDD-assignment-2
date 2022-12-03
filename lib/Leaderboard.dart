@@ -6,7 +6,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'colours.dart' as colours;
-import 'firebase_options.dart';
+import 'Firebase_options.dart';
 
 class LeaderBoard extends StatelessWidget {
   const LeaderBoard({super.key});
@@ -15,20 +15,65 @@ class LeaderBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colours.AppColor.background,
-      appBar: AppBar(
-          centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
           backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          title: const Text(
-            "LEADERBOARD",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
-                color: Colors.white,
-                fontFamily: 'StickNoBills'),
-            textAlign: TextAlign.center,
-          )),
+          bottomOpacity: 0,
+          centerTitle: true,
+          flexibleSpace: Padding(
+            padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+            child : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Spacer(
+                  flex: 1,
+                ),
+                IconButton(
+                  iconSize: 40,
+                  icon: const Icon(Icons.close),
+                  color: colours.AppColor.main,
+                  onPressed: () => Navigator.pop(context),
+                ),
+                const Spacer(
+                  flex: 5,
+                ),
+                Text(
+                  'LEADERBOARD',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontFamily: 'StickNoBills',
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const Spacer(
+                  flex: 5,
+                ),
+                Visibility(
+                  child: IconButton(
+                    iconSize: 40,
+                    icon: const Icon(Icons.close),
+                    color: colours.AppColor.main,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  maintainState: true,
+                  visible: false,
+                ),
+                const Spacer(
+                  flex: 1,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       body: Center(
           child: Column(
         children: [
