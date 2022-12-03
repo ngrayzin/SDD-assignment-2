@@ -88,213 +88,216 @@ class _LoadGameState extends State<LoadGame>{
           child: Container(
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(25, 60, 25, 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 5.0),
-                  child: Text(
-                    "Enter Your Name Below:",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: 'StickNoBills',
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 5.0),
+                    child: Text(
+                      "Enter Your Name Below:",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontFamily: 'StickNoBills',
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 12.0),
-                  child: TextField(
-                    maxLines: 1,
+                  Container(
+                    margin: EdgeInsets.only(top: 12.0),
+                    child: TextField(
+                      maxLines: 1,
 
-                    style: TextStyle(
+                      style: TextStyle(
                         fontFamily: 'StickNoBills',
                         color: Colors.white,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
+                      ),
+                      decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 12.0),
+                          filled: true,
+                          fillColor: colours.AppColor.buttonBackground,
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: colours.AppColor.main,
+                                width: 3,
+                              )
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: colours.AppColor.main,
+                                width: 3,
+                              )
+                          ),
+                          labelText: 'Player Name',
+                          labelStyle: TextStyle(
+                            fontFamily: 'StickNoBills',
+                            color: Colors.grey,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                          )
+                      ),
                     ),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 12.0),
-                      filled: true,
-                      fillColor: colours.AppColor.buttonBackground,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: colours.AppColor.main,
-                          width: 3,
-                        )
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: colours.AppColor.main,
-                          width: 3,
-                        )
-                      ),
-                      labelText: 'Player Name',
-                      labelStyle: TextStyle(
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 50.0, left: 5.0),
+                    child: Text(
+                      "Recent Game Played:",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
                         fontFamily: 'StickNoBills',
-                        color: Colors.grey,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600,
-                      )
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 50.0, left: 5.0),
-                  child: Text(
-                    "Recent Game Played:",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: 'StickNoBills',
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-                Container( //previous game card
-                  margin: EdgeInsets.only(top: 12.0),
-                  padding: EdgeInsets.all(8.0),
-                  width: MediaQuery.of(context).size.width,
-                  //height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: colours.AppColor.buttonBackground,
-                    border: Border.all(
-                      width: 3.0,
-                      color: colours.AppColor.main,
+                  Container( //previous game card
+                    margin: EdgeInsets.only(top: 12.0),
+                    padding: EdgeInsets.all(8.0),
+                    width: MediaQuery.of(context).size.width,
+                    //height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: colours.AppColor.buttonBackground,
+                      border: Border.all(
+                        width: 3.0,
+                        color: colours.AppColor.main,
+                      ),
+
                     ),
 
-                  ),
+                    child: Column(
+                      children: [
+                        Container(
 
-                  child: Column(
-                    children: [
-                      Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width * 0.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.black,
 
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width * 0.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.black,
-
+                          ),
                         ),
-                      ),
-                      Padding(padding: EdgeInsets.only(top:5.0)),
-                      Row( //game details (points + turns + money)
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Card(
-                              elevation: 0,
-                              shadowColor: null,
-                              color: colours.AppColor.main,
-                              child: SizedBox(
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/point.png',
-                                        width: 20,
-                                        height: 20,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      SizedBox(width: 12.0),
-                                      Text(
-                                        '190',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'StickNoBills',
-                                          color: colours.AppColor.background,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                        Padding(padding: EdgeInsets.only(top:5.0)),
+                        Row( //game details (points + turns + money)
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Card(
+                                elevation: 0,
+                                shadowColor: null,
+                                color: colours.AppColor.main,
+                                child: SizedBox(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/point.png',
+                                          width: 20,
+                                          height: 20,
+                                          fit: BoxFit.fitWidth,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                          ),
-
-                          Card(
-                              elevation: 0,
-                              shadowColor: null,
-                              color: colours.AppColor.main,
-                              child: SizedBox(
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/point.png',
-                                        width: 20,
-                                        height: 20,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      SizedBox(width: 12.0),
-                                      Text(
-                                        '190',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'StickNoBills',
-                                          color: colours.AppColor.background,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                                        SizedBox(width: 12.0),
+                                        Text(
+                                          '190',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'StickNoBills',
+                                            color: colours.AppColor.background,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )
-                          ),
+                                )
+                            ),
 
-
-                          Card(
-                              elevation: 0,
-                              shadowColor: null,
-                              color: colours.AppColor.main,
-                              child: SizedBox(
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/point.png',
-                                        width: 20,
-                                        height: 20,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      SizedBox(width: 12.0),
-                                      Text(
-                                        '190',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'StickNoBills',
-                                          color: colours.AppColor.background,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                            Card(
+                                elevation: 0,
+                                shadowColor: null,
+                                color: colours.AppColor.main,
+                                child: SizedBox(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/point.png',
+                                          width: 20,
+                                          height: 20,
+                                          fit: BoxFit.fitWidth,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(width: 12.0),
+                                        Text(
+                                          '190',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'StickNoBills',
+                                            color: colours.AppColor.background,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )
-                          ),
-                        ],
-                      ),
-                    ],
+                                )
+                            ),
+
+
+                            Card(
+                                elevation: 0,
+                                shadowColor: null,
+                                color: colours.AppColor.main,
+                                child: SizedBox(
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/point.png',
+                                          width: 20,
+                                          height: 20,
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                        SizedBox(width: 12.0),
+                                        Text(
+                                          '190',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'StickNoBills',
+                                            color: colours.AppColor.background,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+
           ),
         ),
       )
