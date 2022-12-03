@@ -34,7 +34,7 @@ class _LoadGameState extends State<LoadGame>{
             bottomOpacity: 0,
             centerTitle: true,
             flexibleSpace: Padding(
-              padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
               child : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
