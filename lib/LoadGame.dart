@@ -43,7 +43,7 @@ class _LoadGameState extends State<LoadGame>{
                     flex: 1,
                   ),
                   IconButton(
-                    iconSize: 35,
+                    iconSize: 40,
                     icon: const Icon(Icons.close),
                     color: colours.AppColor.main,
                     onPressed: () => Navigator.pop(context),
@@ -55,7 +55,7 @@ class _LoadGameState extends State<LoadGame>{
                     'LOAD GAME',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 40,
                       fontFamily: 'StickNoBills',
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -66,7 +66,7 @@ class _LoadGameState extends State<LoadGame>{
                   ),
                   Visibility(
                     child: IconButton(
-                      iconSize: 35,
+                      iconSize: 40,
                       icon: const Icon(Icons.close),
                       color: colours.AppColor.main,
                       onPressed: () => Navigator.pop(context),

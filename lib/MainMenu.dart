@@ -27,36 +27,36 @@ class _MainMenuState extends State<MainMenu> {
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.fromLTRB(20, 50, 20, 50),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                      child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 80, top: 10, right: 80, bottom: 20),
-                    child: Image.asset(
-                      "assets/images/logo.png",
-                    ),
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 45, top: 20, right: 45, bottom: 20),
-                    child: Image.asset(
-                      "assets/images/name.png",
-                      fit: BoxFit.contain,
+                    child: SizedBox(
+                      child: Image.asset("assets/images/logo.png"),
+                      width: 200,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Image.asset(
+                      "assets/images/name.png",
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      //fit: BoxFit.contain,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40, bottom: 10),
                     child: SizedBox(
-                      width: 275,
+                      width: MediaQuery.of(context).size.width * 0.7,
                       child: TextButton(
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const GamePage();
                         })),
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.all(12)),
+                                EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 colours.AppColor.background),
                             shape: MaterialStateProperty.all<
@@ -66,15 +66,13 @@ class _MainMenuState extends State<MainMenu> {
                                     side: BorderSide(
                                         color: colours.AppColor.main,
                                         width: 3)))),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("START NEW GAME",
+                        child: Text("START NEW GAME",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 32,
                                   color: Colors.white,
                                   fontFamily: 'StickNoBills')),
                         ),
-                      ),
                     ),
                   ),
                   Padding(
@@ -87,7 +85,7 @@ class _MainMenuState extends State<MainMenu> {
                         })),
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.all(12)),
+                                EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 colours.AppColor.background),
                             shape: MaterialStateProperty.all<
@@ -97,15 +95,12 @@ class _MainMenuState extends State<MainMenu> {
                                     side: BorderSide(
                                         color: colours.AppColor.main,
                                         width: 3)))),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("LOAD SAVE GAME",
+                        child: Text("LOAD SAVE GAME",
                               style: TextStyle(
                                   fontSize: 32,
                                   color: Colors.white,
                                   fontFamily: 'StickNoBills')),
                         ),
-                      ),
                     ),
                   ),
                   Padding(
@@ -122,7 +117,7 @@ class _MainMenuState extends State<MainMenu> {
                         },
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.all(12)),
+                                EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 colours.AppColor.background),
                             shape: MaterialStateProperty.all<
@@ -132,15 +127,12 @@ class _MainMenuState extends State<MainMenu> {
                                     side: BorderSide(
                                         color: colours.AppColor.main,
                                         width: 3)))),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("LEADERBOARD",
+                        child: Text("LEADERBOARD",
                               style: TextStyle(
                                   fontSize: 32,
                                   color: Colors.white,
                                   fontFamily: 'StickNoBills')),
                         ),
-                      ),
                     ),
                   ),
                   Padding(
@@ -153,7 +145,7 @@ class _MainMenuState extends State<MainMenu> {
                             builder: (BuildContext context) => PopUpMessage()),
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.all(12)),
+                                EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 colours.AppColor.background),
                             shape: MaterialStateProperty.all<
@@ -163,9 +155,7 @@ class _MainMenuState extends State<MainMenu> {
                                     side: BorderSide(
                                         color: colours.AppColor.main,
                                         width: 3)))),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("EXIT GAME",
+                        child: Text("EXIT GAME",
                               style: TextStyle(
                                   fontSize: 32,
                                   color: Colors.white,
@@ -173,7 +163,6 @@ class _MainMenuState extends State<MainMenu> {
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ));

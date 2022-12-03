@@ -46,7 +46,7 @@ class _GamePageState extends State<GamePage>{
                     flex: 1,
                   ),
                   IconButton(
-                    iconSize: 35,
+                    iconSize: 40,
                     icon: const Icon(Icons.info_outline),
                     color: colours.AppColor.main,
                     onPressed: () {},
@@ -58,7 +58,7 @@ class _GamePageState extends State<GamePage>{
                     'N.A.C',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 40,
                       fontFamily: 'StickNoBills',
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -69,7 +69,7 @@ class _GamePageState extends State<GamePage>{
                   ),
                   Visibility(
                     child: IconButton(
-                      iconSize: 35,
+                      iconSize: 40,
                       icon: const Icon(Icons.close),
                       color: colours.AppColor.main,
                       onPressed: () => Navigator.pop(context),

@@ -33,7 +33,7 @@ class LeaderBoard extends StatelessWidget {
                   flex: 1,
                 ),
                 IconButton(
-                  iconSize: 35,
+                  iconSize: 40,
                   icon: const Icon(Icons.close),
                   color: colours.AppColor.main,
                   onPressed: () => Navigator.pop(context),
@@ -45,7 +45,7 @@ class LeaderBoard extends StatelessWidget {
                   'LEADERBOARD',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 40,
                     fontFamily: 'StickNoBills',
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -56,7 +56,7 @@ class LeaderBoard extends StatelessWidget {
                 ),
                 Visibility(
                   child: IconButton(
-                    iconSize: 35,
+                    iconSize: 40,
                     icon: const Icon(Icons.close),
                     color: colours.AppColor.main,
                     onPressed: () => Navigator.pop(context),
