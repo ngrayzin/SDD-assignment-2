@@ -6,6 +6,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/GamePage.dart';
+import 'package:sdd_assignment_2/LoadGame.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
@@ -81,7 +82,9 @@ class _MainMenuState extends State<MainMenu> {
                     child: SizedBox(
                       width: 275,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const LoadGame();
+                        })),
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
                                 EdgeInsets.all(12)),

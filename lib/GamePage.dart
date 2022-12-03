@@ -22,26 +22,31 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage>{
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   @override
+
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
       title: 'Game Page',
       home: Scaffold(
         backgroundColor: colours.AppColor.background,
-        appBar: AppBar (
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(30.0),
+          child: AppBar (
             elevation: 0,
-            backgroundColor: colours.AppColor.background,
+            backgroundColor: Colors.transparent,
+            bottomOpacity: 0,
             centerTitle: true,
             leading: IconButton(
-              iconSize: 30,
+              iconSize: 40,
               icon: const Icon(Icons.info_outline),
               color: colours.AppColor.main,
               onPressed: (){},
             ),
             title: Text(
               'N.A.C',
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 32,
+                fontSize: 40,
                 fontFamily: 'StickNoBills',
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -49,13 +54,14 @@ class _GamePageState extends State<GamePage>{
             ),
             actions: <Widget>[
               IconButton(
-                iconSize: 30,
+                iconSize: 40,
                 icon: const Icon(Icons.close),
                 color: colours.AppColor.main,
                 onPressed: () => Navigator.pop(context),
               ),
             ],
           ),
+        ),
         body: SafeArea(
           child: Container (
               width: MediaQuery.of(context).size.width,

@@ -20,7 +20,7 @@ class LeaderBoard extends StatelessWidget {
           backgroundColor: Colors.transparent,
           bottomOpacity: 0.0,
           elevation: 0.0,
-          title: const Text(
+          title: Text(
             "LEADERBOARD",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
