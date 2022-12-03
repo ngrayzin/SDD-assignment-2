@@ -30,36 +30,61 @@ class _GamePageState extends State<GamePage>{
       home: Scaffold(
         backgroundColor: colours.AppColor.background,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(30.0),
+          preferredSize: Size.fromHeight(40.0),
           child: AppBar (
             elevation: 0,
             backgroundColor: Colors.transparent,
             bottomOpacity: 0,
             centerTitle: true,
-            leading: IconButton(
-              iconSize: 40,
-              icon: const Icon(Icons.info_outline),
-              color: colours.AppColor.main,
-              onPressed: (){},
-            ),
-            title: Text(
-              'N.A.C',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 40,
-                fontFamily: 'StickNoBills',
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            flexibleSpace: Padding(
+              padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+              child : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  IconButton(
+                    iconSize: 35,
+                    icon: const Icon(Icons.info_outline),
+                    color: colours.AppColor.main,
+                    onPressed: () {},
+                  ),
+                  const Spacer(
+                    flex: 5,
+                  ),
+                  Text(
+                    'N.A.C',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontFamily: 'StickNoBills',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 5,
+                  ),
+                  Visibility(
+                    child: IconButton(
+                      iconSize: 35,
+                      icon: const Icon(Icons.close),
+                      color: colours.AppColor.main,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    maintainAnimation: true,
+                    maintainSize: true,
+                    maintainState: true,
+                    visible: true,
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                ],
               ),
             ),
-            actions: <Widget>[
-              IconButton(
-                iconSize: 40,
-                icon: const Icon(Icons.close),
-                color: colours.AppColor.main,
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
           ),
         ),
         body: SafeArea(
@@ -67,7 +92,7 @@ class _GamePageState extends State<GamePage>{
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               //alignment: Alignment.center,
-              padding:  EdgeInsets.fromLTRB(10,30,10,20),
+              padding:  EdgeInsets.fromLTRB(10,20,10,20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
