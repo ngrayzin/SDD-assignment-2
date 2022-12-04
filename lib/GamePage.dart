@@ -11,6 +11,7 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
 import 'Player.dart';
+import 'package:sdd_assignment_2/GameOver.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
@@ -26,46 +27,83 @@ class _GamePageState extends State<GamePage>{
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   Player player = Player("name", []);
   @override
+
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
       title: 'Game Page',
       home: Scaffold(
         backgroundColor: colours.AppColor.background,
-        appBar: AppBar (
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40.0),
+          child: AppBar (
             elevation: 0,
-            backgroundColor: colours.AppColor.background,
+            backgroundColor: Colors.transparent,
+            bottomOpacity: 0,
             centerTitle: true,
-            leading: IconButton(
-              iconSize: 50,
-              icon: const Icon(Icons.info_outline),
-              color: colours.AppColor.main,
-              onPressed: (){},
-            ),
-            title: Text(
-              'N.A.C',
-              style: TextStyle(
-                fontSize: 50,
-                fontFamily: 'StickNoBills',
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+            flexibleSpace: Padding(
+              padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+              child : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  IconButton(
+                    iconSize: 40,
+                    icon: const Icon(Icons.info_outline),
+                    color: colours.AppColor.main,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const GameOver(),
+                          ));
+                    },
+                  ),
+                  const Spacer(
+                    flex: 5,
+                  ),
+                  Text(
+                    'N.A.C',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'StickNoBills',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 5,
+                  ),
+                  Visibility(
+                    child: IconButton(
+                      iconSize: 40,
+                      icon: const Icon(Icons.close),
+                      color: colours.AppColor.main,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    maintainAnimation: true,
+                    maintainSize: true,
+                    maintainState: true,
+                    visible: true,
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                ],
               ),
             ),
-            actions: <Widget>[
-              IconButton(
-                iconSize: 50,
-                icon: const Icon(Icons.close),
-                color: colours.AppColor.main,
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
           ),
+        ),
         body: SafeArea(
           child: Container (
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               //alignment: Alignment.center,
-              padding:  EdgeInsets.fromLTRB(10,30,10,20),
+              padding:  EdgeInsets.fromLTRB(20,10,20,20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -151,7 +189,7 @@ class _GamePageState extends State<GamePage>{
                   //SizedBox(height: 20.0),
 
                   Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
