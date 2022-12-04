@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'Player.dart';
 import 'package:sdd_assignment_2/GameOver.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
@@ -22,6 +25,7 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage>{
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
+  Player player = Player("name", []);
   @override
 
   Widget build(BuildContext context) {
@@ -138,6 +142,15 @@ class _GamePageState extends State<GamePage>{
                               ),
                           )
                       ),
+                      Text(
+                        'TURN ${player.turn}',
+                        style: const TextStyle(
+                          fontFamily: 'StickNoBills',
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                       Card(
                           elevation: 0,
                           shadowColor: null,
@@ -171,7 +184,7 @@ class _GamePageState extends State<GamePage>{
                       ),
                     ],
                   ),
-                  GameBoard(boardSettings: boardSettings),
+                  GameBoard(boardSettings: boardSettings, player: player,),
 
                   //SizedBox(height: 20.0),
 
@@ -180,6 +193,7 @@ class _GamePageState extends State<GamePage>{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        //randomizer here
                         BuildingCard(),
                         BuildingCard(),
                       ],
@@ -191,6 +205,12 @@ class _GamePageState extends State<GamePage>{
         ),
       )
     );
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    setState(() {player.turn;});
   }
 }
 
