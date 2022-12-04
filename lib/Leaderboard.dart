@@ -94,7 +94,7 @@ class LeaderBoard extends StatelessWidget {
             ),
           ),*/ //Container for leaderboard title
           Container(
-            margin: const EdgeInsets.fromLTRB(10.0, 10, 10, 2),
+            margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
             padding: const EdgeInsets.all(5.0),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -129,8 +129,9 @@ class LeaderBoard extends StatelessWidget {
                 ]),
           ), //Container for Leaderboard Title
           Container(
-            margin: const EdgeInsets.fromLTRB(5.0, 2, 5, 5),
+            margin: const EdgeInsets.fromLTRB(10, 2, 10, 5),
             padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+            height: 60,
             decoration: BoxDecoration(
               color: colours.AppColor.buttonBackground,
               border: Border.all(
@@ -171,8 +172,9 @@ class LeaderBoard extends StatelessWidget {
                 ]),
           ), //Container for player leaderboard attributes
           Container(
-            margin: const EdgeInsets.fromLTRB(5.0, 2, 5, 5),
+            margin: const EdgeInsets.fromLTRB(10, 2, 10, 5),
             padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+            height: 60,
             decoration: BoxDecoration(
               color: colours.AppColor.buttonBackground,
               border: Border.all(
