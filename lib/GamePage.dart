@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'package:sdd_assignment_2/GameOver.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
@@ -49,7 +50,13 @@ class _GamePageState extends State<GamePage>{
                     iconSize: 40,
                     icon: const Icon(Icons.info_outline),
                     color: colours.AppColor.main,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const GameOver(),
+                          ));
+                    },
                   ),
                   const Spacer(
                     flex: 5,
@@ -92,7 +99,7 @@ class _GamePageState extends State<GamePage>{
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               //alignment: Alignment.center,
-              padding:  EdgeInsets.fromLTRB(10,20,10,20),
+              padding:  EdgeInsets.fromLTRB(20,10,20,20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -169,7 +176,7 @@ class _GamePageState extends State<GamePage>{
                   //SizedBox(height: 20.0),
 
                   Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
