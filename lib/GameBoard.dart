@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:core';
+import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,36 +13,42 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
 import 'Building.dart';
 import 'BuildingTile.dart';
+import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
+import 'package:localstorage/localstorage.dart';
 
 class GameBoard extends StatefulWidget{
   final BoardSettings boardSettings;
-  const GameBoard({Key? key, required this.boardSettings}) : super (key:key);
+  final Player player;
+  const GameBoard({Key? key, required this.boardSettings, required this.player}) : super (key:key);
 
   @override
   State<GameBoard> createState() => _GameBoardState();
 }
 
 class _GameBoardState extends State<GameBoard>{
-  final List<List<String>> widgets = [];
-  List<String> list2 = [];
+  //final List<List<String>> widgets = [];
+  //List<String> list2 = [];
   @override
   void initState(){
     super.initState();
-    for (var row = 0; row < 10; row++){
+    /*for (var row = 0; row < 10; row++){
       list2.clear();
       for (var column = 0; column < 10; column++){
         list2.add("-");
       }
-      widgets.add(list2);
+      widget.player.ruleMap.add(list2);
+    }*/
+    for (var i = 0; i < widget.boardSettings.totalTiles(); i++){
+      widget.player.map.add("-");
     }
-    print("ficiiafoaf");
-    print(widgets);
+    print(widget.player.map);
   }
 
-
   @override
+  bool exist = false;
+  String name = "";
   Widget build(BuildContext context){
     return Container(
       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -55,25 +63,97 @@ class _GameBoardState extends State<GameBoard>{
               mainAxisSpacing: 3,
               children: [
                 for (var i = 0; i < widget.boardSettings.totalTiles(); i++)
-                /*
-                Text("$i",
-                style: TextStyle(
-                  color: Colors.white,
-                ),),
-
-                 */
-                  BoardTile(boardIndex: i, boardSettings: widget.boardSettings)
-                  //BuildingTile(boardIndex: i, boardSettings: widget.boardSettings, name: "P")
-                  //replace boardtile with buildingtile in boardtile file
+                  BoardTile(boardIndex: i, boardSettings: widget.boardSettings, player: widget.player,)
               ],
+
             ),
           ),
         ),
     );
   }
+
+  bool changeColour(){
+    for(int i = 0; i < widget.boardSettings.totalTiles(); i++){
+      if(widget.player.map[i] != "-"){
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
-class Board extends ChangeNotifier{
-  List<Building> buildings = [];
-
+bool mapRules(List<String> map, int i){
+  //center index is either +1 -1 +10 -10
+  if(map.asMap().containsKey(i-10) && map[i-10] != "-" ){
+    print("yes");
+    return true;
+  }
+  if(map.asMap().containsKey(i+10) && map[i+10] != "-"){
+    print("yes");
+    return true;
+  }
+  if(map.asMap().containsKey(i-1) && map[i-1] != "-" && i%10 != 0){
+    print(i);
+    print("yes");
+    return true;
+  }
+  if(map.asMap().containsKey(i+1) && (i+1)%10 != 0 && map[i+1] != "-"){
+    print(i);
+    print("yes");
+    return true;
+  }
+  else{
+    print("no");
+    return false;
+  }
 }
+
+/*
+ //right now its all in boardtile
+ //add all the boardtile into list
+ //map functions to boardtile list
+ void _buildingDropped({
+    required Building building,
+    required Player player ,
+    required int index,
+  }){
+    setState(() {
+      player.addTurn();
+      widget.player.addItemToMap(index,building.name);
+      print(widget.player.map);
+    });
+  }
+
+  Widget _buildDragZone(Building building, int index){
+    bool exist = false;
+    String name = "";
+    return DragTarget<Building>(
+        builder: (context, accept, reject){
+          return DragTarget<Building>(
+              onAccept: (data) => setState(() {
+                exist = widget.player.turn == 1 ? true : mapRules(widget.player.map, index);
+                _buildingDropped(building: building, player: widget.player, index: index);
+              }),
+              builder: (context, accept, reject){
+                if(exist){
+                  return BuildingTile(boardIndex: index,
+                      boardSettings: widget.boardSettings,
+                      name: name);
+                }
+                else {
+                  widget.player.addItemToMap(index,"-");
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    //child: Center(child: Text ("${widget.boardIndex}"),),
+                  );
+                }
+              }
+          );
+        }
+    );
+  }
+}
+*/
+
