@@ -19,8 +19,9 @@ void main() {
     final license = await rootBundle.loadString('fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: [SystemUiOverlay.bottom]);
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
+      overlays: [SystemUiOverlay.bottom]);
   runApp(const MyApp());
 }
 
@@ -39,4 +40,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
