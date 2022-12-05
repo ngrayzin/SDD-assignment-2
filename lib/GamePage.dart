@@ -41,6 +41,7 @@ class _GamePageState extends State<GamePage>{
             backgroundColor: Colors.transparent,
             bottomOpacity: 0,
             centerTitle: true,
+
             flexibleSpace: Padding(
               padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
               child : Row(
@@ -96,6 +97,7 @@ class _GamePageState extends State<GamePage>{
                 ],
               ),
             ),
+
           ),
         ),
         body: SafeArea(
