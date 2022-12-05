@@ -27,7 +27,7 @@ class _BuildingCard extends State<BuildingCard> {
     4 : "Shopping center"
   };
   //randomizer here ig???????
-  Building building = Building(name: 'park');
+  Building building = Building(name: 'Park');
   @override
   Widget build(BuildContext context) {
     return Draggable<Building>(
