@@ -45,72 +45,53 @@ class _LeaderBoardPage extends State<LeaderBoardPage> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(40),
-      //   child: AppBar(
-      //     automaticallyImplyLeading: false,
-      //     elevation: 0,
-      //     backgroundColor: Colors.transparent,
-      //     bottomOpacity: 0,
-      //     centerTitle: true,
-      //     flexibleSpace: Padding(
-      //       padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         crossAxisAlignment: CrossAxisAlignment.center,
-      //         children: [
-      //           const Spacer(
-      //             flex: 1,
-      //           ),
-      // IconButton(
-      //   iconSize: 40,
-      //   icon: const Icon(Icons.close),
-      //   color: colours.AppColor.main,
-      //   onPressed: () => Navigator.pop(context),
-      // ),
-      //           const Spacer(
-      //             flex: 5,
-      //           ),
-      //           Text(
-      //             'LEADERBOARD',
-      //             textAlign: TextAlign.center,
-      // style: TextStyle(
-      //   fontSize: 40,
-      //   fontFamily: 'StickNoBills',
-      //   fontWeight: FontWeight.bold,
-      //   color: Colors.white,
-      // ),
-      //           ),
-      //           const Spacer(
-      //             flex: 5,
-      //           ),
-      //           Visibility(
-      //             child: IconButton(
-      //               iconSize: 40,
-      //               icon: const Icon(Icons.close),
-      //               color: colours.AppColor.main,
-      //               onPressed: () => Navigator.pop(context),
-      //             ),
-      //             maintainAnimation: true,
-      //             maintainSize: true,
-      //             maintainState: true,
-      //             visible: false,
-      //           ),
-      //           const Spacer(
-      //             flex: 1,
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(8),
-        itemCount: 10, //Replace with list size from database read
-        itemBuilder: (BuildContext context, int index) {
-          return LeaderBoardCard();
-        },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
+            padding: const EdgeInsets.all(5.0),
+            color: colours.AppColor.background,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    "Position",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontFamily: 'StickNoBills'),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "Name",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontFamily: 'StickNoBills'),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "Points",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontFamily: 'StickNoBills'),
+                    textAlign: TextAlign.center,
+                  ),
+                ]),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.all(8),
+              itemCount: 10, //Replace with list size from database read
+              itemBuilder: (BuildContext context, int index) {
+                return LeaderBoardCard();
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -187,41 +168,41 @@ class _LeaderBoardPage extends State<LeaderBoardPage> {
 //         children: [
 //           // Call database and pull in data
 //           // Implement for loop here to read data and populate container
-//           Container(
-//             margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
-//             padding: const EdgeInsets.all(5.0),
-//             decoration: const BoxDecoration(
-//               borderRadius: BorderRadius.all(Radius.circular(15)),
-//             ),
-//             child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: const [
-//                   Text(
-//                     "Position",
-//                     style: TextStyle(
-//                         fontSize: 24,
-//                         color: Colors.white,
-//                         fontFamily: 'StickNoBills'),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                   Text(
-//                     "Name",
-//                     style: TextStyle(
-//                         fontSize: 24,
-//                         color: Colors.white,
-//                         fontFamily: 'StickNoBills'),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                   Text(
-//                     "Points",
-//                     style: TextStyle(
-//                         fontSize: 24,
-//                         color: Colors.white,
-//                         fontFamily: 'StickNoBills'),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ]),
-//           ),
+          // Container(
+          //   margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
+          //   padding: const EdgeInsets.all(5.0),
+          //   decoration: const BoxDecoration(
+          //     borderRadius: BorderRadius.all(Radius.circular(15)),
+          //   ),
+          //   child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: const [
+          //         Text(
+          //           "Position",
+          //           style: TextStyle(
+          //               fontSize: 24,
+          //               color: Colors.white,
+          //               fontFamily: 'StickNoBills'),
+          //           textAlign: TextAlign.center,
+          //         ),
+          //         Text(
+          //           "Name",
+          //           style: TextStyle(
+          //               fontSize: 24,
+          //               color: Colors.white,
+          //               fontFamily: 'StickNoBills'),
+          //           textAlign: TextAlign.center,
+          //         ),
+          //         Text(
+          //           "Points",
+          //           style: TextStyle(
+          //               fontSize: 24,
+          //               color: Colors.white,
+          //               fontFamily: 'StickNoBills'),
+          //           textAlign: TextAlign.center,
+          //         ),
+          //       ]),
+          // ),
 //           LeaderBoardCard() 
 //         ],
 //       )),
