@@ -27,7 +27,7 @@ class _MainMenuState extends State<MainMenu> {
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.fromLTRB(20, 40, 20, 40),
+            padding: EdgeInsets.fromLTRB(20, 20, 20, 40),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +49,7 @@ class _MainMenuState extends State<MainMenu> {
                   Padding(
                     padding: const EdgeInsets.only(top: 40, bottom: 10),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: 275,
                       child: TextButton(
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const GamePage();

@@ -19,10 +19,11 @@ void main() {
     final license = await rootBundle.loadString('fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
-      overlays: [SystemUiOverlay.bottom]);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(const MyApp());
+  //WidgetsFlutterBinding.ensureInitialized();
+  /*SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
+      overlays: [SystemUiOverlay.bottom]);*/
 }
 
 class MyApp extends StatelessWidget {
