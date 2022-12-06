@@ -79,10 +79,10 @@ class _MainMenuState extends State<MainMenu> {
                       width: 275,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return const AboutPage();
-                          }));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (BuildContext context) {
+                          //   return const AboutPage();
+                          // }));
                         },
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all<EdgeInsets>(
