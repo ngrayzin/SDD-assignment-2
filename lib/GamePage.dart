@@ -60,7 +60,7 @@ class _GamePageState extends State<GamePage>{
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const AboutPage(),
+                            builder: (context) => const AboutPage(), //goes to about page
                           ));
                     },
                   ),
