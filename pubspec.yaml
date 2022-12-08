@@ -72,7 +72,7 @@ flutter:
     - assets/images/point.png
     - assets/images/Industry.png
     - assets/images/Road.png
-    - assets/images/Park.png
+    - assets/images/park.png
     - assets/images/Commercial.png
     - assets/images/Residential.png
   # To add assets to your application, add an assets section, like this:
