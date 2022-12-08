@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
+import 'package:sdd_assignment_2/About.dart';
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
@@ -59,7 +60,7 @@ class _GamePageState extends State<GamePage>{
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const GameOver(),
+                            builder: (context) => const AboutPage(),
                           ));
                     },
                   ),
