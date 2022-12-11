@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
+import 'package:sdd_assignment_2/GamePage.dart';
 import 'Building.dart';
 import 'BuildingTile.dart';
 import 'Player.dart';
@@ -49,14 +50,15 @@ class _GameBoardState extends State<GameBoard>{
   @override
   bool exist = false;
   String name = "";
+  @override
   Widget build(BuildContext context){
-    return Container(
-      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-        child: SizedBox(
-          height: 400,
+    return Expanded(
           //margin: const EdgeInsets.only(top: 10.0),
           child:
-          Expanded(
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+            child: SizedBox(
+              height: 400,
             child: GridView.count(
               crossAxisCount: widget.boardSettings.cols,
               crossAxisSpacing: 3,
@@ -84,7 +86,12 @@ class _GameBoardState extends State<GameBoard>{
 
 bool mapRules(List<String> map, int i){
   //center index is either +1 -1 +10 -10
-  if(map.asMap().containsKey(i-10) && map[i-10] != "-" ){
+  List<String> building = ['park','factory','house','motorway','shopping center'];
+  if(building.contains(map[i])){
+    print('no');
+    return false;
+  }
+  else if(map.asMap().containsKey(i-10) && map[i-10] != "-"){
     print("yes");
     return true;
   }
@@ -93,12 +100,10 @@ bool mapRules(List<String> map, int i){
     return true;
   }
   if(map.asMap().containsKey(i-1) && map[i-1] != "-" && i%10 != 0){
-    print(i);
     print("yes");
     return true;
   }
-  if(map.asMap().containsKey(i+1) && (i+1)%10 != 0 && map[i+1] != "-"){
-    print(i);
+  if(map.asMap().containsKey(i+1) && map[i+1] != "-" && (i+1)%10 != 0){
     print("yes");
     return true;
   }

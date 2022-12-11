@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
+import 'package:sdd_assignment_2/BoardTile.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
 import 'Player.dart';
@@ -20,11 +22,31 @@ class GamePage extends StatefulWidget {
   @override
   State<GamePage> createState() => _GamePageState();
 
+  static Player player = Player("name", [], 0);
+
+  void x(Function widgetSetState){
+    //Your code
+    widgetSetState();
+  }
 }
 
 class _GamePageState extends State<GamePage>{
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
-  Player player = Player("name", []);
+  late Timer timer;
+  late BoardTile boardTile;
+  @override
+  void initState(){
+    super.initState();
+    GamePage.player =Player("name", [], 0);
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() {});
+    });
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -42,7 +64,7 @@ class _GamePageState extends State<GamePage>{
               color: colours.AppColor.main,
               onPressed: (){},
             ),
-            title: Text(
+            title: const Text(
               'N.A.C',
               style: TextStyle(
                 fontSize: 50,
@@ -105,12 +127,12 @@ class _GamePageState extends State<GamePage>{
                           )
                       ),
                       Text(
-                        'TURN ${player.turn}',
+                        'TURN ${GamePage.player.turn}',
                         style: const TextStyle(
-                          fontFamily: 'StickNoBills',
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.normal,
+                        fontFamily: 'StickNoBills',
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.normal,
                         ),
                       ),
                       Card(
@@ -129,7 +151,7 @@ class _GamePageState extends State<GamePage>{
                                     height: 30,
                                     fit: BoxFit.fitWidth,
                                   ),
-                                  SizedBox(width: 10.0),
+                                  //SizedBox(width: 10.0),
                                   Text(
                                     '16',
                                     style: TextStyle(
@@ -146,7 +168,7 @@ class _GamePageState extends State<GamePage>{
                       ),
                     ],
                   ),
-                  GameBoard(boardSettings: boardSettings, player: player,),
+                  GameBoard(boardSettings: boardSettings, player: GamePage.player,),
 
                   //SizedBox(height: 20.0),
 
@@ -169,11 +191,5 @@ class _GamePageState extends State<GamePage>{
     );
   }
 
-  @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-    setState(() {player.turn;});
-  }
 }
-
 
