@@ -38,10 +38,11 @@ class _GamePageState extends State<GamePage>{
   void initState(){
     super.initState();
     GamePage.player =Player("name", [], 0);
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
       setState(() {});
     });
   }
+
   @override
   void dispose() {
     super.dispose();

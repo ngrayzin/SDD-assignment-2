@@ -74,13 +74,14 @@ class _GameBoardState extends State<GameBoard>{
     );
   }
 
-  bool changeColour(){
+  int turnCount(){
+    int count = 0;
     for(int i = 0; i < widget.boardSettings.totalTiles(); i++){
       if(widget.player.map[i] != "-"){
-        return true;
+        count++;
       }
     }
-    return false;
+    return count;
   }
 }
 
