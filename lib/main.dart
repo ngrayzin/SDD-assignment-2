@@ -12,12 +12,15 @@ import 'MainMenu.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
+  
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: [SystemUiOverlay.bottom]);
   runApp(const MyApp());
 }
 
