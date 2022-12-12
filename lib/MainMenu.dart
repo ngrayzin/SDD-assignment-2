@@ -28,7 +28,11 @@ class _MainMenuState extends State<MainMenu> {
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.fromLTRB(20, 20, 20, 40),
+            padding:  EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width*0.07,
+                MediaQuery.of(context).size.height*0.025,
+                MediaQuery.of(context).size.width*0.07,
+                MediaQuery.of(context).size.height*0.05),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -40,10 +44,10 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 15.0),
+                    padding: EdgeInsets.only(top: 0),
                     child: Image.asset(
                       "assets/images/App_name.png",
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       //fit: BoxFit.contain,
                     ),
                   ),
