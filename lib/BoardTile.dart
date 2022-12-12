@@ -30,7 +30,7 @@ class BoardTile extends StatefulWidget {
 class _BoardTileState extends State<BoardTile>{
   bool exist = false;
   String name = "";
-  List<String> building = ['park','factory','house','motorway','shopping center'];
+  List<String> building = ['Park','Industry','Residential','Road','Commercial'];
   @override
   Widget build(BuildContext context){
     return DragTarget<Building>(
