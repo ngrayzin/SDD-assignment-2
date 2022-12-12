@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BuildingTile.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'package:sdd_assignment_2/GamePage.dart';
 import 'Building.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
@@ -29,32 +30,36 @@ class BoardTile extends StatefulWidget {
 class _BoardTileState extends State<BoardTile>{
   bool exist = false;
   String name = "";
+  List<String> building = ['park','factory','house','motorway','shopping center'];
   @override
   Widget build(BuildContext context){
     return DragTarget<Building>(
-      builder: (context, accept, reject){
-        if(exist){
-          return BuildingTile(boardIndex: widget.boardIndex,
-              boardSettings: widget.boardSettings,
-              name: name);
-        }
-        else {
-          widget.player.addItemToMap(widget.boardIndex,"-");
-          return Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Center(child: Text ("${widget.boardIndex}"),),
-          );
-        }
-      },
       onAccept: (data) => setState(() {
         exist = widget.player.turn == 0 ? true : mapRules(widget.player.map, widget.boardIndex);
         name = data.name;
         exist ? widget.player.addItemToMap(widget.boardIndex,name) : null;
         exist ? widget.player.addTurn()  : null;
-        print(widget.player.map);
+        //print(widget.player.map);
       }),
+      builder: (context, accept, reject){
+        if(exist){
+          return BuildingTile(boardIndex: widget.boardIndex, boardSettings: widget.boardSettings, name: name);
+        }
+        else {
+          if(building.contains(widget.player.map[widget.boardIndex])){
+            return BuildingTile(boardIndex: widget.boardIndex, boardSettings: widget.boardSettings, name: widget.player.map[widget.boardIndex]);
+          }
+          else{
+            widget.player.addItemToMap(widget.boardIndex,"-");
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Center(child: Text ("${widget.boardIndex}"),),
+            );
+          }
+        }
+      },
     );
   }
 
@@ -67,3 +72,4 @@ class _BoardTileState extends State<BoardTile>{
     return false;
   }
 }
+

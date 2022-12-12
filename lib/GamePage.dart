@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -9,10 +10,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/About.dart';
 import 'package:sdd_assignment_2/BoardSettings.dart';
+import 'package:sdd_assignment_2/BoardTile.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
 import 'Player.dart';
-import 'package:sdd_assignment_2/GameOver.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
@@ -22,27 +23,43 @@ class GamePage extends StatefulWidget {
   @override
   State<GamePage> createState() => _GamePageState();
 
+  static Player player = Player("name", [], 0);
+
+  void x(Function widgetSetState){
+    //Your code
+    widgetSetState();
+  }
 }
 
 class _GamePageState extends State<GamePage>{
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
-  Player player = Player("name", []);
+  late Timer timer;
+  late BoardTile boardTile;
   @override
+  void initState(){
+    super.initState();
+    GamePage.player =Player("name", [], 0);
+    timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
+      setState(() {});
+    });
+  }
 
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
       title: 'Game Page',
       home: Scaffold(
         backgroundColor: colours.AppColor.background,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40.0),
-          child: AppBar (
+        appBar: AppBar (
             elevation: 0,
-            backgroundColor: Colors.transparent,
-            bottomOpacity: 0,
+            backgroundColor: colours.AppColor.background,
             centerTitle: true,
-
             flexibleSpace: Padding(
               padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
               child : Row(
@@ -98,15 +115,13 @@ class _GamePageState extends State<GamePage>{
                 ],
               ),
             ),
-
           ),
-        ),
         body: SafeArea(
           child: Container (
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               //alignment: Alignment.center,
-              padding:  EdgeInsets.fromLTRB(20,10,20,20),
+              padding:  EdgeInsets.fromLTRB(10,30,10,20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -146,12 +161,12 @@ class _GamePageState extends State<GamePage>{
                           )
                       ),
                       Text(
-                        'TURN ${player.turn}',
+                        'TURN ${GamePage.player.turn}',
                         style: const TextStyle(
-                          fontFamily: 'StickNoBills',
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.normal,
+                        fontFamily: 'StickNoBills',
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.normal,
                         ),
                       ),
                       Card(
@@ -170,7 +185,7 @@ class _GamePageState extends State<GamePage>{
                                     height: 30,
                                     fit: BoxFit.fitWidth,
                                   ),
-                                  SizedBox(width: 10.0),
+                                  //SizedBox(width: 10.0),
                                   Text(
                                     '16',
                                     style: TextStyle(
@@ -187,12 +202,12 @@ class _GamePageState extends State<GamePage>{
                       ),
                     ],
                   ),
-                  GameBoard(boardSettings: boardSettings, player: player,),
+                  GameBoard(boardSettings: boardSettings, player: GamePage.player,),
 
                   //SizedBox(height: 20.0),
 
                   Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -210,11 +225,5 @@ class _GamePageState extends State<GamePage>{
     );
   }
 
-  @override
-  void setState(VoidCallback fn) {
-    super.setState(fn);
-    setState(() {player.turn;});
-  }
 }
-
 
