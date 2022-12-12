@@ -35,14 +35,14 @@ class _MainMenuState extends State<MainMenu> {
                 children: [
                   Expanded(
                     child: SizedBox(
-                      child: Image.asset("assets/images/logo.png"),
+                      child: Image.asset("assets/images/Logo.png"),
                       width: 200,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 15.0),
                     child: Image.asset(
-                      "assets/images/name.png",
+                      "assets/images/Name.png",
                       width: MediaQuery.of(context).size.width * 0.85,
                       //fit: BoxFit.contain,
                     ),

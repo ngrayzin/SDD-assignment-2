@@ -139,7 +139,7 @@ class _GamePageState extends State<GamePage>{
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
-                                          'assets/images/point.png',
+                                          'assets/images/Point.png',
                                         width: 30,
                                         height: 30,
                                         fit: BoxFit.fitWidth,
@@ -180,7 +180,7 @@ class _GamePageState extends State<GamePage>{
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Image.asset(
-                                    'assets/images/coin.png',
+                                    'assets/images/Coin.png',
                                     width: 30,
                                     height: 30,
                                     fit: BoxFit.fitWidth,

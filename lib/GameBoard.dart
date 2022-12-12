@@ -87,7 +87,7 @@ class _GameBoardState extends State<GameBoard>{
 
 bool mapRules(List<String> map, int i){
   //center index is either +1 -1 +10 -10
-  List<String> building = ['park','factory','house','motorway','shopping center'];
+  List<String> building = ['Park','Industry','Residential','Road','Commercial'];
   if(building.contains(map[i])){
     print('no');
     return false;

@@ -201,7 +201,7 @@ class _LoadGameState extends State<LoadGame>{
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Image.asset(
-                                          'assets/images/point.png',
+                                          'assets/images/Point.png',
                                           width: 20,
                                           height: 20,
                                           fit: BoxFit.fitWidth,
@@ -234,7 +234,7 @@ class _LoadGameState extends State<LoadGame>{
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Image.asset(
-                                          'assets/images/point.png',
+                                          'assets/images/Point.png',
                                           width: 20,
                                           height: 20,
                                           fit: BoxFit.fitWidth,
@@ -268,7 +268,7 @@ class _LoadGameState extends State<LoadGame>{
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Image.asset(
-                                          'assets/images/point.png',
+                                          'assets/images/Point.png',
                                           width: 20,
                                           height: 20,
                                           fit: BoxFit.fitWidth,

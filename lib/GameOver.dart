@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'package:sdd_assignment_2/GamePage.dart';
 import 'Player.dart';
 import 'PopUpMessage.dart';
 import 'colours.dart' as colours;
@@ -23,7 +24,7 @@ class GameOver extends StatefulWidget {
 
 class _GameOver extends State<GameOver> {
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
-  Player player = Player("name", []);
+  Player player = GamePage.player;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
