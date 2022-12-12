@@ -85,7 +85,7 @@ class _LeaderBoardPage extends State<LeaderBoardPage> {
               padding: const EdgeInsets.all(8),
               itemCount: 10, //Replace with list size from database read
               itemBuilder: (BuildContext context, int index) {
-                return LeaderBoardCard();
+                return const LeaderboardCard();
               },
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(),

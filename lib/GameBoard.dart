@@ -53,24 +53,24 @@ class _GameBoardState extends State<GameBoard>{
   @override
   Widget build(BuildContext context){
     return Expanded(
-          //margin: const EdgeInsets.only(top: 10.0),
-          child:
-          Container(
-            margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-            child: SizedBox(
-              height: 400,
-            child: GridView.count(
-              crossAxisCount: widget.boardSettings.cols,
-              crossAxisSpacing: 3,
-              mainAxisSpacing: 3,
-              children: [
-                for (var i = 0; i < widget.boardSettings.totalTiles(); i++)
-                  BoardTile(boardIndex: i, boardSettings: widget.boardSettings, player: widget.player,)
-              ],
+      //margin: const EdgeInsets.only(top: 10.0),
+      child:
+      Container(
+        margin: const EdgeInsets.all(0.0),
+        child: SizedBox(
+          height: 400,
+          child: GridView.count(
+            crossAxisCount: widget.boardSettings.cols,
+            crossAxisSpacing: 3,
+            mainAxisSpacing: 3,
+            children: [
+              for (var i = 0; i < widget.boardSettings.totalTiles(); i++)
+                BoardTile(boardIndex: i, boardSettings: widget.boardSettings, player: widget.player,)
+            ],
 
-            ),
           ),
         ),
+      ),
     );
   }
 
@@ -129,7 +129,6 @@ bool mapRules(List<String> map, int i){
       print(widget.player.map);
     });
   }
-
   Widget _buildDragZone(Building building, int index){
     bool exist = false;
     String name = "";
@@ -162,4 +161,3 @@ bool mapRules(List<String> map, int i){
   }
 }
 */
-

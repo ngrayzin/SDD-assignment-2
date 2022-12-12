@@ -72,12 +72,16 @@ class _Building extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150,
-      height: 150,
+      width: MediaQuery.of(context).size.width*0.37,
+      height: MediaQuery.of(context).size.width*0.37,
       child: Card(
           elevation: 10,
           shadowColor: Colors.grey,
           color: colours.AppColor.main,
+          shape: RoundedRectangleBorder(
+            //side: BorderSide(color: Colors.white70, width: 1),
+            borderRadius: BorderRadius.circular(15),
+          ),
           child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Column(
@@ -105,5 +109,3 @@ class _Building extends StatelessWidget{
   }
 
 }
-
-

@@ -53,15 +53,16 @@ class _GamePageState extends State<GamePage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-      title: 'Game Page',
-      home: Scaffold(
-        backgroundColor: colours.AppColor.background,
-        appBar: AppBar (
+        title: 'Game Page',
+        home: Scaffold(
+          backgroundColor: colours.AppColor.background,
+          appBar: AppBar (
+            automaticallyImplyLeading: false,
             elevation: 0,
             backgroundColor: colours.AppColor.background,
             centerTitle: true,
             flexibleSpace: Padding(
-              padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.12),
               child : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,15 +72,10 @@ class _GamePageState extends State<GamePage>{
                   ),
                   IconButton(
                     iconSize: 40,
-                    icon: const Icon(Icons.info_outline),
+                    icon: const Icon(Icons.close),
                     color: colours.AppColor.main,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AboutPage(), //goes to about page
-                          ));
-                    },
+                    onPressed: () => Navigator.pop(context),
+
                   ),
                   const Spacer(
                     flex: 5,
@@ -100,9 +96,15 @@ class _GamePageState extends State<GamePage>{
                   Visibility(
                     child: IconButton(
                       iconSize: 40,
-                      icon: const Icon(Icons.close),
+                      icon: const Icon(Icons.info_outline),
                       color: colours.AppColor.main,
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AboutPage(), //goes to about page
+                            ));
+                      },
                     ),
                     maintainAnimation: true,
                     maintainSize: true,
@@ -116,114 +118,144 @@ class _GamePageState extends State<GamePage>{
               ),
             ),
           ),
-        body: SafeArea(
-          child: Container (
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              //alignment: Alignment.center,
-              padding:  EdgeInsets.fromLTRB(10,30,10,20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget> [
-                      Card(
-                          elevation: 0,
-                          shadowColor: null,
-                          color: colours.AppColor.buttonBackground,
-                          child: SizedBox(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+          body: SafeArea(
+            child: Container (
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                //alignment: Alignment.center,
+                padding:  EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width*0.07,
+                    MediaQuery.of(context).size.height*0.05,
+                    MediaQuery.of(context).size.width*0.07,
+                    MediaQuery.of(context).size.height*0.05),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget> [
+                        Card(
+                            elevation: 0,
+                            shadowColor: null,
+                            color: colours.AppColor.buttonBackground,
+                            child: SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                 child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.asset(
-                                          'assets/images/Point.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      SizedBox(width: 10.0),
-                                      Text(
-                                        '190',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'StickNoBills',
-                                          color: Colors.white,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                              ),
-                          )
-                      ),
-                      Text(
-                        'TURN ${GamePage.player.turn}',
-                        style: const TextStyle(
-                        fontFamily: 'StickNoBills',
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      Card(
-                          elevation: 0,
-                          shadowColor: null,
-                          color: colours.AppColor.buttonBackground,
-                          child: SizedBox(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/Coin.png',
-                                    width: 30,
-                                    height: 30,
-                                    fit: BoxFit.fitWidth,
-                                  ),
-                                  //SizedBox(width: 10.0),
-                                  Text(
-                                    '16',
-                                    style: TextStyle(
-                                      fontFamily: 'StickNoBills',
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.normal,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/Point.png',
+                                      width: 30,
+                                      height: 30,
+                                      fit: BoxFit.fitWidth,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 10.0),
+                                    Text(
+                                      '190',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'StickNoBills',
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                      ),
-                    ],
-                  ),
-                  GameBoard(boardSettings: boardSettings, player: GamePage.player,),
-
-                  //SizedBox(height: 20.0),
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        //randomizer here hello
-                        BuildingCard(),
-                        BuildingCard(),
+                            )
+                        ),
+                        const Spacer(
+                          flex:1,
+                        ),
+                        Card(
+                            elevation: 0,
+                            shadowColor: null,
+                            color: colours.AppColor.buttonBackground,
+                            child: SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'TURN  ${GamePage.player.turn}',
+                                      style: const TextStyle(
+                                        fontFamily: 'StickNoBills',
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                        ),
+                        const Spacer(
+                          flex:1,
+                        ),
+                        Card(
+                            elevation: 0,
+                            shadowColor: null,
+                            color: colours.AppColor.buttonBackground,
+                            child: SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/Coin.png',
+                                      width: 30,
+                                      height: 30,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                    SizedBox(width: 10.0),
+                                    Text(
+                                      '16',
+                                      style: TextStyle(
+                                        fontFamily: 'StickNoBills',
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                        ),
                       ],
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 30.0)),
+                    GameBoard(boardSettings: boardSettings, player: GamePage.player,),
+
+                    //SizedBox(height: 20.0),
+
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                //randomizer here
+                                BuildingCard(),
+                                Spacer(),
+                                BuildingCard(),
+                              ],
+                            )
+                        )
+
                     )
-                  )
-                ],
-              )
+                  ],
+                )
+            ),
           ),
-        ),
-      )
+        )
     );
   }
 
 }
-
