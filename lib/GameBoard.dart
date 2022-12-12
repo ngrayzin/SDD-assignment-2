@@ -56,7 +56,7 @@ class _GameBoardState extends State<GameBoard>{
           //margin: const EdgeInsets.only(top: 10.0),
           child:
           Container(
-            margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+            margin: const EdgeInsets.all(0.0),
             child: SizedBox(
               height: 400,
             child: GridView.count(

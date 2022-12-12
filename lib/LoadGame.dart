@@ -26,15 +26,13 @@ class _LoadGameState extends State<LoadGame>{
       title: 'Load Game Page',
       home: Scaffold(
         backgroundColor: colours.AppColor.background,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40),
-          child: AppBar(
+        appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
             bottomOpacity: 0,
             centerTitle: true,
             flexibleSpace: Padding(
-              padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.12),
               child : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,11 +81,14 @@ class _LoadGameState extends State<LoadGame>{
               ),
             ),
           ),
-        ),
         body: SafeArea(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(25, 60, 25, 50),
+            padding:  EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width*0.07,
+                MediaQuery.of(context).size.height*0.015,
+                MediaQuery.of(context).size.width*0.07,
+                MediaQuery.of(context).size.height*0.05),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -114,11 +115,11 @@ class _LoadGameState extends State<LoadGame>{
                       style: TextStyle(
                         fontFamily: 'StickNoBills',
                         color: Colors.white,
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 12.0),
+                          contentPadding: const EdgeInsets.fromLTRB(25.0, 18.0, 25.0, 15.0),
                           filled: true,
                           fillColor: colours.AppColor.buttonBackground,
                           enabledBorder: OutlineInputBorder(
@@ -135,7 +136,7 @@ class _LoadGameState extends State<LoadGame>{
                                 width: 3,
                               )
                           ),
-                          labelText: 'Player Name',
+                          //labelText: 'Player Name',
                           labelStyle: TextStyle(
                             fontFamily: 'StickNoBills',
                             color: Colors.grey,
@@ -201,7 +202,7 @@ class _LoadGameState extends State<LoadGame>{
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Image.asset(
-                                          'assets/images/point.png',
+                                          'assets/images/Point.png',
                                           width: 20,
                                           height: 20,
                                           fit: BoxFit.fitWidth,
@@ -234,7 +235,7 @@ class _LoadGameState extends State<LoadGame>{
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Image.asset(
-                                          'assets/images/point.png',
+                                          'assets/images/Point.png',
                                           width: 20,
                                           height: 20,
                                           fit: BoxFit.fitWidth,
@@ -268,7 +269,7 @@ class _LoadGameState extends State<LoadGame>{
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Image.asset(
-                                          'assets/images/point.png',
+                                          'assets/images/Point.png',
                                           width: 20,
                                           height: 20,
                                           fit: BoxFit.fitWidth,

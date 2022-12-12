@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
+import 'package:sdd_assignment_2/LeaderboardCard.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
@@ -15,16 +16,14 @@ class LeaderBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colours.AppColor.background,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40),
-        child: AppBar(
+      appBar: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.transparent,
           bottomOpacity: 0,
           centerTitle: true,
           flexibleSpace: Padding(
-            padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.12),
             child : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,149 +72,68 @@ class LeaderBoard extends StatelessWidget {
             ),
           ),
         ),
-      ),
-      body: Center(
-          child: Column(
-        children: [
-          /*Container(
-            margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-            padding: const EdgeInsets.all(5.0),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            child: const Text(
-              "LEADERBOARD",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 48,
-                  color: Colors.white,
-                  fontFamily: 'StickNoBills'),
-              textAlign: TextAlign.center,
-            ),
-          ),*/ //Container for leaderboard title
-          Container(
-            margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
-            padding: const EdgeInsets.all(5.0),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Position",
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'StickNoBills'),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    "Name",
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'StickNoBills'),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    "Points",
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'StickNoBills'),
-                    textAlign: TextAlign.center,
-                  ),
-                ]),
-          ), //Container for Leaderboard Title
-          Container(
-            margin: const EdgeInsets.fromLTRB(10, 2, 10, 5),
-            padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-            height: 60,
-            decoration: BoxDecoration(
-              color: colours.AppColor.buttonBackground,
-              border: Border.all(
-                color: colours.AppColor.main,
-                width: 3.0,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              padding:  EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width*0.07,
+                  MediaQuery.of(context).size.height*0.025,
+                  MediaQuery.of(context).size.width*0.07,
+                  MediaQuery.of(context).size.height*0.05),
+              child: Column(
                 children: [
-                  Text(
-                    "1st",
-                    style: TextStyle(
-                      color: colours.AppColor.main,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      fontFamily: 'StickNoBills',
+                  Container(
+                    //margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    "Player 24908",
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'StickNoBills'),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    "490",
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'StickNoBills'),
-                    textAlign: TextAlign.center,
-                  ),
-                ]),
-          ), //Container for player leaderboard attributes
-          Container(
-            margin: const EdgeInsets.fromLTRB(10, 2, 10, 5),
-            padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
-            height: 60,
-            decoration: BoxDecoration(
-              color: colours.AppColor.buttonBackground,
-              border: Border.all(
-                color: colours.AppColor.main,
-                width: 3.0,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            "Position",
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.white,
+                                fontFamily: 'StickNoBills'),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            "Name",
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.white,
+                                fontFamily: 'StickNoBills'),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            "Points",
+                            style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.white,
+                                fontFamily: 'StickNoBills'),
+                            textAlign: TextAlign.center,
+                          ),
+                        ]),
+                  ), //Container for Leaderboard Title
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                  LeaderboardCard(),
+                ],
               ),
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "2nd",
-                    style: TextStyle(
-                      color: colours.AppColor.main,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      fontFamily: 'StickNoBills',
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    "Rayzin",
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'StickNoBills'),
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(
-                    "475",
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontFamily: 'StickNoBills'),
-                    textAlign: TextAlign.center,
-                  ),
-                ]),
+            )
           ),
-        ],
-      )),
+        )
+      ),
     );
   }
 }

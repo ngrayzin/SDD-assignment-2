@@ -66,13 +66,13 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/name.png
-    - assets/images/logo.png
-    - assets/images/coin.png
-    - assets/images/point.png
+    - assets/images/App_name.png
+    - assets/images/App_logo.png
+    - assets/images/Coin.png
+    - assets/images/Point.png
     - assets/images/Industry.png
     - assets/images/Road.png
-    - assets/images/park.png
+    - assets/images/Park.png
     - assets/images/Commercial.png
     - assets/images/Residential.png
   # To add assets to your application, add an assets section, like this:

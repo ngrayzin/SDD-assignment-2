@@ -35,14 +35,14 @@ class _MainMenuState extends State<MainMenu> {
                 children: [
                   Expanded(
                     child: SizedBox(
-                      child: Image.asset("assets/images/logo.png"),
+                      child: Image.asset("assets/images/App_logo.png"),
                       width: 200,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 15.0),
                     child: Image.asset(
-                      "assets/images/name.png",
+                      "assets/images/App_name.png",
                       width: MediaQuery.of(context).size.width * 0.85,
                       //fit: BoxFit.contain,
                     ),
@@ -50,7 +50,7 @@ class _MainMenuState extends State<MainMenu> {
                   Padding(
                     padding: const EdgeInsets.only(top: 40, bottom: 10),
                     child: SizedBox(
-                      width: 275,
+                      width: MediaQuery.of(context).size.width*0.75,
                       child: TextButton(
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const GamePage();
@@ -79,7 +79,7 @@ class _MainMenuState extends State<MainMenu> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: SizedBox(
-                      width: 275,
+                      width: MediaQuery.of(context).size.width*0.75,
                       child: TextButton(
                         onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const LoadGame();
@@ -107,7 +107,7 @@ class _MainMenuState extends State<MainMenu> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: SizedBox(
-                      width: 275,
+                      width: MediaQuery.of(context).size.width*0.75,
                       child: TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -139,7 +139,7 @@ class _MainMenuState extends State<MainMenu> {
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: SizedBox(
-                      width: 275,
+                      width: MediaQuery.of(context).size.width*0.75,
                       child: TextButton(
                         onPressed: () => showDialog<String>(
                             context: context,

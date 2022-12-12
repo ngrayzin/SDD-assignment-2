@@ -19,11 +19,12 @@ class GameOver extends StatefulWidget {
   @override
   State<GameOver> createState() => _GameOver();
 
+  static Player player = Player("name", [], 0);
 }
 
 class _GameOver extends State<GameOver> {
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
-  Player player = Player("name", []);
+  //Player player = Player("name", []);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -114,7 +115,7 @@ class _GameOver extends State<GameOver> {
                   ),
                 ),
                 const Padding(padding: EdgeInsets.only(top: 20)),
-                GameBoard(boardSettings: boardSettings, player: player),
+                GameBoard(boardSettings: boardSettings, player: GameOver.player,),
                 const Padding(padding: EdgeInsets.only(top: 60)),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.85,
