@@ -211,7 +211,7 @@ class _GamePageState extends State<GamePage>{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        //randomizer here
+                        //randomizer here hello
                         BuildingCard(),
                         BuildingCard(),
                       ],
