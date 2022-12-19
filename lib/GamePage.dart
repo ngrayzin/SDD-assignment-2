@@ -35,6 +35,7 @@ class _GamePageState extends State<GamePage>{
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   late Timer timer;
   late BoardTile boardTile;
+
   @override
   void initState(){
     super.initState();
@@ -74,7 +75,21 @@ class _GamePageState extends State<GamePage>{
                     iconSize: 40,
                     icon: const Icon(Icons.close),
                     color: colours.AppColor.main,
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () async {
+                      final postKey =
+                          FirebaseDatabase.instance.ref().child('players').push().key;
+                      FirebaseDatabase.instance
+                          .ref('players/$postKey')
+                          .set(GamePage.player.toJson())
+                          .then((_) {
+                        // Data saved successfully!
+                        Navigator.pop(context);
+                      })
+                          .catchError((error) {
+                            print(error);
+                        // The write failed...
+                      });
+                    },
 
                   ),
                   const Spacer(

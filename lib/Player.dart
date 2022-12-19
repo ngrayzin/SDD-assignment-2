@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class Player{
+class Player {
   final String name;
   final List<String> map;
   int turn = 0;
@@ -8,16 +8,33 @@ class Player{
   int coin = 0;
 
   Player(this.name, this.map, this.turn);
+
+  /* Player.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        map = json['map'],
+        turn = json['turn'],
+        point = json['point'],
+        coin = json['coin'];*/
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'map': map.toString(),
+      'turn': turn,
+      'point': point,
+      'coin': coin,
+    };
+  }
+
   void addItemToMap(int i, String n) {
     map[i] = n;
   }
+
   void addTurn() {
     turn++;
   }
 
-  int returnTurn(){
+  int returnTurn() {
     print(turn);
     return turn;
   }
 }
-

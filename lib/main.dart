@@ -13,8 +13,14 @@ import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:flutter/services.dart';
+//import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    name: "sdd-assignment-2",
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
