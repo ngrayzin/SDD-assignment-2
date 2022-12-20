@@ -25,6 +25,7 @@ class BoardTile extends StatefulWidget {
   @override
   State<BoardTile> createState() => _BoardTileState();
 
+
 }
 
 class _BoardTileState extends State<BoardTile>{
@@ -39,7 +40,9 @@ class _BoardTileState extends State<BoardTile>{
         name = data.name;
         exist ? widget.player.addItemToMap(widget.boardIndex,name) : null;
         exist ? widget.player.addTurn()  : null;
+        exist ? widget.player.minusCoin(): null;
         //print(widget.player.map);
+        GamePage.check = true;
       }),
       builder: (context, accept, reject){
         if(exist){
@@ -55,7 +58,7 @@ class _BoardTileState extends State<BoardTile>{
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: Center(child: Text ("${widget.boardIndex}"),),
+              //child: Center(child: Text ("${widget.boardIndex}"),),
             );
           }
         }
@@ -72,4 +75,5 @@ class _BoardTileState extends State<BoardTile>{
     return false;
   }
 }
+
 

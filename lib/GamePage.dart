@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,24 +26,31 @@ class GamePage extends StatefulWidget {
 
   static Player player = Player("name", [], 0);
 
-  void x(Function widgetSetState) {
-    //Your code
-    widgetSetState();
-  }
+  static bool check = false;
+
 }
 
 class _GamePageState extends State<GamePage> {
+
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   late Timer timer;
   late BoardTile boardTile;
+
+  refresh(){
+    setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
     GamePage.player = Player("name", [], 0);
+    randomizer();
     timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
       setState(() {});
     });
+    if(GamePage.check == true){
+      setState(() {});
+    }
   }
 
   @override
@@ -50,10 +58,8 @@ class _GamePageState extends State<GamePage> {
     super.dispose();
     timer.cancel();
   }
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
         title: 'Game Page',
         home: Scaffold(
@@ -84,13 +90,13 @@ class _GamePageState extends State<GamePage> {
                           .ref('players/$postKey')
                           .set(GamePage.player.toJson())
                           .then((_) {
-                        // Data saved successfully!
-                        Navigator.pop(context);
-                      })
+                            // Data saved successfully!
+                            Navigator.pop(context);
+                          })
                           .catchError((error) {
                             print(error);
-                        // The write failed...
-                      });
+                            // The write failed...
+                          });
                     },
                   ),
                   const Spacer(
@@ -235,7 +241,7 @@ class _GamePageState extends State<GamePage> {
                                     ),
                                     SizedBox(width: 10.0),
                                     Text(
-                                      '16',
+                                      '${GamePage.player.coin}',
                                       style: TextStyle(
                                         fontFamily: 'StickNoBills',
                                         color: Colors.white,
@@ -275,4 +281,14 @@ class _GamePageState extends State<GamePage> {
           ),
         ));
   }
+}
+
+void randomizer(){
+  Random random = Random();
+  int randomNumber = random.nextInt(5);
+  if(GamePage.check == true){
+    print(randomNumber);
+    print("asjbaiufbwg");
+  }
+  GamePage.check = false;
 }
