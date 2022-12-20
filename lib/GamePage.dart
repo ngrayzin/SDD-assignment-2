@@ -47,7 +47,7 @@ class _GamePageState extends State<GamePage> {
   @override
   void dispose() {
     super.dispose();
-    timer?.cancel();
+    timer.cancel();
   }
 
   @override
