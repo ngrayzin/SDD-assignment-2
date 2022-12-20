@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
-import 'LeaderBoardCard.dart';
+import 'LeaderboardCard.dart';
 import 'Player.dart';
 
 class LeaderBoardPage extends StatefulWidget {

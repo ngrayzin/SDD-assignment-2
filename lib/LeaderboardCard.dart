@@ -5,21 +5,25 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
+import 'package:sdd_assignment_2/BoardSettings.dart';
+import 'package:sdd_assignment_2/BoardTile.dart';
+import 'package:sdd_assignment_2/Building.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
-import 'Player.dart';
 
-class LeaderBoardCard extends StatelessWidget {
-  // final Player player;
-  // const LeaderBoardPage({Key? key, required this.player}) : super(key: key);
+class LeaderboardCard extends StatefulWidget {
+  const LeaderboardCard({Key? key}) : super(key: key);
 
-  const LeaderBoardCard({super.key});
+  @override
+  State<StatefulWidget> createState() => _LeaderboardCard();
+}
 
+class _LeaderboardCard extends State<LeaderboardCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(10, 2, 10, 5),
-      padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
+      margin: const EdgeInsets.fromLTRB(0, 12, 0, 3),
+      padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
       height: 60,
       decoration: BoxDecoration(
         color: colours.AppColor.buttonBackground,
@@ -41,13 +45,13 @@ class LeaderBoardCard extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         Text(
-          "Player 24908", //Replace with player.name
+          "Player 24908",
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
           textAlign: TextAlign.center,
         ),
         Text(
-          "490", //Replace with player.points
+          "490",
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
           textAlign: TextAlign.center,
