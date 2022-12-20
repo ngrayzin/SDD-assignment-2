@@ -116,7 +116,7 @@ class AboutPage extends StatelessWidget {
                           WidgetSpan(child: SizedBox(height: 35)),
                           TextSpan(
                             text:
-                            'This city-building game begins with 16 coins. In each turn, the player will construct one of two randomly-selected buildings in the 20x20 city. Each construction cost 1 coin. For the first building, the player can build anywhere in the city. For subsequent constructions, the player can only build on squares that are connected to existing buildings. The other building that was not built is discarded.\n',
+                            'This city-building game begins with 16 coins. In each turn, the player will construct one of two randomly-selected buildings in the 10x10 city. Each construction cost 1 coin. For the first building, the player can build anywhere in the city. For subsequent constructions, the player can only build on squares that are connected to existing buildings. The other building that was not built is discarded.\n',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
