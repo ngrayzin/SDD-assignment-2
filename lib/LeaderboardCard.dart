@@ -9,11 +9,11 @@ import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'Player.dart';
 
-class LeaderboardCard extends StatelessWidget {
+class LeaderBoardCard extends StatelessWidget {
   // final Player player;
   // const LeaderBoardPage({Key? key, required this.player}) : super(key: key);
 
-  const LeaderboardCard({super.key});
+  const LeaderBoardCard({super.key});
 
   @override
   Widget build(BuildContext context) {
