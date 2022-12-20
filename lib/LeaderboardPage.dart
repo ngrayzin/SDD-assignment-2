@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
-import 'LeaderBoardCard.dart';
+import 'LeaderboardCard.dart';
 import 'Player.dart';
 
 class LeaderBoardPage extends StatefulWidget {
@@ -85,7 +85,7 @@ class _LeaderBoardPage extends State<LeaderBoardPage> {
               padding: const EdgeInsets.all(8),
               itemCount: 10, //Replace with list size from database read
               itemBuilder: (BuildContext context, int index) {
-                return const LeaderboardCard();
+                return const LeaderBoardCard();
               },
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(),

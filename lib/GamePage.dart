@@ -25,20 +25,21 @@ class GamePage extends StatefulWidget {
 
   static Player player = Player("name", [], 0);
 
-  void x(Function widgetSetState){
+  void x(Function widgetSetState) {
     //Your code
     widgetSetState();
   }
 }
 
-class _GamePageState extends State<GamePage>{
+class _GamePageState extends State<GamePage> {
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   late Timer timer;
   late BoardTile boardTile;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    GamePage.player =Player("name", [], 0);
+    GamePage.player = Player("name", [], 0);
     timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
       setState(() {});
     });
@@ -47,8 +48,9 @@ class _GamePageState extends State<GamePage>{
   @override
   void dispose() {
     super.dispose();
-    timer?.cancel();
+    timer.cancel();
   }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -56,14 +58,15 @@ class _GamePageState extends State<GamePage>{
         title: 'Game Page',
         home: Scaffold(
           backgroundColor: colours.AppColor.background,
-          appBar: AppBar (
+          appBar: AppBar(
             automaticallyImplyLeading: false,
             elevation: 0,
             backgroundColor: colours.AppColor.background,
             centerTitle: true,
             flexibleSpace: Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.12),
-              child : Row(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width * 0.12),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -74,8 +77,21 @@ class _GamePageState extends State<GamePage>{
                     iconSize: 40,
                     icon: const Icon(Icons.close),
                     color: colours.AppColor.main,
-                    onPressed: () => Navigator.pop(context),
-
+                    onPressed: () async {
+                      final postKey =
+                          FirebaseDatabase.instance.ref().child('players').push().key;
+                      FirebaseDatabase.instance
+                          .ref('players/$postKey')
+                          .set(GamePage.player.toJson())
+                          .then((_) {
+                        // Data saved successfully!
+                        Navigator.pop(context);
+                      })
+                          .catchError((error) {
+                            print(error);
+                        // The write failed...
+                      });
+                    },
                   ),
                   const Spacer(
                     flex: 5,
@@ -102,7 +118,8 @@ class _GamePageState extends State<GamePage>{
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const AboutPage(), //goes to about page
+                              builder: (context) =>
+                                  const AboutPage(), //goes to about page
                             ));
                       },
                     ),
@@ -119,30 +136,32 @@ class _GamePageState extends State<GamePage>{
             ),
           ),
           body: SafeArea(
-            child: Container (
+            child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 //alignment: Alignment.center,
-                padding:  EdgeInsets.fromLTRB(
-                    MediaQuery.of(context).size.width*0.07,
-                    MediaQuery.of(context).size.height*0.05,
-                    MediaQuery.of(context).size.width*0.07,
-                    MediaQuery.of(context).size.height*0.05),
+                padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.07,
+                    MediaQuery.of(context).size.height * 0.05,
+                    MediaQuery.of(context).size.width * 0.07,
+                    MediaQuery.of(context).size.height * 0.05),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget> [
+                      children: <Widget>[
                         Card(
                             elevation: 0,
                             shadowColor: null,
                             color: colours.AppColor.buttonBackground,
                             child: SizedBox(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Image.asset(
                                       'assets/images/Point.png',
@@ -164,10 +183,9 @@ class _GamePageState extends State<GamePage>{
                                   ],
                                 ),
                               ),
-                            )
-                        ),
+                            )),
                         const Spacer(
-                          flex:1,
+                          flex: 1,
                         ),
                         Card(
                             elevation: 0,
@@ -175,9 +193,11 @@ class _GamePageState extends State<GamePage>{
                             color: colours.AppColor.buttonBackground,
                             child: SizedBox(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       'TURN  ${GamePage.player.turn}',
@@ -191,10 +211,9 @@ class _GamePageState extends State<GamePage>{
                                   ],
                                 ),
                               ),
-                            )
-                        ),
+                            )),
                         const Spacer(
-                          flex:1,
+                          flex: 1,
                         ),
                         Card(
                             elevation: 0,
@@ -202,9 +221,11 @@ class _GamePageState extends State<GamePage>{
                             color: colours.AppColor.buttonBackground,
                             child: SizedBox(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Image.asset(
                                       'assets/images/Coin.png',
@@ -225,12 +246,14 @@ class _GamePageState extends State<GamePage>{
                                   ],
                                 ),
                               ),
-                            )
-                        ),
+                            )),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(top: 30.0)),
-                    GameBoard(boardSettings: boardSettings, player: GamePage.player,),
+                    GameBoard(
+                      boardSettings: boardSettings,
+                      player: GamePage.player,
+                    ),
 
                     //SizedBox(height: 20.0),
 
@@ -238,24 +261,18 @@ class _GamePageState extends State<GamePage>{
                         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: IntrinsicHeight(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                //randomizer here
-                                BuildingCard(),
-                                Spacer(),
-                                BuildingCard(),
-                              ],
-                            )
-                        )
-
-                    )
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            //randomizer here
+                            BuildingCard(),
+                            Spacer(),
+                            BuildingCard(),
+                          ],
+                        )))
                   ],
-                )
-            ),
+                )),
           ),
-        )
-    );
+        ));
   }
-
 }
