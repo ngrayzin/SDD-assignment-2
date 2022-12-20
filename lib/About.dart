@@ -174,7 +174,7 @@ class AboutPage extends StatelessWidget {
                             "Road",
                             style: TextStyle(
                                 color: Color(0xFFFFFC00),
-                                fontSize: 38,
+                                fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
                           ),
@@ -207,7 +207,7 @@ class AboutPage extends StatelessWidget {
                             "Residential",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 0, 255, 255),
-                                fontSize: 38,
+                                fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
                           ),
@@ -240,7 +240,7 @@ class AboutPage extends StatelessWidget {
                             "Commercial",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 255, 162, 0),
-                                fontSize: 38,
+                                fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
                           ),
@@ -273,7 +273,7 @@ class AboutPage extends StatelessWidget {
                             "Park",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 0, 255, 94),
-                                fontSize: 38,
+                                fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
                           ),
@@ -306,7 +306,7 @@ class AboutPage extends StatelessWidget {
                             "Industry",
                             style: TextStyle(
                                 color: Color.fromARGB(255, 204, 0, 255),
-                                fontSize: 38,
+                                fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
                           ),
