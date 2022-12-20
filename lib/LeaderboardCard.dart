@@ -5,25 +5,21 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
-import 'package:sdd_assignment_2/BoardSettings.dart';
-import 'package:sdd_assignment_2/BoardTile.dart';
-import 'package:sdd_assignment_2/Building.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
+import 'Player.dart';
 
-class LeaderboardCard extends StatefulWidget{
-  const LeaderboardCard({Key? key}) : super (key:key);
+class LeaderBoardCard extends StatelessWidget {
+  // final Player player;
+  // const LeaderBoardPage({Key? key, required this.player}) : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => _LeaderboardCard();
-}
+  const LeaderBoardCard({super.key});
 
-class _LeaderboardCard extends State<LeaderboardCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 12, 0, 3),
-      padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
+      margin: const EdgeInsets.fromLTRB(10, 2, 10, 5),
+      padding: const EdgeInsets.fromLTRB(20.0, 5, 20, 5),
       height: 60,
       decoration: BoxDecoration(
         color: colours.AppColor.buttonBackground,
@@ -33,36 +29,30 @@ class _LeaderboardCard extends State<LeaderboardCard> {
         ),
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "1st",
-              style: TextStyle(
-                color: colours.AppColor.main,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-                fontFamily: 'StickNoBills',
-              ),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              "Player 24908",
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontFamily: 'StickNoBills'),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              "490",
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontFamily: 'StickNoBills'),
-              textAlign: TextAlign.center,
-            ),
-          ]),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(
+          "1st",
+          style: TextStyle(
+            color: colours.AppColor.main,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            fontFamily: 'StickNoBills',
+          ),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          "Player 24908", //Replace with player.name
+          style: TextStyle(
+              fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
+          textAlign: TextAlign.center,
+        ),
+        Text(
+          "490", //Replace with player.points
+          style: TextStyle(
+              fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
+          textAlign: TextAlign.center,
+        ),
+      ]),
     );
   }
 }
