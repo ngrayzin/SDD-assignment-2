@@ -23,8 +23,9 @@ class LeaderBoard extends StatelessWidget {
         bottomOpacity: 0,
         centerTitle: true,
         flexibleSpace: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).size.width*0.1),
-          child : Row(
+          padding:
+              EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.1),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -74,66 +75,64 @@ class LeaderBoard extends StatelessWidget {
       ),
       body: SafeArea(
           child: Container(
-            padding:  EdgeInsets.fromLTRB(
-                MediaQuery.of(context).size.width*0.07,
-                MediaQuery.of(context).size.height*0.025,
-                MediaQuery.of(context).size.width*0.07,
-                MediaQuery.of(context).size.height*0.05),
-            child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        //margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "Position",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                    fontFamily: 'StickNoBills'),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "Name",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                    fontFamily: 'StickNoBills'),
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "Points",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                    fontFamily: 'StickNoBills'),
-                                textAlign: TextAlign.center,
-                              ),
-                            ]),
-                      ), //Container for Leaderboard Title
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                      LeaderboardCard(),
-                    ],
-                  ),
-                )
-            ),
-          )
-      ),
+        padding: EdgeInsets.fromLTRB(
+            MediaQuery.of(context).size.width * 0.07,
+            MediaQuery.of(context).size.height * 0.025,
+            MediaQuery.of(context).size.width * 0.07,
+            MediaQuery.of(context).size.height * 0.05),
+        child: Center(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                //margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        "Position",
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontFamily: 'StickNoBills'),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Name",
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontFamily: 'StickNoBills'),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Points",
+                        style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontFamily: 'StickNoBills'),
+                        textAlign: TextAlign.center,
+                      ),
+                    ]),
+              ), //Container for Leaderboard Title
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+              LeaderBoardCard(),
+            ],
+          ),
+        )),
+      )),
     );
   }
 }
