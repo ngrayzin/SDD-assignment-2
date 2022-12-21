@@ -30,8 +30,10 @@ class GamePage extends StatefulWidget {
 
   static void randomizer(){
     Random random = Random();
-    int randomNumber = random.nextInt(5);
-    print(randomNumber);
+    int randomNumber1 = random.nextInt(5);
+    int randomNumber2 = random.nextInt(5);
+    print(randomNumber1);
+    print(randomNumber2);
   }
 }
 
