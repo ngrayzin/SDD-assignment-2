@@ -41,8 +41,8 @@ class _BoardTileState extends State<BoardTile>{
         exist ? widget.player.addItemToMap(widget.boardIndex,name) : null;
         exist ? widget.player.addTurn()  : null;
         exist ? widget.player.minusCoin(): null;
+        exist ? GamePage.randomizer() : null;
         //print(widget.player.map);
-        GamePage.check = true;
       }),
       builder: (context, accept, reject){
         if(exist){

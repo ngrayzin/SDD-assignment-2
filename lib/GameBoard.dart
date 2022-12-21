@@ -94,22 +94,18 @@ bool mapRules(List<String> map, int i){
   }
   else if(map.asMap().containsKey(i-10) && map[i-10] != "-"){
     print("yes");
-    GamePage.check = true;
     return true;
   }
   if(map.asMap().containsKey(i+10) && map[i+10] != "-"){
     print("yes");
-    GamePage.check = true;
     return true;
   }
   if(map.asMap().containsKey(i-1) && map[i-1] != "-" && i%10 != 0){
     print("yes");
-    GamePage.check = true;
     return true;
   }
   if(map.asMap().containsKey(i+1) && map[i+1] != "-" && (i+1)%10 != 0){
     print("yes");
-    GamePage.check = true;
     return true;
   }
   else{

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,8 +27,12 @@ class GamePage extends StatefulWidget {
 
   static Player player = Player("name", [], 0);
 
-  static bool check = false;
 
+  static void randomizer(){
+    Random random = Random();
+    int randomNumber = random.nextInt(5);
+    print(randomNumber);
+  }
 }
 
 class _GamePageState extends State<GamePage> {
@@ -44,13 +49,10 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     super.initState();
     GamePage.player = Player("name", [], 0);
-    randomizer();
+    GamePage.randomizer();
     timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
       setState(() {});
     });
-    if(GamePage.check == true){
-      setState(() {});
-    }
   }
 
   @override
@@ -283,12 +285,3 @@ class _GamePageState extends State<GamePage> {
   }
 }
 
-void randomizer(){
-  Random random = Random();
-  int randomNumber = random.nextInt(5);
-  if(GamePage.check == true){
-    print(randomNumber);
-    print("asjbaiufbwg");
-  }
-  GamePage.check = false;
-}
