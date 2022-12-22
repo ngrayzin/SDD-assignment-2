@@ -11,14 +11,14 @@ import 'package:sdd_assignment_2/Building.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
-class BuildingCard extends StatefulWidget {
-  const BuildingCard({Key? key}) : super(key: key);
+class BuildingCard extends StatefulWidget{
+  const BuildingCard({Key? key}) : super (key:key);
 
   @override
   State<StatefulWidget> createState() => _BuildingCard();
 
   static returnColour(String building) {
-    switch (building) {
+    switch(building){
       case "Park":
         return colours.AppColor.parkColor;
       case "Commercial":
@@ -36,13 +36,13 @@ class BuildingCard extends StatefulWidget {
 
 class _BuildingCard extends State<BuildingCard> {
   final Map buildingList = {
-    0: "Park",
-    1: "Commercial",
-    2: "Industry",
-    3: "Residential",
-    4: "Road"
+    0 : "Park",
+    1 : "Commercial",
+    2 : "Industry",
+    3 : "Residential",
+    4 : "Road"
   };
-  Building building = Building(1);
+  Building building = Building(0);
   @override
   Widget build(BuildContext context) {
     return Draggable<Building>(
@@ -56,9 +56,10 @@ class _BuildingCard extends State<BuildingCard> {
               child: Padding(
                 padding: const EdgeInsets.all(0),
                 child: Center(
-                  child: Image.asset('assets/images/${building.name}.png'),
+                  child:Image.asset('assets/images/${building.name}.png'),
                 ),
-              )),
+              )
+          ),
         ),
       ),
       childWhenDragging: const SizedBox(width: 20),
@@ -67,16 +68,16 @@ class _BuildingCard extends State<BuildingCard> {
   }
 }
 
-class _Building extends StatelessWidget {
-  const _Building({key, required this.building}) : super(key: key);
+class _Building extends StatelessWidget{
+  const _Building({key, required this.building}) : super(key:key);
 
   final String building;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.37,
-      height: MediaQuery.of(context).size.width * 0.37,
+      width: MediaQuery.of(context).size.width*0.37,
+      height: MediaQuery.of(context).size.width*0.37,
       child: Card(
           elevation: 10,
           shadowColor: Colors.grey,
@@ -105,7 +106,10 @@ class _Building extends StatelessWidget {
                     ),
                   )
                 ],
-              ))),
+              )
+          )
+      ),
     );
   }
+
 }
