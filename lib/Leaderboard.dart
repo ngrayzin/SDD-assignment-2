@@ -6,6 +6,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/LeaderboardCard.dart';
+import 'LeaderboardCard.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
