@@ -16,18 +16,33 @@ class BuildingCard extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() => _BuildingCard();
+
+  static returnColour(String building) {
+    switch(building){
+      case "Park":
+        return colours.AppColor.parkColor;
+      case "Commercial":
+        return colours.AppColor.commercialColor;
+      case "Industry":
+        return colours.AppColor.industryColor;
+      case "Residential":
+        return colours.AppColor.residentialColor;
+      case "Road":
+        return colours.AppColor.roadColor;
+    }
+    return colours.AppColor.main;
+  }
 }
 
 class _BuildingCard extends State<BuildingCard> {
   final Map buildingList = {
     0 : "Park",
-    1 : "Factory",
-    2 : "House",
-    3 : "Motorway",
-    4 : "Shopping center"
+    1 : "Commercial",
+    2 : "Industry",
+    3 : "Residential",
+    4 : "Road"
   };
-  //randomizer here ig???????
-  Building building = Building(name: 'Park');
+  Building building = Building(0);
   @override
   Widget build(BuildContext context) {
     return Draggable<Building>(
@@ -35,27 +50,16 @@ class _BuildingCard extends State<BuildingCard> {
       feedback: SizedBox(
         width: 40,
         height: 40,
-        child: Card(
-            elevation: 0,
-            shadowColor: Colors.grey,
-            color: Colors.amber,
-            child: Padding(
-                padding: EdgeInsets.all(0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      building.name,
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontFamily: 'StickNoBills',
-                        fontWeight: FontWeight.bold,
-                        color: colours.AppColor.background,
-                      ),
-                    )
-                  ],
-                )
-            )
+        child: Center(
+          child: Card(
+              color: BuildingCard.returnColour(building.name),
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: Center(
+                  child:Image.asset('assets/images/${building.name}.png'),
+                ),
+              )
+          ),
         ),
       ),
       childWhenDragging: const SizedBox(width: 20),
@@ -77,13 +81,13 @@ class _Building extends StatelessWidget{
       child: Card(
           elevation: 10,
           shadowColor: Colors.grey,
-          color: colours.AppColor.main,
+          color: BuildingCard.returnColour(building),
           shape: RoundedRectangleBorder(
             //side: BorderSide(color: Colors.white70, width: 1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
