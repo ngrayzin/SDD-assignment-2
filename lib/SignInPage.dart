@@ -1,9 +1,13 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sdd_assignment_2/GamePage.dart';
+import 'package:sdd_assignment_2/MainMenu.dart';
 import 'colours.dart' as colours;
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+  SignInPage({super.key});
+  final TextEditingController myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +60,12 @@ class SignInPage extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              controller: myController,
               textAlign: TextAlign.center,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(15.0),
@@ -82,7 +87,7 @@ class SignInPage extends StatelessWidget {
                     fontFamily: 'StickNoBills',
                     fontWeight: FontWeight.bold,
                   )),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -98,7 +103,27 @@ class SignInPage extends StatelessWidget {
                   width: 300,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {}, //Button that says Confirm
+                    onPressed: () {
+                      GamePage.player.name = myController.text;
+                      final postKey = FirebaseDatabase.instance
+                          .ref()
+                          .child('players')
+                          .push()
+                          .key;
+                      FirebaseDatabase.instance
+                          .ref('players/$postKey')
+                          .set(GamePage.player.toJson())
+                          .then((_) {
+                        // Data saved successfully!
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MainMenu()));
+                      }).catchError((error) {
+                        print(error);
+                        // The write failed...
+                      });
+                    }, //Button that says Confirm
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 54, 232, 154),
                       shape: RoundedRectangleBorder(
