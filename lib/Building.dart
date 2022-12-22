@@ -2,18 +2,18 @@ import 'dart:ffi';
 import 'dart:ui';
 import 'colours.dart' as colours;
 
-class Building{
-  //final int index;
-  final String name;
+class Building {
+  late int index;
+  late String name;
   final Map buildingList = {
-    0 : "Park",
-    1 : "Commercial",
-    2 : "Industry",
-    3 : "Residential",
-    4 : "Road"
+    0: "Park",
+    1: "Commercial",
+    2: "Industry",
+    3: "Residential",
+    4: "Road"
   };
-  Building({required this.name});
-
+  Building(int index) {
+    this.index = index;
+    this.name = buildingList[index];
+  }
 }
-
-
