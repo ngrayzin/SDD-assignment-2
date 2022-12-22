@@ -218,37 +218,37 @@ class _GamePageState extends State<GamePage> {
                                     ],
                                   ),
                                 ),
-                              )),
-                          const Spacer(
-                            flex: 1,
-                          ),
-                          Card(
-                              elevation: 0,
-                              shadowColor: null,
-                              color: colours.AppColor.buttonBackground,
-                              child: SizedBox(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/Coin.png',
-                                        width: 30,
-                                        height: 30,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                      SizedBox(width: 10.0),
-                                      Text(
-                                        '${GamePage.player.coin}',
-                                        style: TextStyle(
-                                          fontFamily: 'StickNoBills',
-                                          color: Colors.white,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                              ),
+                            )),
+                        const Spacer(
+                          flex: 1,
+                        ),
+                        Card(
+                            elevation: 0,
+                            shadowColor: null,
+                            color: colours.AppColor.buttonBackground,
+                            child: SizedBox(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/Coin.png',
+                                      width: 30,
+                                      height: 30,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                    SizedBox(width: 10.0),
+                                    Text(
+                                      '${GamePage.player.coin}',
+                                      style: TextStyle(
+                                        fontFamily: 'StickNoBills',
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                     ],
                                   ),
