@@ -65,7 +65,10 @@ class _GamePageState extends State<GamePage> {
           title: 'Game Page',
           home: Scaffold(
             backgroundColor: colours.AppColor.background,
+            appBar: AppBar(
             centerTitle: true,
+            elevation: 0,
+            backgroundColor: colours.AppColor.background,
             flexibleSpace: Padding(
               padding: EdgeInsets.only(
                   top: MediaQuery.of(context).size.width * 0.12),
@@ -104,40 +107,6 @@ class _GamePageState extends State<GamePage> {
                       // });
                     },
                   ),
-                  const Spacer(
-                    flex: 5,
-                  ),
-                  Text(
-                    'N.A.C',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: 'StickNoBills',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    IconButton(
-                      iconSize: 40,
-                      icon: const Icon(Icons.close),
-                      color: colours.AppColor.main,
-                      onPressed: () async {
-                        final postKey = FirebaseDatabase.instance
-                            .ref()
-                            .child('players')
-                            .push()
-                            .key;
-                        FirebaseDatabase.instance
-                            .ref('players/$postKey')
-                            .set(GamePage.player.toJson())
-                            .then((_) {
-                          // Data saved successfully!
-                          Navigator.pop(context);
-                        }).catchError((error) {
-                          print(error);
-                          // The write failed...
-                        });
-                      },
-                    ),
                     const Spacer(
                       flex: 5,
                     ),
@@ -257,7 +226,7 @@ class _GamePageState extends State<GamePage> {
                                   ),
                                 ),
                               ),
-                            )),
+                            ),
                         const Spacer(
                           flex: 1,
                         ),
@@ -288,7 +257,7 @@ class _GamePageState extends State<GamePage> {
                                         fontSize: 24,
                                         fontWeight: FontWeight.normal,
                                       ),
-                                    ],
+                                    )],
                                   ),
                                 ),
                               )),
