@@ -6,6 +6,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
+import 'BuildingCard.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
@@ -25,26 +26,10 @@ class BuildingTile extends StatefulWidget {
 class _BuildingTile extends State<BuildingTile>{
   @override
   Widget build(BuildContext context){
-    return Card(
-        elevation: 0,
-        shadowColor: Colors.grey,
-        color: Colors.amber,
-        child: Padding(
-            padding: EdgeInsets.all(0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.name,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontFamily: 'StickNoBills',
-                    fontWeight: FontWeight.bold,
-                    color: colours.AppColor.background,
-                  ),
-                )
-              ],
-            )
+    return Container(
+        color: BuildingCard.returnColour(widget.name),
+        child: Center(
+          child:Image.asset('assets/images/${widget.name}.png'),
         )
     );
   }

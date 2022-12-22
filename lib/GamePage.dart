@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,21 +28,31 @@ class GamePage extends StatefulWidget {
 
   static Player player = Player("name", [], 0);
 
-  void x(Function widgetSetState) {
-    //Your code
-    widgetSetState();
+
+  static void randomizer(){
+    Random random = Random();
+    int randomNumber1 = random.nextInt(5);
+    int randomNumber2 = random.nextInt(5);
+    print(randomNumber1);
+    print(randomNumber2);
   }
 }
 
 class _GamePageState extends State<GamePage> {
+
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
   late Timer timer;
   late BoardTile boardTile;
+
+  refresh(){
+    setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
     GamePage.player = Player("name", [], 0);
+    GamePage.randomizer();
     timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
       setState(() {});
     });
@@ -51,10 +63,8 @@ class _GamePageState extends State<GamePage> {
     super.dispose();
     timer.cancel();
   }
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
         title: 'Game Page',
         home: Scaffold(
@@ -85,13 +95,13 @@ class _GamePageState extends State<GamePage> {
                           .ref('players/$postKey')
                           .set(GamePage.player.toJson())
                           .then((_) {
-                        // Data saved successfully!
-                        Navigator.pop(context);
-                      })
+                            // Data saved successfully!
+                            Navigator.pop(context);
+                          })
                           .catchError((error) {
                             print(error);
-                        // The write failed...
-                      });
+                            // The write failed...
+                          });
                     },
                   ),
                   const Spacer(
@@ -236,7 +246,7 @@ class _GamePageState extends State<GamePage> {
                                     ),
                                     SizedBox(width: 10.0),
                                     Text(
-                                      '16',
+                                      '${GamePage.player.coin}',
                                       style: TextStyle(
                                         fontFamily: 'StickNoBills',
                                         color: Colors.white,
@@ -277,3 +287,4 @@ class _GamePageState extends State<GamePage> {
         ));
   }
 }
+
