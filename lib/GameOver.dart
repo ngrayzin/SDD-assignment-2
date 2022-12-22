@@ -61,7 +61,7 @@ class _GameOver extends State<GameOver> {
                     const Spacer(
                       flex: 5,
                     ),
-                    Text(
+                    const Text(
                       'N.A.C',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -75,16 +75,16 @@ class _GameOver extends State<GameOver> {
                       flex: 5,
                     ),
                     Visibility(
-                      child: IconButton(
-                        iconSize: 40,
-                        icon: const Icon(Icons.close),
-                        color: colours.AppColor.main,
-                        onPressed: () => Navigator.pop(context),
-                      ),
                       maintainAnimation: true,
                       maintainSize: true,
                       maintainState: true,
                       visible: false,
+                      child: IconButton(
+                        iconSize: 40,
+                        icon: const Icon(Icons.close),
+                        color: colours.AppColor.main,
+                        onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+                      ),
                     ),
                     const Spacer(
                       flex: 1,
