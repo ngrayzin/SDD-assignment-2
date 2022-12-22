@@ -15,6 +15,7 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'Building.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
@@ -29,40 +30,40 @@ class GamePage extends StatefulWidget {
   static Player player = Player("name", [], 0);
 
 
-  static void randomizer(){
+  /*static void randomizer(){
     Random random = Random();
     int randomNumber1 = random.nextInt(5);
     int randomNumber2 = random.nextInt(5);
     print(randomNumber1);
     print(randomNumber2);
-  }
+  }*/
 }
 
 class _GamePageState extends State<GamePage> {
 
   final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
-  late Timer timer;
+  //late Timer timer;
   late BoardTile boardTile;
-
-  refresh(){
-    setState(() {});
-  }
 
   @override
   void initState() {
     super.initState();
     GamePage.player = Player("name", [], 0);
-    GamePage.randomizer();
-    timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
+    //GamePage.randomizer();
+    for (var i = 0; i < boardSettings.totalTiles(); i++){
+      GamePage.player.map.add("-");
+    }
+    print(GamePage.player.map);
+    /*timer = Timer.periodic(const Duration(milliseconds: 5), (_) {
       setState(() {});
-    });
+    });*/
   }
 
-  @override
+  /*@override
   void dispose() {
     super.dispose();
     timer.cancel();
-  }
+  }*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -261,10 +262,7 @@ class _GamePageState extends State<GamePage> {
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(top: 30.0)),
-                    GameBoard(
-                      boardSettings: boardSettings,
-                      player: GamePage.player,
-                    ),
+                    returnGameBoard(),
 
                     //SizedBox(height: 20.0),
 
@@ -286,5 +284,137 @@ class _GamePageState extends State<GamePage> {
           ),
         ));
   }
+
+  /*Widget randomizer(int num1, int num2){
+    return Draggable<Building>(
+      data: building,
+      feedback: SizedBox(
+        width: 40,
+        height: 40,
+        child: Card(
+            elevation: 0,
+            shadowColor: Colors.grey,
+            color: Colors.amber,
+            child: Padding(
+                padding: EdgeInsets.all(0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      building.name,
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontFamily: 'StickNoBills',
+                        fontWeight: FontWeight.bold,
+                        color: colours.AppColor.background,
+                      ),
+                    )
+                  ],
+                )
+            )
+        ),
+      ),
+      childWhenDragging: const SizedBox(width: 20),
+      child: //_Building(building: building.name),
+    );
+  }*/
+
+  Widget returnGameBoard(){
+    return Expanded(
+      //margin: const EdgeInsets.only(top: 10.0),
+      child:
+      Container(
+        margin: const EdgeInsets.all(0.0),
+        child: SizedBox(
+          height: 400,
+          child: GridView.count(
+            crossAxisCount: boardSettings.cols,
+            crossAxisSpacing: 3,
+            mainAxisSpacing: 3,
+            children: [
+              for (var i = 0; i < boardSettings.totalTiles(); i++)
+                returnBoardTile(i)
+            ],
+
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget returnBoardTile(int index){
+    bool exist = false;
+    String name = "";
+    List<String> building = ['Park','Industry','Residential','Road','Commercial'];
+    return DragTarget<Building>(
+      onAccept: (data) => setState(() {
+        exist = GamePage.player.turn == 0 ? true : rules(GamePage.player.map, index);
+        name = data.name;
+        exist ? GamePage.player.addItemToMap(index,name) : null;
+        exist ? GamePage.player.addTurn()  : null;
+        exist ? GamePage.player.minusCoin(): null;
+        //print(widget.player.map);
+      }),
+      builder: (context, accept, reject){
+        if(exist){
+          return returnBuildingTile(name);
+        }
+        else {
+          if(building.contains(GamePage.player.map[index])){
+            return returnBuildingTile(GamePage.player.map[index]);
+          }
+          else{
+            GamePage.player.addItemToMap(index,"-");
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              //child: Center(child: Text ("${widget.boardIndex}"),),
+            );
+          }
+        }
+      },
+    );
+
+  }
+
+  Widget returnBuildingTile(String name){
+    return Container(
+        color: BuildingCard.returnColour(name),
+        child: Center(
+          child:Image.asset('assets/images/$name.png'),
+        )
+    );
+  }
 }
+
+bool rules(List<String> map, int i){
+  //center index is either +1 -1 +10 -10
+  List<String> building = ['Park','Industry','Residential','Road','Commercial'];
+  if(building.contains(map[i])){
+    print('no');
+    return false;
+  }
+  else if(map.asMap().containsKey(i-10) && map[i-10] != "-"){
+    print("yes");
+    return true;
+  }
+  if(map.asMap().containsKey(i+10) && map[i+10] != "-"){
+    print("yes");
+    return true;
+  }
+  if(map.asMap().containsKey(i-1) && map[i-1] != "-" && i%10 != 0){
+    print("yes");
+    return true;
+  }
+  if(map.asMap().containsKey(i+1) && map[i+1] != "-" && (i+1)%10 != 0){
+    print("yes");
+    return true;
+  }
+  else{
+    print("no");
+    return false;
+  }
+}
+
 
