@@ -19,20 +19,21 @@ import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:localstorage/localstorage.dart';
 
-class GameBoard extends StatefulWidget{
+class GameBoard extends StatefulWidget {
   final BoardSettings boardSettings;
   final Player player;
-  const GameBoard({Key? key, required this.boardSettings, required this.player}) : super (key:key);
+  const GameBoard({Key? key, required this.boardSettings, required this.player})
+      : super(key: key);
 
   @override
   State<GameBoard> createState() => _GameBoardState();
 }
 
-class _GameBoardState extends State<GameBoard>{
+class _GameBoardState extends State<GameBoard> {
   //final List<List<String>> widgets = [];
   //List<String> list2 = [];
   @override
-  void initState(){
+  void initState() {
     super.initState();
     /*for (var row = 0; row < 10; row++){
       list2.clear();
@@ -41,7 +42,7 @@ class _GameBoardState extends State<GameBoard>{
       }
       widget.player.ruleMap.add(list2);
     }*/
-    for (var i = 0; i < widget.boardSettings.totalTiles(); i++){
+    for (var i = 0; i < widget.boardSettings.totalTiles(); i++) {
       widget.player.map.add("-");
     }
     print(widget.player.map);
@@ -51,11 +52,10 @@ class _GameBoardState extends State<GameBoard>{
   bool exist = false;
   String name = "";
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Expanded(
       //margin: const EdgeInsets.only(top: 10.0),
-      child:
-      Container(
+      child: Container(
         margin: const EdgeInsets.all(0.0),
         child: SizedBox(
           height: 400,
@@ -65,19 +65,22 @@ class _GameBoardState extends State<GameBoard>{
             mainAxisSpacing: 3,
             children: [
               for (var i = 0; i < widget.boardSettings.totalTiles(); i++)
-                BoardTile(boardIndex: i, boardSettings: widget.boardSettings, player: widget.player,)
+                BoardTile(
+                  boardIndex: i,
+                  boardSettings: widget.boardSettings,
+                  player: widget.player,
+                )
             ],
-
           ),
         ),
       ),
     );
   }
 
-  int turnCount(){
+  int turnCount() {
     int count = 0;
-    for(int i = 0; i < widget.boardSettings.totalTiles(); i++){
-      if(widget.player.map[i] != "-"){
+    for (int i = 0; i < widget.boardSettings.totalTiles(); i++) {
+      if (widget.player.map[i] != "-") {
         count++;
       }
     }
@@ -85,30 +88,36 @@ class _GameBoardState extends State<GameBoard>{
   }
 }
 
-bool mapRules(List<String> map, int i){
+bool mapRules(List<String> map, int i) {
   //center index is either +1 -1 +10 -10
-  List<String> building = ['Park','Industry','Residential','Road','Commercial'];
-  if(building.contains(map[i])){
+  List<String> building = [
+    'Park',
+    'Industry',
+    'Residential',
+    'Road',
+    'Commercial'
+  ];
+  if (building.contains(map[i])) {
     print('no');
     return false;
-  }
-  else if(map.asMap().containsKey(i-10) && map[i-10] != "-"){
+  } else if (map.asMap().containsKey(i - 10) && map[i - 10] != "-") {
     print("yes");
     return true;
   }
-  if(map.asMap().containsKey(i+10) && map[i+10] != "-"){
+  if (map.asMap().containsKey(i + 10) && map[i + 10] != "-") {
     print("yes");
     return true;
   }
-  if(map.asMap().containsKey(i-1) && map[i-1] != "-" && i%10 != 0){
+  if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" && i % 10 != 0) {
     print("yes");
     return true;
   }
-  if(map.asMap().containsKey(i+1) && map[i+1] != "-" && (i+1)%10 != 0){
+  if (map.asMap().containsKey(i + 1) &&
+      map[i + 1] != "-" &&
+      (i + 1) % 10 != 0) {
     print("yes");
     return true;
-  }
-  else{
+  } else {
     print("no");
     return false;
   }
