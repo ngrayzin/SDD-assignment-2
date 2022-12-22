@@ -14,48 +14,65 @@ import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
-
 class BoardTile extends StatefulWidget {
   final int boardIndex;
   final BoardSettings boardSettings;
   final Player player;
-  const BoardTile({Key? key, required this.boardIndex, required this.boardSettings, required this.player}) : super (key: key);
-
+  const BoardTile(
+      {Key? key,
+      required this.boardIndex,
+      required this.boardSettings,
+      required this.player})
+      : super(key: key);
 
   @override
   State<BoardTile> createState() => _BoardTileState();
-
 }
 
-class _BoardTileState extends State<BoardTile>{
+class _BoardTileState extends State<BoardTile> {
   bool exist = false;
   String name = "";
-  List<String> building = ['Park','Industry','Residential','Road','Commercial'];
+  List<String> building = [
+    'Park',
+    'Industry',
+    'Residential',
+    'Road',
+    'Commercial'
+  ];
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return DragTarget<Building>(
       onAccept: (data) => setState(() {
-        exist = widget.player.turn == 0 ? true : mapRules(widget.player.map, widget.boardIndex);
+        exist = widget.player.turn == 0
+            ? true
+            : mapRules(widget.player.map, widget.boardIndex);
         name = data.name;
-        exist ? widget.player.addItemToMap(widget.boardIndex,name) : null;
-        exist ? widget.player.addTurn()  : null;
+        exist ? widget.player.addItemToMap(widget.boardIndex, name) : null;
+        exist ? widget.player.addTurn() : null;
+        exist ? widget.player.deductCoin() : null;
         //print(widget.player.map);
       }),
-      builder: (context, accept, reject){
-        if(exist){
-          return BuildingTile(boardIndex: widget.boardIndex, boardSettings: widget.boardSettings, name: name);
-        }
-        else {
-          if(building.contains(widget.player.map[widget.boardIndex])){
-            return BuildingTile(boardIndex: widget.boardIndex, boardSettings: widget.boardSettings, name: widget.player.map[widget.boardIndex]);
-          }
-          else{
-            widget.player.addItemToMap(widget.boardIndex,"-");
+      builder: (context, accept, reject) {
+        if (exist) {
+          return BuildingTile(
+              boardIndex: widget.boardIndex,
+              boardSettings: widget.boardSettings,
+              name: name);
+        } else {
+          if (building.contains(widget.player.map[widget.boardIndex])) {
+            return BuildingTile(
+                boardIndex: widget.boardIndex,
+                boardSettings: widget.boardSettings,
+                name: widget.player.map[widget.boardIndex]);
+          } else {
+            widget.player.addItemToMap(widget.boardIndex, "-");
             return Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
-              child: Center(child: Text ("${widget.boardIndex}"),),
+              child: Center(
+                child: Text("${widget.boardIndex}"),
+              ),
             );
           }
         }
@@ -63,13 +80,12 @@ class _BoardTileState extends State<BoardTile>{
     );
   }
 
-  bool changeColour(){
-    for(int i = 0; i < widget.boardSettings.totalTiles(); i++){
-      if(widget.player.map[i] != "-"){
+  bool changeColour() {
+    for (int i = 0; i < widget.boardSettings.totalTiles(); i++) {
+      if (widget.player.map[i] != "-") {
         return true;
       }
     }
     return false;
   }
 }
-

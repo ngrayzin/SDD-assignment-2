@@ -5,7 +5,7 @@ class Player {
   final List<String> map;
   int turn = 0;
   int point = 0;
-  int coin = 0;
+  int coin = 16;
 
   Player(this.name, this.map, this.turn);
 
@@ -31,6 +31,10 @@ class Player {
 
   void addTurn() {
     turn++;
+  }
+
+  void deductCoin() {
+    coin--;
   }
 
   int returnTurn() {

@@ -78,17 +78,19 @@ class _GamePageState extends State<GamePage> {
                     icon: const Icon(Icons.close),
                     color: colours.AppColor.main,
                     onPressed: () async {
-                      final postKey =
-                          FirebaseDatabase.instance.ref().child('players').push().key;
+                      final postKey = FirebaseDatabase.instance
+                          .ref()
+                          .child('players')
+                          .push()
+                          .key;
                       FirebaseDatabase.instance
                           .ref('players/$postKey')
                           .set(GamePage.player.toJson())
                           .then((_) {
                         // Data saved successfully!
                         Navigator.pop(context);
-                      })
-                          .catchError((error) {
-                            print(error);
+                      }).catchError((error) {
+                        print(error);
                         // The write failed...
                       });
                     },
@@ -235,7 +237,7 @@ class _GamePageState extends State<GamePage> {
                                     ),
                                     SizedBox(width: 10.0),
                                     Text(
-                                      '16',
+                                      '${GamePage.player.coin}',
                                       style: TextStyle(
                                         fontFamily: 'StickNoBills',
                                         color: Colors.white,
