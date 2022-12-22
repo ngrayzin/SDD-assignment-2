@@ -33,7 +33,7 @@ class Player {
     turn++;
   }
 
-  void deductCoin() {
+  void minusCoin() {
     coin--;
   }
 
