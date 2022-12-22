@@ -19,7 +19,7 @@ class GameOver extends StatefulWidget {
 
   @override
   State<GameOver> createState() => _GameOver();
-
+  static int value = 1;
 }
 
 class _GameOver extends State<GameOver> {
@@ -29,122 +29,120 @@ class _GameOver extends State<GameOver> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-      title: 'Game Over',
-      home: Scaffold(
-        backgroundColor: colours.AppColor.background,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(40.0),
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            bottomOpacity: 0,
-            centerTitle: true,
-            flexibleSpace: Padding(
-              padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  IconButton(
-                    iconSize: 40,
-                    icon: const Icon(Icons.close),
-                    color: colours.AppColor.main,
-                      onPressed: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => PopUpMessage()),
-                  ),
-                  const Spacer(
-                    flex: 5,
-                  ),
-                  Text(
-                    'N.A.C',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: 'StickNoBills',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+        title: 'Game Over',
+        home: Scaffold(
+          backgroundColor: colours.AppColor.background,
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(40.0),
+            child: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              bottomOpacity: 0,
+              centerTitle: true,
+              flexibleSpace: Padding(
+                padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Spacer(
+                      flex: 1,
                     ),
-                  ),
-                  const Spacer(
-                    flex: 5,
-                  ),
-                  Visibility(
-                    child: IconButton(
+                    IconButton(
                       iconSize: 40,
                       icon: const Icon(Icons.close),
                       color: colours.AppColor.main,
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => PopUpMessage(
+                                value: GameOver.value,
+                              )),
                     ),
-                    maintainAnimation: true,
-                    maintainSize: true,
-                    maintainState: true,
-                    visible: false,
-                  ),
-                  const Spacer(
-                    flex: 1,
-                  ),
-                ],
+                    const Spacer(
+                      flex: 5,
+                    ),
+                    Text(
+                      'N.A.C',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontFamily: 'StickNoBills',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Spacer(
+                      flex: 5,
+                    ),
+                    Visibility(
+                      child: IconButton(
+                        iconSize: 40,
+                        icon: const Icon(Icons.close),
+                        color: colours.AppColor.main,
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      maintainAnimation: true,
+                      maintainSize: true,
+                      maintainState: true,
+                      visible: false,
+                    ),
+                    const Spacer(
+                      flex: 1,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        body: SafeArea(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            padding:  EdgeInsets.fromLTRB(20,20,20,20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(0),
-                  child: Text(
-                    'THE GAME HAS ENDED!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'StickNoBills',
-                      color: colours.AppColor.main,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 20)),
-                GameBoard(boardSettings: boardSettings, player: player),
-                const Padding(padding: EdgeInsets.only(top: 60)),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.85,
-                  height: 75,
-                  child: TextButton(
-                    onPressed: (){},
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+          body: SafeArea(
+            child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(0),
+                      child: Text(
+                        'THE GAME HAS ENDED!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'StickNoBills',
+                          color: colours.AppColor.main,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      backgroundColor: colours.AppColor.main,
                     ),
-                    child: Text(
-                      "SAVE GAME",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'StickNoBills',
-                        color: colours.AppColor.background,
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  )
-                ),
-              ],
-            )
+                    const Padding(padding: EdgeInsets.only(top: 20)),
+                    GameBoard(boardSettings: boardSettings, player: player),
+                    const Padding(padding: EdgeInsets.only(top: 60)),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        height: 75,
+                        child: TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              backgroundColor: colours.AppColor.main,
+                            ),
+                            child: Text(
+                              "SAVE GAME",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'StickNoBills',
+                                color: colours.AppColor.background,
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ))),
+                  ],
+                )),
           ),
-        ),
-      )
-    );
+        ));
   }
 }

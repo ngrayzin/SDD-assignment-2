@@ -15,6 +15,7 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
@@ -22,6 +23,7 @@ import 'Firebase_options.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
+  static int value = 1;
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -63,20 +65,56 @@ class _GamePageState extends State<GamePage> {
           title: 'Game Page',
           home: Scaffold(
             backgroundColor: colours.AppColor.background,
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              backgroundColor: colours.AppColor.background,
-              centerTitle: true,
-              flexibleSpace: Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Spacer(
-                      flex: 1,
+            centerTitle: true,
+            flexibleSpace: Padding(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.width * 0.12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  IconButton(
+                    iconSize: 40,
+                    icon: const Icon(Icons.close),
+                    color: colours.AppColor.main,
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PopUpMessage(
+                                    value: GamePage.value,
+                                  )));
+                      // final postKey = FirebaseDatabase.instance
+                      //     .ref()
+                      //     .child('players')
+                      //     .push()
+                      //     .key;
+                      // FirebaseDatabase.instance
+                      //     .ref('players/$postKey')
+                      //     .set(GamePage.player.toJson())
+                      //     .then((_) {
+                      //   // Data saved successfully!
+                      //   Navigator.pop(context);
+                      // }).catchError((error) {
+                      //   print(error);
+                      //   // The write failed...
+                      // });
+                    },
+                  ),
+                  const Spacer(
+                    flex: 5,
+                  ),
+                  Text(
+                    'N.A.C',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'StickNoBills',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                     IconButton(
                       iconSize: 40,

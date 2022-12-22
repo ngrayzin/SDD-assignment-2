@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Player {
-  final String name;
+  String name;
   final List<String> map;
   int turn = 0;
   int point = 0;
