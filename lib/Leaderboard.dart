@@ -178,7 +178,7 @@ class LeaderBoard extends StatelessWidget {
       positionText = position.toString() + "st";
     } else if (position == 2) {
       positionText = position.toString() + "nd";
-    } else if (position == 2) {
+    } else if (position == 3) {
       positionText = position.toString() + "rd";
     } else {
       positionText = position.toString() + "th";
