@@ -17,7 +17,6 @@ import 'BuildingTile.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
-import 'package:localstorage/localstorage.dart';
 
 class GameBoard extends StatefulWidget {
   final BoardSettings boardSettings;
