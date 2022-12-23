@@ -38,10 +38,12 @@ class GamePage extends StatefulWidget {
 
   static int num1 = 0;
   static int num2 = 0;
+  static int row = 10;
+  static int col = 10;
 }
 
 class _GamePageState extends State<GamePage> {
-  final BoardSettings boardSettings = BoardSettings(cols: 10, rows: 10);
+  final BoardSettings boardSettings = BoardSettings(cols: GamePage.col, rows: GamePage.row);
   //late Timer timer;
   late BoardTile boardTile;
 
@@ -111,7 +113,7 @@ class _GamePageState extends State<GamePage> {
                     const Spacer(
                       flex: 5,
                     ),
-                    Text(
+                    const Text(
                       'N.A.C',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -186,9 +188,9 @@ class _GamePageState extends State<GamePage> {
                                       ),
                                       SizedBox(width: 10.0),
                                       Text(
-                                        '190',
+                                        '${GamePage.player.point}',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: 'StickNoBills',
                                           color: Colors.white,
                                           fontSize: 24,
@@ -249,10 +251,10 @@ class _GamePageState extends State<GamePage> {
                                         height: 30,
                                         fit: BoxFit.fitWidth,
                                       ),
-                                      SizedBox(width: 10.0),
+                                      const SizedBox(width: 10.0),
                                       Text(
                                         '${GamePage.player.coin}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontFamily: 'StickNoBills',
                                           color: Colors.white,
                                           fontSize: 24,
@@ -265,13 +267,13 @@ class _GamePageState extends State<GamePage> {
                               )),
                         ],
                       ),
-                      Padding(padding: EdgeInsets.only(top: 30.0)),
+                      const Padding(padding: EdgeInsets.only(top: 30.0)),
                       returnGameBoard(),
 
                       //SizedBox(height: 20.0),
 
                       Padding(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: IntrinsicHeight(
                               child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -280,7 +282,7 @@ class _GamePageState extends State<GamePage> {
                               //randomizer here
                               randomizer(GamePage.num1),
                               // BuildingCard(),
-                              Spacer(),
+                              const Spacer(),
                               // BuildingCard(),
                               randomizer(GamePage.num2),
                             ],
@@ -387,6 +389,7 @@ class _GamePageState extends State<GamePage> {
         exist ? GamePage.player.addItemToMap(index, name) : null;
         exist ? GamePage.player.addTurn() : null;
         exist ? GamePage.player.minusCoin() : null;
+        exist ? GamePage.player.calculatePoints(GamePage.row) : null;
         if (exist) {
           GamePage.num1 = GamePage.randomNum();
           GamePage.num2 = GamePage.randomNum();
@@ -436,27 +439,16 @@ bool rules(List<String> map, int i) {
   ];
   //center index is either +1 -1 +10 -10
   if (building.contains(map[i])) {
-    print('no');
     return false;
-  } else if (map.asMap().containsKey(i - 10) && map[i - 10] != "-") {
-    print("yes");
+  } else if (map.asMap().containsKey(i - GamePage.row) && map[i - GamePage.row] != "-") { //check if there is smt below
     return true;
-  }
-  if (map.asMap().containsKey(i + 10) && map[i + 10] != "-") {
-    print("yes");
+  } else if (map.asMap().containsKey(i + GamePage.row) && map[i + GamePage.row] != "-") { //check if there is smt on top
     return true;
-  }
-  if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" && i % 10 != 0) {
-    print("yes");
+  } else if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" && i % GamePage.row != 0) { //check if there is smt on the left
     return true;
-  }
-  if (map.asMap().containsKey(i + 1) &&
-      map[i + 1] != "-" &&
-      (i + 1) % 10 != 0) {
-    print("yes");
+  } else if (map.asMap().containsKey(i + 1) && map[i + 1] != "-" &&(i + 1) % GamePage.row != 0) { //check if there is smt on the right
     return true;
   } else {
-    print("no");
     return false;
   }
 }
