@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdd_assignment_2/About.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/LoadGame.dart';
@@ -12,6 +14,11 @@ import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import "Leaderboard.dart";
+
+final GoogleSignIn _googleSignIn = GoogleSignIn(
+  signInOption: SignInOption.games,
+  scopes: ['email'],
+);
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -22,6 +29,20 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  GoogleSignInAccount? _currentUser;
+  @override
+  void initState() {
+    super.initState();
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
+      setState(() {
+        _currentUser = account;
+      });
+      if (_currentUser != null) {
+        await FirebaseAuth.instance.signInAnonymously();
+      }
+    });
+    _googleSignIn.signInSilently();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
