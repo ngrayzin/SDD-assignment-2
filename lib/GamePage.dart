@@ -57,6 +57,7 @@ class _GamePageState extends State<GamePage> {
     GamePage.num1 = GamePage.randomNum();
     GamePage.num2 = GamePage.randomNum();
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -66,47 +67,47 @@ class _GamePageState extends State<GamePage> {
           home: Scaffold(
             backgroundColor: colours.AppColor.background,
             appBar: AppBar(
-            centerTitle: true,
-            elevation: 0,
-            backgroundColor: colours.AppColor.background,
-            flexibleSpace: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width * 0.12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  IconButton(
-                    iconSize: 40,
-                    icon: const Icon(Icons.close),
-                    color: colours.AppColor.main,
-                    onPressed: () async {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PopUpMessage(
-                                    value: GamePage.value,
-                                  )));
-                      // final postKey = FirebaseDatabase.instance
-                      //     .ref()
-                      //     .child('players')
-                      //     .push()
-                      //     .key;
-                      // FirebaseDatabase.instance
-                      //     .ref('players/$postKey')
-                      //     .set(GamePage.player.toJson())
-                      //     .then((_) {
-                      //   // Data saved successfully!
-                      //   Navigator.pop(context);
-                      // }).catchError((error) {
-                      //   print(error);
-                      //   // The write failed...
-                      // });
-                    },
-                  ),
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: colours.AppColor.background,
+              flexibleSpace: Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width * 0.12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Spacer(
+                      flex: 1,
+                    ),
+                    IconButton(
+                      iconSize: 40,
+                      icon: const Icon(Icons.close),
+                      color: colours.AppColor.main,
+                      onPressed: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PopUpMessage(
+                                      value: GamePage.value,
+                                    )));
+                        // final postKey = FirebaseDatabase.instance
+                        //     .ref()
+                        //     .child('players')
+                        //     .push()
+                        //     .key;
+                        // FirebaseDatabase.instance
+                        //     .ref('players/$postKey')
+                        //     .set(GamePage.player.toJson())
+                        //     .then((_) {
+                        //   // Data saved successfully!
+                        //   Navigator.pop(context);
+                        // }).catchError((error) {
+                        //   print(error);
+                        //   // The write failed...
+                        // });
+                      },
+                    ),
                     const Spacer(
                       flex: 5,
                     ),
@@ -202,35 +203,6 @@ class _GamePageState extends State<GamePage> {
                             flex: 1,
                           ),
                           Card(
-                              elevation: 0,
-                              shadowColor: null,
-                              color: colours.AppColor.buttonBackground,
-                              child: SizedBox(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        'TURN  ${GamePage.player.turn}',
-                                        style: const TextStyle(
-                                          fontFamily: 'StickNoBills',
-                                          color: Colors.white,
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                        const Spacer(
-                          flex: 1,
-                        ),
-                        Card(
                             elevation: 0,
                             shadowColor: null,
                             color: colours.AppColor.buttonBackground,
@@ -242,22 +214,52 @@ class _GamePageState extends State<GamePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Image.asset(
-                                      'assets/images/Coin.png',
-                                      width: 30,
-                                      height: 30,
-                                      fit: BoxFit.fitWidth,
-                                    ),
-                                    SizedBox(width: 10.0),
                                     Text(
-                                      '${GamePage.player.coin}',
-                                      style: TextStyle(
+                                      'TURN  ${GamePage.player.turn}',
+                                      style: const TextStyle(
                                         fontFamily: 'StickNoBills',
                                         color: Colors.white,
                                         fontSize: 24,
                                         fontWeight: FontWeight.normal,
                                       ),
-                                    )],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(
+                            flex: 1,
+                          ),
+                          Card(
+                              elevation: 0,
+                              shadowColor: null,
+                              color: colours.AppColor.buttonBackground,
+                              child: SizedBox(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/Coin.png',
+                                        width: 30,
+                                        height: 30,
+                                        fit: BoxFit.fitWidth,
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                        '${GamePage.player.coin}',
+                                        style: TextStyle(
+                                          fontFamily: 'StickNoBills',
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               )),
@@ -303,16 +305,15 @@ class _GamePageState extends State<GamePage> {
               child: Padding(
                 padding: const EdgeInsets.all(0),
                 child: Center(
-                  child:Image.asset('assets/images/${building.name}.png'),
+                  child: Image.asset('assets/images/${building.name}.png'),
                 ),
-              )
-          ),
+              )),
         ),
       ),
       childWhenDragging: const SizedBox(width: 20),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.37,
-        height: MediaQuery.of(context).size.width*0.37,
+        width: MediaQuery.of(context).size.width * 0.37,
+        height: MediaQuery.of(context).size.width * 0.37,
         child: Card(
             elevation: 10,
             shadowColor: Colors.grey,
@@ -341,9 +342,7 @@ class _GamePageState extends State<GamePage> {
                       ),
                     )
                   ],
-                )
-            )
-        ),
+                ))),
       ),
     );
   }
@@ -388,9 +387,13 @@ class _GamePageState extends State<GamePage> {
         exist ? GamePage.player.addItemToMap(index, name) : null;
         exist ? GamePage.player.addTurn() : null;
         exist ? GamePage.player.minusCoin() : null;
-        if(exist){
+        if (exist) {
           GamePage.num1 = GamePage.randomNum();
           GamePage.num2 = GamePage.randomNum();
+          // Loop to check if it is the same value, change if it's same value
+          while (GamePage.num1 == GamePage.num2) {
+            GamePage.num1 = GamePage.randomNum();
+          }
         }
         //print(GamePage.player.map);
       }),
@@ -423,7 +426,7 @@ class _GamePageState extends State<GamePage> {
   }
 }
 
-bool rules(List<String> map,int i) {
+bool rules(List<String> map, int i) {
   List<String> building = [
     'Park',
     'Industry',
