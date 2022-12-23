@@ -15,9 +15,25 @@ class LeaderBoardPage extends StatefulWidget {
 
   @override
   State<LeaderBoardPage> createState() => _LeaderBoardPage();
+
+  static readData() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.child('players').get();
+    if (snapshot.exists) {
+      print(snapshot.value);
+    } else {
+      print('No data available.');
+    }
+  }
 }
 
 class _LeaderBoardPage extends State<LeaderBoardPage> {
+  @override
+  void initState() {
+    super.initState();
+    LeaderBoardPage.readData();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -80,7 +96,8 @@ class _LeaderBoardPage extends State<LeaderBoardPage> {
                   ),
                 ]),
           ),
-          Expanded(
+          SizedBox(
+            height: 200,
             child: ListView.separated(
               padding: const EdgeInsets.all(8),
               itemCount: 10, //Replace with list size from database read
