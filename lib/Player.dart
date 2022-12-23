@@ -79,10 +79,19 @@ class Player {
         print("roadList");
         print(roadList);
         for (int roadCounter = 0; roadCounter < roadList.length; roadCounter++){
-          if (roadList[roadCounter] == "Road"){
-            roadCount +=1 ;
+          if(roadCounter < roadList.length-1){
+            if (roadList[roadCounter] == "Road"){
+              roadCount +=1 ;
+            }
+            else {
+              connected.add(roadCount);
+              roadCount = 0;
+            }
           }
-          else {
+          else{
+            if (roadList[roadCounter] == "Road"){
+              roadCount +=1 ;
+            }
             connected.add(roadCount);
             roadCount = 0;
           }
@@ -105,7 +114,7 @@ class Player {
           point++;
         } else if (map.asMap().containsKey(i + row) && map[i + row] == "Park") { //check if there is smt on top
           point++;
-        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Park" && i % row == 0) { //check if there is smt on the left
+        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Park" && i % row != 0) { //check if there is smt on the left
           point++;
         } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Park" &&(i + 1) % row != 0) { //check if there is smt on the right
           point++;
@@ -118,7 +127,7 @@ class Player {
           point++;
         } else if (map.asMap().containsKey(i + row) && map[i + row] == "Commercial") { //check if there is smt on top
           point++;
-        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Commercial" && i % row == 0) { //check if there is smt on the left
+        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Commercial" && i % row != 0) { //check if there is smt on the left
           point++;
         } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Commercial" &&(i + 1) % row != 0) { //check if there is smt on the right
           point++;
@@ -126,11 +135,14 @@ class Player {
         //coin
         if (map.asMap().containsKey(i - row) && map[i - row] == "Residential") { //check if there is smt below
           coin++;
-        } else if (map.asMap().containsKey(i + row) && map[i + row] == "Residential") { //check if there is smt on top
+        }
+        if (map.asMap().containsKey(i + row) && map[i + row] == "Residential") { //check if there is smt on top
           coin++;
-        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Residential" && i % row == 0) { //check if there is smt on the left
+        }
+        if (map.asMap().containsKey(i - 1) && map[i - 1] == "Residential" && i % row != 0) { //check if there is smt on the left
           coin++;
-        } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Residential" &&(i + 1) % row != 0) { //check if there is smt on the right
+        }
+        if (map.asMap().containsKey(i + 1) && map[i + 1] == "Residential" &&(i + 1) % row != 0) { //check if there is smt on the right
           coin++;
         }
       }
@@ -141,11 +153,14 @@ class Player {
         //coin
         if (map.asMap().containsKey(i - row) && map[i - row] == "Residential") { //check if there is smt below
           coin++;
-        } else if (map.asMap().containsKey(i + row) && map[i + row] == "Residential") { //check if there is smt on top
+        }
+        if (map.asMap().containsKey(i + row) && map[i + row] == "Residential") { //check if there is smt on top
           coin++;
-        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Residential" && i % row == 0) { //check if there is smt on the left
+        }
+        if (map.asMap().containsKey(i - 1) && map[i - 1] == "Residential" && i % row != 0) { //check if there is smt on the left
           coin++;
-        } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Residential" &&(i + 1) % row != 0) { //check if there is smt on the right
+        }
+        if (map.asMap().containsKey(i + 1) && map[i + 1] == "Residential" &&(i + 1) % row != 0) { //check if there is smt on the right
           coin++;
         }
       }
@@ -161,7 +176,7 @@ class Player {
         } else if (map.asMap().containsKey(i + row) && map[i + row] == "Industry") { //check if there is smt on top
           point++;
           adjacent = true;
-        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Industry" && i % row == 0) { //check if there is smt on the left
+        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Industry" && i % row != 0) { //check if there is smt on the left
           point++;
           adjacent = true;
         } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Industry" &&(i + 1) % row != 0) { //check if there is smt on the right
@@ -173,124 +188,45 @@ class Player {
           //residential
           if (map.asMap().containsKey(i - row) && map[i - row] == "Residential") { //check if there is smt below
             point++;
-          } else if (map.asMap().containsKey(i + row) && map[i + row] == "Residential") { //check if there is smt on top
+          }
+          if (map.asMap().containsKey(i + row) && map[i + row] == "Residential") { //check if there is smt on top
             point++;
-          } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Residential" && i % row == 0) { //check if there is smt on the left
+          }
+          if (map.asMap().containsKey(i - 1) && map[i - 1] == "Residential" && i % row != 0) { //check if there is smt on the left
             point++;
-          } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Residential" &&(i + 1) % row != 0) { //check if there is smt on the right
+          }
+          if (map.asMap().containsKey(i + 1) && map[i + 1] == "Residential" &&(i + 1) % row != 0) { //check if there is smt on the right
             point++;
           }
           //commercial
           if (map.asMap().containsKey(i - row) && map[i - row] == "Commercial") { //check if there is smt below
             point++;
-          } else if (map.asMap().containsKey(i + row) && map[i + row] == "Commercial") { //check if there is smt on top
+          }
+          if (map.asMap().containsKey(i + row) && map[i + row] == "Commercial") { //check if there is smt on top
             point++;
-          } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Commercial" && i % row == 0) { //check if there is smt on the left
+          }
+          if (map.asMap().containsKey(i - 1) && map[i - 1] == "Commercial" && i % row != 0) { //check if there is smt on the left
             point++;
-          } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Commercial" &&(i + 1) % row != 0) { //check if there is smt on the right
+          }
+          if (map.asMap().containsKey(i + 1) && map[i + 1] == "Commercial" &&(i + 1) % row != 0) { //check if there is smt on the right
             point++;
           }
           //park
           if (map.asMap().containsKey(i - row) && map[i - row] == "Park") { //check if there is smt below
             point+=2;
-          } else if (map.asMap().containsKey(i + row) && map[i + row] == "Park") { //check if there is smt on top
+          }
+          if (map.asMap().containsKey(i + row) && map[i + row] == "Park") { //check if there is smt on top
             point+=2;
-          } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Park" && i % row == 0) { //check if there is smt on the left
+          }
+          if (map.asMap().containsKey(i - 1) && map[i - 1] == "Park" && i % row != 0) { //check if there is smt on the left
             point+=2;
-          } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Park" &&(i + 1) % row != 0) { //check if there is smt on the right
+          }
+          if (map.asMap().containsKey(i + 1) && map[i + 1] == "Park" &&(i + 1) % row != 0) { //check if there is smt on the right
             point+=2;
           }
         }
       }
 
     }
-
-
-
-
-
-
-
-
-
-    /*
-    var gridRow = List<String>.filled(row, "-");
-    var gridList = List.generate(col, (i) => gridRow, growable: false);
-    List<String> mapCopy = map;
-
-    for (int r = 0; r < row; r++){
-      for (int c = 0; c < col; c++){
-        gridList[r][c] = mapCopy[0];
-        mapCopy.removeAt(0);
-        print (gridList);
-      }
-    }
-
-
-
-    for (int r = 0; r < row; r++){
-      for (int c = 0; c < col; c++){
-
-        print (gridList[r][c]);
-
-        //Park
-        if (gridList[r][c] == "Park"){
-          if (r != row && c != col && r != 0 && c != 0){ //if the park lies in the middle of the grid
-            if (gridList[r-1][c] == "Park" || gridList[r+1][c] == "Park" || gridList[r][c-1] == "Park" || gridList[r][c+1] == "Park"){
-              point++;
-            }
-          }
-          else if (r == 0 && c != 0 && c != col){ // if the park lies in the top row
-            if (gridList[r+1][c] == "Park" || gridList[r][c-1] == "Park" || gridList[r][c+1] == "Park"){
-              point++;
-            }
-          }
-          else if (r == row && c != 0 && c != col){ // if the park lies in the bottom row
-            if (gridList[r-1][c] == "Park" || gridList[r][c-1] == "Park" || gridList[r][c+1] == "Park"){
-              point++;
-            }
-          }
-          else if (c == 0 && r != 0 && r != row){ // if the park lies in the first col
-            if (gridList[r-1][c] == "Park" || gridList[r+1][c] == "Park" || gridList[r][c+1] == "Park"){
-              point++;
-            }
-          }
-          else if (c == col && r != 0 && r != row){ // if the park lies in the last col
-            if (gridList[r-1][c] == "Park" || gridList[r+1][c] == "Park" || gridList[r][c-1] == "Park"){
-              point++;
-            }
-          }
-          else if (r == 0 && c == 0){ // if park lies in the top left corner of the grid
-            if ( (gridList[r][c+1] == "Park") || (gridList[r+1][c] == "Park")){
-              point++;
-            }
-          }
-          else if (r == 0 && c == col){ // if the park lies in the top right corner of the grid
-            if ( (gridList[r][c-1] == "Park") || (gridList[r+1][c] == "Park") ){
-              point++;
-            }
-          }
-          else if (r == row && c == 0){ // if the park lies in the bottom left corner of the grid
-            if ( (gridList[r-1][c] == "Park") && (gridList[r][c-1] == "Park") ){
-              point++;
-            }
-          }
-          else if (r == row && c == col){ // if the park lies in the bottom right corner of the grid
-            if ( (gridList[r-1][c] == "Park") && (gridList[r][c-1] == "Park") ){
-              point++;
-            }
-          }
-        }
-        //End of Park
-
-
-
-      }
-    }
-    */
-
-
-
-
   }
 }
