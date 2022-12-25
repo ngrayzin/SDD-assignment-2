@@ -125,11 +125,14 @@ class Player {
         //point
         if (map.asMap().containsKey(i - row) && map[i - row] == "Commercial") { //check if there is smt below
           point++;
-        } else if (map.asMap().containsKey(i + row) && map[i + row] == "Commercial") { //check if there is smt on top
+        }
+        if (map.asMap().containsKey(i + row) && map[i + row] == "Commercial") { //check if there is smt on top
           point++;
-        } else if (map.asMap().containsKey(i - 1) && map[i - 1] == "Commercial" && i % row != 0) { //check if there is smt on the left
+        }
+        if (map.asMap().containsKey(i - 1) && map[i - 1] == "Commercial" && i % row != 0) { //check if there is smt on the left
           point++;
-        } else if (map.asMap().containsKey(i + 1) && map[i + 1] == "Commercial" &&(i + 1) % row != 0) { //check if there is smt on the right
+        }
+        if (map.asMap().containsKey(i + 1) && map[i + 1] == "Commercial" &&(i + 1) % row != 0) { //check if there is smt on the right
           point++;
         }
         //coin
