@@ -24,10 +24,9 @@ import 'Firebase_options.dart';
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
   static int value = 1;
-
+  static bool loaded = false;
   @override
   State<GamePage> createState() => _GamePageState();
-
   static Player player = Player("name", [], 0);
 
   static int randomNum() {
@@ -43,17 +42,20 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  final BoardSettings boardSettings = BoardSettings(cols: GamePage.col, rows: GamePage.row);
+  final BoardSettings boardSettings =
+      BoardSettings(cols: GamePage.col, rows: GamePage.row);
   //late Timer timer;
   late BoardTile boardTile;
 
   @override
   void initState() {
     super.initState();
-    GamePage.player = Player("name", [], 0);
-    //GamePage.randomizer();
-    for (var i = 0; i < boardSettings.totalTiles(); i++) {
-      GamePage.player.map.add("-");
+    if(GamePage.loaded == false){
+      GamePage.player = Player("name", [], 0);
+      //GamePage.randomizer();
+      for (var i = 0; i < boardSettings.totalTiles(); i++) {
+        GamePage.player.map.add("-");
+      }
     }
     print(GamePage.player.map);
     GamePage.num1 = GamePage.randomNum();
@@ -93,21 +95,6 @@ class _GamePageState extends State<GamePage> {
                                 builder: (context) => PopUpMessage(
                                       value: GamePage.value,
                                     )));
-                        // final postKey = FirebaseDatabase.instance
-                        //     .ref()
-                        //     .child('players')
-                        //     .push()
-                        //     .key;
-                        // FirebaseDatabase.instance
-                        //     .ref('players/$postKey')
-                        //     .set(GamePage.player.toJson())
-                        //     .then((_) {
-                        //   // Data saved successfully!
-                        //   Navigator.pop(context);
-                        // }).catchError((error) {
-                        //   print(error);
-                        //   // The write failed...
-                        // });
                       },
                     ),
                     const Spacer(
@@ -440,13 +427,23 @@ bool rules(List<String> map, int i) {
   //center index is either +1 -1 +10 -10
   if (building.contains(map[i])) {
     return false;
-  } else if (map.asMap().containsKey(i - GamePage.row) && map[i - GamePage.row] != "-") { //check if there is smt below
+  } else if (map.asMap().containsKey(i - GamePage.row) &&
+      map[i - GamePage.row] != "-") {
+    //check if there is smt below
     return true;
-  } else if (map.asMap().containsKey(i + GamePage.row) && map[i + GamePage.row] != "-") { //check if there is smt on top
+  } else if (map.asMap().containsKey(i + GamePage.row) &&
+      map[i + GamePage.row] != "-") {
+    //check if there is smt on top
     return true;
-  } else if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" && i % GamePage.row != 0) { //check if there is smt on the left
+  } else if (map.asMap().containsKey(i - 1) &&
+      map[i - 1] != "-" &&
+      i % GamePage.row != 0) {
+    //check if there is smt on the left
     return true;
-  } else if (map.asMap().containsKey(i + 1) && map[i + 1] != "-" &&(i + 1) % GamePage.row != 0) { //check if there is smt on the right
+  } else if (map.asMap().containsKey(i + 1) &&
+      map[i + 1] != "-" &&
+      (i + 1) % GamePage.row != 0) {
+    //check if there is smt on the right
     return true;
   } else {
     return false;

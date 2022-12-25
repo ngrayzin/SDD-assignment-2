@@ -169,7 +169,7 @@ class LeaderBoard extends StatelessWidget {
     } else {
       print('No data available.');
     }
-    return Text("FUCK");
+    return Text("FUCK"); //Ayo???? Who did this
   }
 
   returnLeaderboardCard(Player player, int position) {
