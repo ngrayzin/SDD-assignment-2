@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdd_assignment_2/Player.dart';
+import 'Login.dart';
 import 'MainMenu.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      home: const MainMenu(),
+      home: const Login(),
     );
   }
 }

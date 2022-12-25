@@ -9,4 +9,6 @@ class AppColor {
   static Color residentialColor = const Color(0xFF00FFFF);
   static Color commercialColor = const Color(0xFFFFC000);
   static Color industryColor = const Color(0xFFFF00FF);
+  static Color error = const Color(0xFFA50203);
+
 }
