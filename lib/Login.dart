@@ -20,6 +20,7 @@ class _LoginState extends State<Login>{
   final formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context){
@@ -56,7 +57,7 @@ class _LoginState extends State<Login>{
                     key: formKey,
                     child: Column(
                       children: <Widget>[
-                        returnUsername(),
+                        returnEmail(),
                         returnPassword(),
                         submit(),
                         const SizedBox(height: 10),
@@ -75,7 +76,7 @@ class _LoginState extends State<Login>{
     );
   }
 
-  Widget returnUsername(){
+  Widget returnEmail(){
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,6 +97,7 @@ class _LoginState extends State<Login>{
         Container(
           margin: const EdgeInsets.only(top: 12.0),
           child: TextFormField(
+            controller: email,
             maxLines: 1,
             style: const TextStyle(
               fontFamily: 'StickNoBills',
@@ -183,6 +185,7 @@ class _LoginState extends State<Login>{
         Container(
           margin: const EdgeInsets.only(top: 12.0),
           child: TextFormField(
+            controller: password,
             obscureText: true,
             enableSuggestions: false,
             autocorrect: false,
@@ -252,17 +255,30 @@ class _LoginState extends State<Login>{
         child: ElevatedButton(
           onPressed: () async {
             if(formKey.currentState!.validate()){
+              setState(() {
+                isLoading = true;
+              });
               String mail = email.text;
               String pass = password.text;
               try {
-                final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: mail,
                     password: pass,
-                ).then((_) {
+                ).then((credential) {
+                  print(credential.user?.uid);
+                  formKey.currentState?.reset();
+                  setState(() {
+                    isLoading = false;
+                  });
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                  const MainMenu()), (Route<dynamic> route) => false);
                   // user exist
                   //Navigator.popUntil(context, (route) => route.isFirst);
                 });
               } on FirebaseAuthException catch (e) {
+                setState(() {
+                  isLoading = false;
+                });
                 if (e.code == 'user-not-found') {
                   print('No user found for that email.');
                 } else if (e.code == 'wrong-password') {
@@ -281,7 +297,7 @@ class _LoginState extends State<Login>{
               backgroundColor:
               MaterialStateProperty.all<Color>(colours.AppColor.main),
               side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
-          child: const Text(
+          child:!isLoading? const Text(
             "Login",
             style: TextStyle(
             fontFamily: 'StickNoBills',
@@ -289,7 +305,9 @@ class _LoginState extends State<Login>{
             fontSize: 20,
             fontWeight: FontWeight.w600,
           )
-          ),
+          ): Transform.scale(
+            scale: 0.5,
+            child: const CircularProgressIndicator()),
         ),
       ),
     );

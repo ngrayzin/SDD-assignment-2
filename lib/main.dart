@@ -45,8 +45,30 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      home: const Login(),
+      home: landingPage() ? const MainMenu() : const Login(),
     );
   }
 }
+
+bool landingPage(){
+  bool check = false;
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      check = false;
+      print("not here");
+    }
+    else {
+      check = true;
+      print("here");
+    }
+  });
+  return check;
+}
+
+Future<bool> isUserLoggedIn() async {
+  final User? user = FirebaseAuth.instance.currentUser;
+  return user != null;
+}
+
+
 
