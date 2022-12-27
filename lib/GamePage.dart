@@ -38,8 +38,8 @@ class GamePage extends StatefulWidget {
 
   static int num1 = 0;
   static int num2 = 0;
-  static int row = 10;
-  static int col = 10;
+  static int row = GamePage.player.level;
+  static int col = GamePage.player.level;
 }
 
 class _GamePageState extends State<GamePage> {
@@ -360,7 +360,7 @@ class _GamePageState extends State<GamePage> {
       child: Container(
         margin: const EdgeInsets.all(0.0),
         child: SizedBox(
-          height: 400,
+          height: 350,
           child: GridView.count(
             //padding: EdgeInsets.zero,
             crossAxisCount: boardSettings.cols,

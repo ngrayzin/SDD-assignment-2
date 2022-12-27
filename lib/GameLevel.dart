@@ -14,6 +14,7 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
 import 'Player.dart';
@@ -129,7 +130,13 @@ class _GameLevelState extends State<GameLevel> {
               children: [
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GamePage.player.setLevel("Easy");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const GamePage();
+                          }));
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: colours.AppColor.buttonBackground,
                       shape: RoundedRectangleBorder(
@@ -175,7 +182,13 @@ class _GameLevelState extends State<GameLevel> {
                 ),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GamePage.player.setLevel("Medium");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const GamePage();
+                          }));
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: colours.AppColor.buttonBackground,
                       shape: RoundedRectangleBorder(
@@ -221,7 +234,13 @@ class _GameLevelState extends State<GameLevel> {
                 ),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GamePage.player.setLevel("Hard");
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const GamePage();
+                          }));
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: colours.AppColor.buttonBackground,
                       shape: RoundedRectangleBorder(
