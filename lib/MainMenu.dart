@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdd_assignment_2/About.dart';
+import 'package:sdd_assignment_2/GameLevel.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/LoadGame.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
@@ -80,7 +81,7 @@ class _MainMenuState extends State<MainMenu> {
                   child: TextButton(
                     onPressed: () => Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const GamePage();
+                      return const GameLevel();
                     })),
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all<EdgeInsets>(
