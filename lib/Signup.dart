@@ -53,14 +53,14 @@ class _SignupState extends State<Signup>{
                 const Spacer(
                   flex: 5,
                 ),
-                Text(
+                const Text(
                   'SIGN UP',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'StickNoBills',
                     fontWeight: FontWeight.bold,
-                    color: colours.AppColor.main,
+                    color: Colors.white,
                   ),
                 ),
                 const Spacer(
@@ -89,34 +89,32 @@ class _SignupState extends State<Signup>{
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.fromLTRB(
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0,
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.01),
-          child: Column(
+            MediaQuery.of(context).size.width * 0.07,
+            MediaQuery.of(context).size.height * 0.01,
+            MediaQuery.of(context).size.width * 0.07,
+            MediaQuery.of(context).size.height * 0.05),
+          child: Form(
+            key: formKey,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 0),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: <Widget>[
-                        returnName(),
-                        returnEmail(),
-                        returnPassword(),
-                        submit(context),
-                        const SizedBox(height: 10),
-                        login(context),
-                      ],
-                    ),
-                  ),
-                ),
-              ]
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                returnName(),
+                const SizedBox(height: 10),
+                returnEmail(),
+                const SizedBox(height: 10),
+                returnPassword(),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                submit(context),
+                const SizedBox(height: 10),
+                login(context),
+              ],
+            ),
           ),
-        )
+        ),
     );
+
   }
   Widget returnEmail(){
     return Column(
@@ -142,9 +140,10 @@ class _SignupState extends State<Signup>{
             controller: _emailController,
             maxLines: 1,
             style: const TextStyle(
+              letterSpacing: 1,
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -161,7 +160,7 @@ class _SignupState extends State<Signup>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -233,9 +232,10 @@ class _SignupState extends State<Signup>{
             autocorrect: false,
             maxLines: 1,
             style: const TextStyle(
+              letterSpacing: 1,
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -245,7 +245,7 @@ class _SignupState extends State<Signup>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -314,9 +314,10 @@ class _SignupState extends State<Signup>{
             controller: _nameController,
             maxLines: 1,
             style: const TextStyle(
+              letterSpacing: 1,
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -326,7 +327,7 @@ class _SignupState extends State<Signup>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -373,7 +374,7 @@ class _SignupState extends State<Signup>{
 
   Widget submit(BuildContext context){
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
@@ -423,18 +424,21 @@ class _SignupState extends State<Signup>{
               backgroundColor:
               MaterialStateProperty.all<Color>(colours.AppColor.main),
               side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
-          child: !isLoading? const Text(
-              "Sign up",
-              style: TextStyle(
-                fontFamily: 'StickNoBills',
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
+          child: Container(
+            padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
+              child: !isLoading? const Text(
+                  "Sign up",
+                  style: TextStyle(
+                    fontFamily: 'StickNoBills',
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  )
+              ): Transform.scale(
+                scale: 0.5,
+                child: const CircularProgressIndicator(),
               )
-          ): Transform.scale(
-            scale: 0.5,
-            child: const CircularProgressIndicator(),
-          )
+          ),
         ),
       ),
     );
@@ -449,7 +453,7 @@ class _SignupState extends State<Signup>{
             style: TextStyle(color: Colors.white70),
           ),
           TextSpan(
-            text: 'Login here',
+            text: ' Login here',
             style: const TextStyle(color: Colors.blue),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
