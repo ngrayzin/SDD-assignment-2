@@ -98,7 +98,7 @@ class AboutPage extends StatelessWidget {
                       text: const TextSpan(
                         text: "DESCRIPTION:\n",
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 30,
                           color: Colors.white,
                           fontFamily: 'StickNoBills',
                           fontWeight: FontWeight.bold,
@@ -135,13 +135,13 @@ class AboutPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 60),
                   Container(
                     // Container for BUILDINGS title
                     child: const Text(
                       "BUILDINGS:",
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 30,
                         color: Colors.white,
                         fontFamily: 'StickNoBills',
                         fontWeight: FontWeight.bold,
@@ -163,7 +163,12 @@ class AboutPage extends StatelessWidget {
                                 maxWidth: 100,
                                 maxHeight: 100,
                               ),
-                              color: colours.AppColor.roadColor,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: colours.AppColor.buttonBackground,
+                                  border: Border.all(width: 2.0, color: colours.AppColor.main)
+                              ),
+                              padding: const EdgeInsets.all(12.0),
                               child: Image.asset('assets/images/Road.png'),
                             ),
                           ),
@@ -173,7 +178,7 @@ class AboutPage extends StatelessWidget {
                           child: Text(
                             "Road",
                             style: TextStyle(
-                                color: Color(0xFFFFFC00),
+                                color: Colors.white,
                                 fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
@@ -196,7 +201,12 @@ class AboutPage extends StatelessWidget {
                                 maxWidth: 100,
                                 maxHeight: 100,
                               ),
-                              color: const Color.fromARGB(255, 0, 255, 255),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: colours.AppColor.buttonBackground,
+                                  border: Border.all(width: 2.0, color: colours.AppColor.main)
+                              ),
+                              padding: const EdgeInsets.all(12.0),
                               child: Image.asset('assets/images/Residential.png'),
                             ),
                           ),
@@ -206,7 +216,7 @@ class AboutPage extends StatelessWidget {
                           child: Text(
                             "Residential",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 0, 255, 255),
+                                color: Colors.white,
                                 fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
@@ -229,7 +239,12 @@ class AboutPage extends StatelessWidget {
                                 maxWidth: 100,
                                 maxHeight: 100,
                               ),
-                              color: const Color.fromARGB(255, 255, 162, 0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: colours.AppColor.buttonBackground,
+                                  border: Border.all(width: 2.0, color: colours.AppColor.main)
+                              ),
+                              padding: const EdgeInsets.all(12.0),
                               child: Image.asset('assets/images/Commercial.png'),
                             ),
                           ),
@@ -239,7 +254,7 @@ class AboutPage extends StatelessWidget {
                           child: Text(
                             "Commercial",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 255, 162, 0),
+                                color: Colors.white,
                                 fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
@@ -262,7 +277,12 @@ class AboutPage extends StatelessWidget {
                                 maxWidth: 100,
                                 maxHeight: 100,
                               ),
-                              color: const Color.fromARGB(255, 0, 255, 94),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: colours.AppColor.buttonBackground,
+                                  border: Border.all(width: 2.0, color: colours.AppColor.main)
+                              ),
+                              padding: const EdgeInsets.all(12.0),
                               child: Image.asset('assets/images/Park.png'),
                             ),
                           ),
@@ -272,7 +292,7 @@ class AboutPage extends StatelessWidget {
                           child: Text(
                             "Park",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 0, 255, 94),
+                                color: Colors.white,
                                 fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
@@ -288,15 +308,22 @@ class AboutPage extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.only(right: 12.0),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
+
                             child: Container(
                               alignment: Alignment.center,
                               constraints: const BoxConstraints(
                                 maxWidth: 100,
                                 maxHeight: 100,
                               ),
-                              color: const Color.fromARGB(255, 204, 0, 255),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  color: colours.AppColor.buttonBackground,
+                                  border: Border.all(width: 2.0, color: colours.AppColor.main),
+
+                              ),
+                              padding: const EdgeInsets.all(12.0),
                               child: Image.asset('assets/images/Industry.png'),
+
                             ),
                           ),
                         ),
@@ -305,7 +332,7 @@ class AboutPage extends StatelessWidget {
                           child: Text(
                             "Industry",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 204, 0, 255),
+                                color: Colors.white,
                                 fontSize: 40,
                                 fontFamily: 'StickNoBills',
                                 fontWeight: FontWeight.bold),
@@ -314,7 +341,7 @@ class AboutPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 60),
                   Container(
                     //margin: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: RichText(
@@ -322,7 +349,7 @@ class AboutPage extends StatelessWidget {
                       text: const TextSpan(
                         text: "Points System:\n",
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 30,
                           color: Colors.white,
                           fontFamily: 'StickNoBills',
                           fontWeight: FontWeight.bold,
@@ -334,7 +361,7 @@ class AboutPage extends StatelessWidget {
 
                             style: TextStyle(
                               fontSize: 16,
-                              color: Color(0xFFFFFC00),
+                              color: const Color(0xFF36E89A), //Color(0xFFFFFC00),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -352,7 +379,7 @@ class AboutPage extends StatelessWidget {
                             text: 'Residential (R): ',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 0, 255, 255),
+                              color: const Color(0xFF36E89A), //Color.fromARGB(255, 0, 255, 255),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -370,7 +397,7 @@ class AboutPage extends StatelessWidget {
                             text: 'Commercial (C): ',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 255, 162, 0),
+                              color: const Color(0xFF36E89A), //Color.fromARGB(255, 255, 162, 0),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -388,7 +415,7 @@ class AboutPage extends StatelessWidget {
                             text: 'Park (O): ',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 0, 255, 94),
+                              color: const Color(0xFF36E89A), //Color.fromARGB(255, 0, 255, 94),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -405,7 +432,7 @@ class AboutPage extends StatelessWidget {
                             text: 'Industry (I): ',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 204, 0, 255),
+                              color: const Color(0xFF36E89A), //Color.fromARGB(255, 204, 0, 255),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
