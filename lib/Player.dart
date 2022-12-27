@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class Player {
-  String name;
+  String? name;
   String stringMap = "";
   List<String> map;
   int turn = 0;
@@ -27,7 +28,7 @@ class Player {
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'name': FirebaseAuth.instance.currentUser?.displayName,
       'map': map.toString(),
       'turn': turn,
       'point': point,
@@ -76,8 +77,6 @@ class Player {
           roadList[element] = map[counter];
           counter++;
         }
-        print("roadList");
-        print(roadList);
         for (int roadCounter = 0; roadCounter < roadList.length; roadCounter++){
           if(roadCounter < roadList.length-1){
             if (roadList[roadCounter] == "Road"){
@@ -96,13 +95,8 @@ class Player {
             roadCount = 0;
           }
         }
-        print("connected");
-        print(connected);
-        print("\n\n\n\n");
         for (int x = 0; x < connected.length; x++){
           if (connected[x] > 1){
-            print("break");
-            print(connected[x]);
             point += connected[x];
           }
         }

@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdd_assignment_2/Player.dart';
+import 'Login.dart';
 import 'MainMenu.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
@@ -44,8 +45,33 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      home: const MainMenu(),
+      home: landingPage() ? const MainMenu() : const Login(),
     );
   }
 }
+
+bool landingPage(){
+  var currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser != null) {
+    print(currentUser.uid);
+    print("fuck");
+    return true;
+  }
+  else{
+    print("fuckfuck");
+    return false;
+  }
+}
+
+/*Future<void> _handleStartScreen() async {
+  Auth _auth = Auth();
+  if (await _auth.isLoggedIn()) {
+    Navigator.of(context).pushReplacementNamed("/chat");
+  }
+  else {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginScreen(auth: _auth,)));
+  }
+}*/
+
+
 
