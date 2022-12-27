@@ -158,6 +158,7 @@ class _GameLevelState extends State<GameLevel> {
                           Text(
                             '5x5 grid',
                             style: TextStyle(
+                              letterSpacing: 1.5,
                               fontFamily: 'StickNoBills',
                               color: Colors.white,
                               fontSize: 18,
@@ -203,6 +204,7 @@ class _GameLevelState extends State<GameLevel> {
                             Text(
                               '7x7 grid',
                               style: TextStyle(
+                                letterSpacing: 1.5,
                                 fontFamily: 'StickNoBills',
                                 color: Colors.white,
                                 fontSize: 18,
@@ -248,6 +250,7 @@ class _GameLevelState extends State<GameLevel> {
                             Text(
                               '10x10 grid',
                               style: TextStyle(
+                                letterSpacing: 1.5,
                                 fontFamily: 'StickNoBills',
                                 color: Colors.white,
                                 fontSize: 18,
