@@ -76,6 +76,7 @@ flutter:
     - assets/images/Park.png
     - assets/images/Commercial.png
     - assets/images/Residential.png
+    - assets/images/MONKEI.png
   # To add assets to your application, add an assets section, like this:
   #assets:
   #  - assets/images

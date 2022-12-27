@@ -10,6 +10,7 @@ class Player {
   int turn = 0;
   int point = 0;
   int coin = 16;
+  int level = 0;
 
   Player(this.name, this.map, this.turn);
 
@@ -19,7 +20,8 @@ class Player {
         stringMap = json['map'],
         turn = json['turn'],
         point = json['point'],
-        coin = json['coin'];
+        coin = json['coin'],
+        level = json['level'];
 
   // factory Player.fromJson(dynamic json) {
   //   return Player(json['name'] as String, json['map'] as List<String>,
@@ -33,6 +35,7 @@ class Player {
       'turn': turn,
       'point': point,
       'coin': coin,
+      'level': level
     };
   }
 
@@ -57,6 +60,18 @@ class Player {
   int returnTurn() {
     print(turn);
     return turn;
+  }
+
+  void setLevel(String text){
+    if (text == "Easy"){
+      level = 5;
+    }
+    else if (text == "Medium"){
+      level =  7;
+    }
+    else if (text == "Hard"){
+      level = 10;
+    }
   }
 
 
