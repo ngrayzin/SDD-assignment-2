@@ -3,8 +3,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdd_assignment_2/MainMenu.dart';
 import 'Firebase_Services.dart';
+import 'Player.dart';
 import 'Signup.dart';
 import 'colours.dart' as colours;
 
@@ -17,10 +19,21 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login>{
+  @override
+  void initState() {
+    super.initState();
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      print(currentUser.uid);
+      print("fuck");
+    }
+  }
+
   final formKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   bool isLoading = false;
+  bool isLoading1 = false;
 
   @override
   Widget build(BuildContext context){
@@ -266,6 +279,7 @@ class _LoginState extends State<Login>{
                     password: pass,
                 ).then((credential) {
                   print(credential.user?.uid);
+                  print(credential.user?.displayName);
                   formKey.currentState?.reset();
                   setState(() {
                     isLoading = false;
@@ -319,21 +333,45 @@ class _LoginState extends State<Login>{
       child: OutlinedButton.icon(
         icon: Image.asset("assets/images/google.png",width: 32,height: 32,fit: BoxFit.cover,),
         onPressed: () async {
-          FirebaseService service = FirebaseService();
+          setState(() {
+            isLoading1 = true;
+          });
+          //FirebaseService service = FirebaseService();
+          final GoogleSignIn googleSignIn = GoogleSignIn();
           try {
-            await service.signInwithGoogle();
-            print("asdasd");
-            //Navigator.pushNamedAndRemoveUntil(context, "MainMenu", (route) => false);
-          } catch(e){
-            if(e is FirebaseAuthException){
-              print(e.message!);
-            }
+            final GoogleSignInAccount? googleSignInAccount =
+            await googleSignIn.signIn();
+            final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount!.authentication;
+            final AuthCredential credential = GoogleAuthProvider.credential(
+              accessToken: googleSignInAuthentication.accessToken,
+              idToken: googleSignInAuthentication.idToken,
+            );
+            await FirebaseAuth.instance.signInWithCredential(credential)
+              .then((value) {
+                final user = value.user;
+                print(user?.uid);
+                setState(() {
+                  isLoading1 = false;
+                });
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                const MainMenu()), (Route<dynamic> route) => false);
+            });
+          } on FirebaseAuthException catch (e) {
+            setState(() {
+              isLoading1 = false;
+            });
+            print(e.message);
+            throw e;
           }
         },
-        label: Text(
+        label: !isLoading1? Text(
           "Sign in with google",
           style: TextStyle(
               color: colours.AppColor.background, fontWeight: FontWeight.bold),
+        ): Transform.scale(
+          scale: 0.5,
+          child: const CircularProgressIndicator(),
         ),
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
+var currentUser = FirebaseAuth.instance.currentUser;
+
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
   static int value = 1;
@@ -28,7 +31,7 @@ class GamePage extends StatefulWidget {
   @override
   State<GamePage> createState() => _GamePageState();
 
-  static Player player = Player("name", [], 0);
+  static Player player = Player(currentUser?.displayName, [], 0);
 
   static int randomNum() {
     Random random = Random();
@@ -58,6 +61,9 @@ class _GamePageState extends State<GamePage> {
     print(GamePage.player.map);
     GamePage.num1 = GamePage.randomNum();
     GamePage.num2 = GamePage.randomNum();
+    print(currentUser?.uid);
+    print(currentUser?.email);
+    print(currentUser?.displayName);
   }
 
   @override
@@ -87,27 +93,22 @@ class _GamePageState extends State<GamePage> {
                       icon: const Icon(Icons.close),
                       color: colours.AppColor.main,
                       onPressed: () async {
-                        Navigator.push(
+                        /*Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PopUpMessage(
                                       value: GamePage.value,
-                                    )));
-                        // final postKey = FirebaseDatabase.instance
-                        //     .ref()
-                        //     .child('players')
-                        //     .push()
-                        //     .key;
-                        // FirebaseDatabase.instance
-                        //     .ref('players/$postKey')
-                        //     .set(GamePage.player.toJson())
-                        //     .then((_) {
-                        //   // Data saved successfully!
-                        //   Navigator.pop(context);
-                        // }).catchError((error) {
-                        //   print(error);
-                        //   // The write failed...
-                        // });
+                                    )));*/
+                         FirebaseDatabase.instance
+                             .ref('players/${currentUser?.uid}')
+                             .set(GamePage.player.toJson())
+                             .then((_) {
+                           // Data saved successfully!
+                           Navigator.pop(context);
+                         }).catchError((error) {
+                           print(error);
+                           // The write failed...
+                        });
                       },
                     ),
                     const Spacer(

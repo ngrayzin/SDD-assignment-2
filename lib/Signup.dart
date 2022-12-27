@@ -392,27 +392,13 @@ class _SignupState extends State<Signup>{
                 ).then((credential) {
                   final user = credential.user;
                   print(user?.uid);
-                  Player player = Player(username, [], 0);
-                  FirebaseDatabase.instance
-                      .ref('players/${user?.uid}')
-                      .set(player.toJson())
-                      .then((_) {
-                    // Data saved successfully!
-                    setState(() {
-                      isLoading = false;
-                    });
-                    formKey.currentState?.reset();
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                        const MainMenu()), (Route<dynamic> route) => false);
-                      }).catchError((error) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                        print(error);
-                        // The write failed...
-                      });
-                    // user exist
-                  //Navigator.popUntil(context, (route) => route.isFirst);
+                  print("stringnig");
+                  print(username);
+                  credential.user?.updateDisplayName(username);
+                  formKey.currentState?.reset();
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                      const MainMenu()), (Route<dynamic> route) => false);
+
                 });
               } on FirebaseAuthException catch (e) {
                 setState(() {

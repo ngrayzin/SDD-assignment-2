@@ -51,24 +51,27 @@ class MyApp extends StatelessWidget {
 }
 
 bool landingPage(){
-  bool check = false;
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user == null) {
-      check = false;
-      print("not here");
-    }
-    else {
-      check = true;
-      print("here");
-    }
-  });
-  return check;
+  var currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser != null) {
+    print(currentUser.uid);
+    print("fuck");
+    return true;
+  }
+  else{
+    print("fuckfuck");
+    return false;
+  }
 }
 
-Future<bool> isUserLoggedIn() async {
-  final User? user = FirebaseAuth.instance.currentUser;
-  return user != null;
-}
+/*Future<void> _handleStartScreen() async {
+  Auth _auth = Auth();
+  if (await _auth.isLoggedIn()) {
+    Navigator.of(context).pushReplacementNamed("/chat");
+  }
+  else {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LoginScreen(auth: _auth,)));
+  }
+}*/
 
 
 
