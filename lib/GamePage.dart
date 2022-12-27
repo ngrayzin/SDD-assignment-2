@@ -74,7 +74,7 @@ class _GamePageState extends State<GamePage> {
               backgroundColor: colours.AppColor.background,
               flexibleSpace: Padding(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.12),
+                    top: MediaQuery.of(context).size.width * 0.15), // was 0.12
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,7 +92,9 @@ class _GamePageState extends State<GamePage> {
                             MaterialPageRoute(
                                 builder: (context) => PopUpMessage(
                                       value: GamePage.value,
-                                    )));
+                                    )
+                            )
+                        );
                         // final postKey = FirebaseDatabase.instance
                         //     .ref()
                         //     .child('players')
@@ -132,11 +134,11 @@ class _GamePageState extends State<GamePage> {
                         icon: const Icon(Icons.info_outline),
                         color: colours.AppColor.main,
                         onPressed: () {
-                          Navigator.push(
-                              context,
+                          print("hello");
+                          Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    const AboutPage(), //goes to about page
+                                    AboutPage(), //goes to about page
                               ));
                         },
                       ),
@@ -159,7 +161,7 @@ class _GamePageState extends State<GamePage> {
                   //alignment: Alignment.center,
                   padding: EdgeInsets.fromLTRB(
                       MediaQuery.of(context).size.width * 0.07,
-                      MediaQuery.of(context).size.height * 0.05,
+                      MediaQuery.of(context).size.height * 0.03, //was 0.05
                       MediaQuery.of(context).size.width * 0.07,
                       MediaQuery.of(context).size.height * 0.05),
                   child: Column(
@@ -303,25 +305,27 @@ class _GamePageState extends State<GamePage> {
         height: 40,
         child: Center(
           child: Card(
-              color: BuildingCard.returnColour(building.name),
+              color: colours.AppColor.background,
               child: Padding(
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsets.all(2.0),
                 child: Center(
                   child: Image.asset('assets/images/${building.name}.png'),
                 ),
               )),
         ),
       ),
-      childWhenDragging: const SizedBox(width: 20),
+      childWhenDragging: const SizedBox(
+        width: 20,
+      ),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.37,
         height: MediaQuery.of(context).size.width * 0.37,
         child: Card(
-            elevation: 10,
-            shadowColor: Colors.grey,
-            color: BuildingCard.returnColour(building.name),
+            elevation: 8,
+            shadowColor: colours.AppColor.main,
+            color: colours.AppColor.buttonBackground,
             shape: RoundedRectangleBorder(
-              //side: BorderSide(color: Colors.white70, width: 1),
+              side: BorderSide(color: colours.AppColor.main, width: 2),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
@@ -334,13 +338,14 @@ class _GamePageState extends State<GamePage> {
                       width: 70,
                       height: 70,
                     ),
+                    const SizedBox(height: 5.0),
                     Text(
                       building.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontFamily: 'StickNoBills',
-                        fontWeight: FontWeight.bold,
-                        color: colours.AppColor.background,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
                       ),
                     )
                   ],
@@ -357,6 +362,7 @@ class _GamePageState extends State<GamePage> {
         child: SizedBox(
           height: 400,
           child: GridView.count(
+            //padding: EdgeInsets.zero,
             crossAxisCount: boardSettings.cols,
             crossAxisSpacing: 3,
             mainAxisSpacing: 3,
@@ -409,8 +415,8 @@ class _GamePageState extends State<GamePage> {
           } else {
             GamePage.player.addItemToMap(index, "-");
             return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: colours.AppColor.main,
               ),
               //child: Center(child: Text ("${widget.boardIndex}"),),
             );
@@ -422,10 +428,14 @@ class _GamePageState extends State<GamePage> {
 
   Widget returnBuildingTile(String name) {
     return Container(
-        color: BuildingCard.returnColour(name),
-        child: Center(
-          child: Image.asset('assets/images/$name.png'),
-        ));
+        color: colours.AppColor.background,
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+            child: Center(
+              child: Image.asset('assets/images/$name.png'),
+            )
+        )
+    );
   }
 }
 
