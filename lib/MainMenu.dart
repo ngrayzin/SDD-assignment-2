@@ -132,7 +132,7 @@ class _MainMenuState extends State<MainMenu> {
                             }
                             else {
                               Fluttertoast.showToast(
-                                  msg: "This is a Toast message",
+                                  msg: "No previous saved game",
                                   toastLength: Toast.LENGTH_SHORT,
                                   timeInSecForIosWeb: 1,
                                   textColor: Colors.white,
