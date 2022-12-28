@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 
@@ -79,6 +80,21 @@ class Player {
     print(turn);
     return turn;
   }
+
+  bool endGrid() {
+    for (int i = 0; i < map.length; i ++){
+      if (map[i] == "-"){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  Future<void> saveGame() async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref('players/${currentUser?.uid}');
+    await ref.update(saveGameToJson());
+  }
+
 
   void setLevel(String text){
     if (text == "Easy"){
