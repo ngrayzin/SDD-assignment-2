@@ -46,7 +46,7 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  final BoardSettings boardSettings = BoardSettings(cols: GamePage.col, rows: GamePage.row);
+  final BoardSettings boardSettings = BoardSettings(cols: GamePage.player.level, rows: GamePage.player.level);
   late BoardTile boardTile;
 
   @override
