@@ -132,8 +132,6 @@ class _GameLevelState extends State<GameLevel> {
                   child: ElevatedButton(
                     onPressed: () {
                       GamePage.player.setLevel("Easy");
-                      print("Check1");
-                      print(GamePage.player.level);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return const GamePage();
@@ -186,8 +184,6 @@ class _GameLevelState extends State<GameLevel> {
                   child: ElevatedButton(
                     onPressed: () {
                       GamePage.player.setLevel("Medium");
-                      print("Check1");
-                      print(GamePage.player.level);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return const GamePage();
@@ -240,8 +236,6 @@ class _GameLevelState extends State<GameLevel> {
                   child: ElevatedButton(
                     onPressed: () {
                       GamePage.player.setLevel("Hard");
-                      print("Check1");
-                      print(GamePage.player.level);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                             return const GamePage();

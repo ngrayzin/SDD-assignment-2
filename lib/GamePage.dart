@@ -18,6 +18,7 @@ import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
+import 'EndGame.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
@@ -59,10 +60,10 @@ class _GamePageState extends State<GamePage> {
     for (var i = 0; i < boardSettings.totalTiles(); i++) {
       GamePage.player.map.add("-");
     }
-    print(GamePage.player.map);
+    //print(GamePage.player.map);
     GamePage.num1 = GamePage.randomNum();
     GamePage.num2 = GamePage.randomNum();
-    print(GamePage.player.level);
+    //print(GamePage.player.level);
   }
 
   @override
@@ -351,7 +352,7 @@ class _GamePageState extends State<GamePage> {
                     fontSize: 30,
                     fontFamily: 'StickNoBills',
                     fontWeight: FontWeight.bold))),
-        Padding(padding: EdgeInsets.only(bottom: 85)),
+        const Padding(padding: EdgeInsets.only(bottom: 85)),
       ],
     );
     return alert;
@@ -457,6 +458,13 @@ class _GamePageState extends State<GamePage> {
         exist ? GamePage.player.addTurn() : null;
         exist ? GamePage.player.minusCoin() : null;
         exist ? GamePage.player.calculatePoints(GamePage.row) : null;
+        if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    EndGame(), //goes to end game page
+              ));
+        }
         if (exist) {
           GamePage.num1 = GamePage.randomNum();
           GamePage.num2 = GamePage.randomNum();
