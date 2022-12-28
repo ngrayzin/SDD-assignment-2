@@ -16,7 +16,7 @@ class Player {
   Player(this.name, this.map, this.turn, this.level);
 
   Player.fromJson(dynamic json)
-      : name = json['name'],
+      : name = FirebaseAuth.instance.currentUser?.displayName,
         map = [],
         stringMap = json['map'],
         turn = json['turn'],
