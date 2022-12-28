@@ -28,14 +28,29 @@ class Player {
   //       json['turn'] as int);
   // }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> saveGameToJson() {
     return {
       'name': FirebaseAuth.instance.currentUser?.displayName,
-      'map': map.toString(),
-      'turn': turn,
-      'point': point,
-      'coin': coin,
-      'level': level
+      'highestScore': 0,
+      'saveGame':{
+        'map': map.toString(),
+        'turn': turn,
+        'point': point,
+        'coin': coin,
+      },
+    };
+  }
+
+  Map<String, dynamic> finishGameToJson() {
+    return {
+      'name': FirebaseAuth.instance.currentUser?.displayName,
+      'highestScore': 0,
+      'finishGame':{
+        'map': map.toString(),
+        'turn': turn,
+        'point': point,
+        'coin': coin,
+      },
     };
   }
 

@@ -135,7 +135,7 @@ class SignInPage extends StatelessWidget {
                               .key;
                           FirebaseDatabase.instance
                               .ref('players/$postKey')
-                              .set(GamePage.player.toJson())
+                              .set(GamePage.player.saveGameToJson())
                               .then((_) {
                             // Data saved successfully!
                             Navigator.popUntil(context, (route) => route.isFirst);

@@ -101,7 +101,7 @@ class _GamePageState extends State<GamePage> {
                                     )));*/
                          FirebaseDatabase.instance
                              .ref('players/${currentUser?.uid}')
-                             .set(GamePage.player.toJson())
+                             .set(GamePage.player.saveGameToJson())
                              .then((_) {
                            // Data saved successfully!
                            Navigator.pop(context);
