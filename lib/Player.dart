@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sdd_assignment_2/GamePage.dart';
 
 class Player {
   String? name;
@@ -37,6 +38,7 @@ class Player {
         'turn': turn,
         'point': point,
         'coin': coin,
+        'level': level,
       },
     };
   }
@@ -50,6 +52,7 @@ class Player {
         'turn': turn,
         'point': point,
         'coin': coin,
+        'level': level,
       },
     };
   }
@@ -79,12 +82,15 @@ class Player {
 
   void setLevel(String text){
     if (text == "Easy"){
+      GamePage.value = 5;
       level = 5;
     }
     else if (text == "Medium"){
-      level =  7;
+      GamePage.value =  7;
+      level = 7;
     }
     else if (text == "Hard"){
+      GamePage.value = 10;
       level = 10;
     }
   }

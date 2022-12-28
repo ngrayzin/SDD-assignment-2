@@ -26,7 +26,7 @@ var currentUser = FirebaseAuth.instance.currentUser;
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
-  static int value = 1;
+  static int value = 0;
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -53,7 +53,7 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    GamePage.player = Player("name", [], 0);
+    GamePage.player = Player(currentUser?.displayName, [], 0);
     //GamePage.randomizer();
     for (var i = 0; i < boardSettings.totalTiles(); i++) {
       GamePage.player.map.add("-");
@@ -61,9 +61,7 @@ class _GamePageState extends State<GamePage> {
     print(GamePage.player.map);
     GamePage.num1 = GamePage.randomNum();
     GamePage.num2 = GamePage.randomNum();
-    print(currentUser?.uid);
-    print(currentUser?.email);
-    print(currentUser?.displayName);
+    print(GamePage.player.level);
   }
 
   @override
@@ -92,24 +90,12 @@ class _GamePageState extends State<GamePage> {
                       iconSize: 40,
                       icon: const Icon(Icons.close),
                       color: colours.AppColor.main,
-                      onPressed: () async {
-                        /*Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PopUpMessage(
-                                      value: GamePage.value,
-                                    )));*/
-                         FirebaseDatabase.instance
-                             .ref('players/${currentUser?.uid}')
-                             .set(GamePage.player.saveGameToJson())
-                             .then((_) {
-                           // Data saved successfully!
-                           Navigator.pop(context);
-                         }).catchError((error) {
-                           print(error);
-                           // The write failed...
-                        });
-                      },
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return saveGameMsg();
+                        },
+                      ),
                     ),
                     const Spacer(
                       flex: 5,
@@ -293,6 +279,81 @@ class _GamePageState extends State<GamePage> {
             ),
           )),
     );
+  }
+
+  AlertDialog saveGameMsg(){
+    AlertDialog alert = AlertDialog(
+    insetPadding: EdgeInsets.all(10),
+      title: const Text(
+        'SAVE GAME?',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 50,
+          fontFamily: 'StickNoBills',
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(width: MediaQuery.of(context).size.width),
+          borderRadius: BorderRadius.circular(12)),
+      actionsAlignment: MainAxisAlignment.center,
+      actions: <Widget>[
+        TextButton(
+          onPressed: (){
+            FirebaseDatabase.instance
+                .ref('players/${currentUser?.uid}')
+                .set(GamePage.player.saveGameToJson())
+                .then((_) {
+              // Data saved successfully!
+              Navigator.popUntil(context, (route) => route.isFirst);
+            }).catchError((error) {
+              print(error);
+              // The write failed...
+            });
+          },
+          style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(const Size(80, 50)),
+            padding:
+            MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
+            foregroundColor: MaterialStateProperty.all<Color>(
+                colours.AppColor.buttonBackground),
+            backgroundColor:
+            MaterialStateProperty.all<Color>(colours.AppColor.main),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            ),
+          ),
+          child: const Text('YES',
+              style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: 'StickNoBills',
+                  fontWeight: FontWeight.bold)),
+        ),
+        const SizedBox(width: 25),
+        TextButton(
+            onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+            style: ButtonStyle(
+              minimumSize: MaterialStateProperty.all(const Size(80, 20)),
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.all(5)),
+              foregroundColor: MaterialStateProperty.all<Color>(
+                  colours.AppColor.buttonBackground),
+              backgroundColor:
+              MaterialStateProperty.all<Color>(colours.AppColor.main),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+              ),
+            ),
+            child: const Text('NO',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'StickNoBills',
+                    fontWeight: FontWeight.bold))),
+        Padding(padding: EdgeInsets.only(bottom: 85)),
+      ],
+    );
+    return alert;
   }
 
   Widget randomizer(int number) {
