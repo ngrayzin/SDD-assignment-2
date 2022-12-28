@@ -11,9 +11,9 @@ class Player {
   int turn = 0;
   int point = 0;
   int coin = 16;
-  int level = 0;
+  int level;
 
-  Player(this.name, this.map, this.turn);
+  Player(this.name, this.map, this.turn, this.level);
 
   Player.fromJson(dynamic json)
       : name = json['name'],

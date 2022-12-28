@@ -31,7 +31,7 @@ class GamePage extends StatefulWidget {
   @override
   State<GamePage> createState() => _GamePageState();
 
-  static Player player = Player(currentUser?.displayName, [], 0);
+  static Player player = Player(currentUser?.displayName, [], 0, 0);
 
   static int randomNum() {
     Random random = Random();
@@ -41,20 +41,21 @@ class GamePage extends StatefulWidget {
 
   static int num1 = 0;
   static int num2 = 0;
-  static int row = GamePage.player.level;
-  static int col = GamePage.player.level;
+  static int row = 0;
+  static int col = 0;
 }
 
 class _GamePageState extends State<GamePage> {
   final BoardSettings boardSettings = BoardSettings(cols: GamePage.col, rows: GamePage.row);
-  //late Timer timer;
   late BoardTile boardTile;
 
   @override
   void initState() {
     super.initState();
-    GamePage.player = Player(currentUser?.displayName, [], 0);
+    GamePage.player = Player(currentUser?.displayName, [], 0, GamePage.player.level);
     //GamePage.randomizer();
+    GamePage.row = GamePage.player.level;
+    GamePage.col = GamePage.player.level;
     for (var i = 0; i < boardSettings.totalTiles(); i++) {
       GamePage.player.map.add("-");
     }
