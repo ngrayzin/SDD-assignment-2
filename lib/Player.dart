@@ -30,33 +30,16 @@ class Player {
   //       json['turn'] as int);
   // }
 
-  Map<String, dynamic> saveGameToJson() {
+  Map<String, dynamic> ToJson() {
     return {
-      'name': FirebaseAuth.instance.currentUser?.displayName,
-      'highestScore': 0,
-      'saveGame':{
-        'map': map.toString(),
-        'turn': turn,
-        'point': point,
-        'coin': coin,
-        'level': level,
-      },
+      'map': map.toString(),
+      'turn': turn,
+      'point': point,
+      'coin': coin,
+      'level': level,
     };
   }
 
-  Map<String, dynamic> finishGameToJson() {
-    return {
-      'name': FirebaseAuth.instance.currentUser?.displayName,
-      'highestScore': 0,
-      'finishGame':{
-        'map': map.toString(),
-        'turn': turn,
-        'point': point,
-        'coin': coin,
-        'level': level,
-      },
-    };
-  }
 
   void deserializeMap() {
     stringMap = stringMap.substring(1, stringMap.length - 1);
@@ -90,10 +73,48 @@ class Player {
     return true;
   }
 
-  Future<void> saveGame() async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref('players/${currentUser?.uid}');
-    await ref.update(saveGameToJson());
+  Future<void> saveGame(int score) async {
+    //final user =  FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}');
+    final newPostKey =
+        FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/finishGame').push().key;
+    final ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore');
+    DatabaseReference finish = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/finishGame/$newPostKey');
+    DatabaseReference remove = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/saveGame');
+    await ref.get()
+        .then((snapshot){
+        if (snapshot.exists) {
+          String string = snapshot.value.toString();
+          int i = int.parse(string);
+          if(score > i){
+            ref.set(score);
+          }
+        }
+        }).then((_) {
+          finish.set(ToJson());
+          remove.set(null);
+        });
+    //DatabaseReference ref = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/finishGame');
+    //await ref.update(saveGameToJson());
   }
+
+  Future<bool> highscore(int score) async {
+    bool check = false;
+    final ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore');
+    await ref.get()
+        .then((snapshot){
+      if (snapshot.exists) {
+        String string = snapshot.value.toString();
+        int i = int.parse(string);
+        print(i);
+        if(score > i){
+          check = true;
+        }
+      }
+    });
+    return check;
+  }
+
+
 
 
   void setLevel(String text){

@@ -44,6 +44,8 @@ class GamePage extends StatefulWidget {
   static int num2 = 0;
   static int row = 0;
   static int col = 0;
+  static bool ran = true;
+  static bool ran2 = true;
 }
 
 class _GamePageState extends State<GamePage> {
@@ -268,11 +270,8 @@ class _GamePageState extends State<GamePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             //crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              //randomizer here
                               randomizer(GamePage.num1),
-                              // BuildingCard(),
                               const Spacer(),
-                              // BuildingCard(),
                               randomizer(GamePage.num2),
                             ],
                           )))
@@ -281,6 +280,10 @@ class _GamePageState extends State<GamePage> {
             ),
           )),
     );
+  }
+
+  Widget options(){
+    return randomizer(GamePage.num2);
   }
 
   AlertDialog saveGameMsg(){
@@ -303,8 +306,8 @@ class _GamePageState extends State<GamePage> {
         TextButton(
           onPressed: (){
             FirebaseDatabase.instance
-                .ref('players/${currentUser?.uid}')
-                .set(GamePage.player.saveGameToJson())
+                .ref('players/${currentUser?.uid}/saveGame')
+                .set(GamePage.player.ToJson())
                 .then((_) {
               // Data saved successfully!
               Navigator.popUntil(context, (route) => route.isFirst);
@@ -362,6 +365,12 @@ class _GamePageState extends State<GamePage> {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
+      onDragStarted: () => setState((){
+        !GamePage.ran;
+      }),
+      onDragEnd: (_) => setState((){
+        !GamePage.ran;
+      }),
       feedback: SizedBox(
         width: 40,
         height: 40,
@@ -390,28 +399,31 @@ class _GamePageState extends State<GamePage> {
               side: BorderSide(color: colours.AppColor.main, width: 2),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('assets/images/${building.name}.png'),
-                      width: 70,
-                      height: 70,
-                    ),
-                    const SizedBox(height: 5.0),
-                    Text(
-                      building.name,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontFamily: 'StickNoBills',
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
+            child: Visibility(
+              visible: GamePage.ran,
+              child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage('assets/images/${building.name}.png'),
+                        width: 70,
+                        height: 70,
                       ),
-                    )
-                  ],
-                ))),
+                      const SizedBox(height: 5.0),
+                      Text(
+                        building.name,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontFamily: 'StickNoBills',
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  )),
+            )),
       ),
     );
   }
@@ -449,6 +461,9 @@ class _GamePageState extends State<GamePage> {
       'Commercial'
     ];
     return DragTarget<Building>(
+      onMove: (detail) => setState(() {
+        detail.data.check = true;
+      }),
       onAccept: (data) => setState(() {
         exist = GamePage.player.turn == 0
             ? true
@@ -462,7 +477,7 @@ class _GamePageState extends State<GamePage> {
           Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) =>
-                    EndGame(), //goes to end game page
+                    EndGame(GamePage.player), //goes to end game page
               ));
         }
         if (exist) {
@@ -476,6 +491,17 @@ class _GamePageState extends State<GamePage> {
         //print(GamePage.player.map);
       }),
       builder: (context, accept, reject) {
+        /*
+        while (GamePage.player.coin <= 0){
+          print("This is fcking stupid");
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                const EndGame(), //goes to about page
+              ));
+        }
+
+         */
         if (exist) {
           return returnBuildingTile(name);
         } else {
