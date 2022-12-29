@@ -322,8 +322,8 @@ class _LoadGameState extends State<LoadGame> {
         TextButton(
           onPressed: () {
             FirebaseDatabase.instance
-                .ref('players/${currentUser?.uid}')
-                .set(widget.player.saveGameToJson())
+                .ref('players/${currentUser?.uid}/saveGame')
+                .set(widget.player.ToJson())
                 .then((_) {
               // Data saved successfully!
               Navigator.popUntil(context, (route) => route.isFirst);
@@ -485,7 +485,7 @@ class _LoadGameState extends State<LoadGame> {
             exist ? widget.player.addTurn() : null;
             exist ? widget.player.minusCoin() : null;
             exist ? widget.player.calculatePoints(LoadGame.row) : null;
-            if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
+            if (widget.player.coin == 0 || widget.player.endGrid() == true){
               Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) =>

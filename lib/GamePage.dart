@@ -303,8 +303,8 @@ class _GamePageState extends State<GamePage> {
         TextButton(
           onPressed: (){
             FirebaseDatabase.instance
-                .ref('players/${currentUser?.uid}')
-                .set(GamePage.player.saveGameToJson())
+                .ref('players/${currentUser?.uid}/saveGame')
+                .set(GamePage.player.ToJson())
                 .then((_) {
               // Data saved successfully!
               Navigator.popUntil(context, (route) => route.isFirst);
