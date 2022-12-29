@@ -462,7 +462,7 @@ class _GamePageState extends State<GamePage> {
           Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) =>
-                    EndGame(), //goes to end game page
+                    EndGame(GamePage.player), //goes to end game page
               ));
         }
         if (exist) {
@@ -476,6 +476,17 @@ class _GamePageState extends State<GamePage> {
         //print(GamePage.player.map);
       }),
       builder: (context, accept, reject) {
+        /*
+        while (GamePage.player.coin <= 0){
+          print("This is fcking stupid");
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                const EndGame(), //goes to about page
+              ));
+        }
+
+         */
         if (exist) {
           return returnBuildingTile(name);
         } else {

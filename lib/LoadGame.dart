@@ -11,6 +11,7 @@ import 'package:sdd_assignment_2/GameBoard.dart';
 import 'About.dart';
 import 'BoardTile.dart';
 import 'Building.dart';
+import 'EndGame.dart';
 import 'GamePage.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
@@ -32,7 +33,8 @@ class LoadGame extends StatefulWidget{
   static int row = 0;
 }
 
-class _LoadGameState extends State<LoadGame>{
+class _LoadGameState extends State<LoadGame> {
+
   late BoardSettings boardSettings = BoardSettings(cols: widget.level, rows: widget.level);
   late BoardTile boardTile;
 
@@ -45,6 +47,15 @@ class _LoadGameState extends State<LoadGame>{
     LoadGame.num1 = GamePage.randomNum();
     LoadGame.num2 = GamePage.randomNum();
     LoadGame.row = widget.player.level;
+
+    if (widget.player.coin <= 0 || widget.player.endGrid() == true) {
+      print("This is fcking stupid");
+      Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => EndGame(widget.player), //goes to about page
+          )
+      );
+    }
   }
 
 
@@ -62,7 +73,10 @@ class _LoadGameState extends State<LoadGame>{
               backgroundColor: colours.AppColor.background,
               flexibleSpace: Padding(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.15), // was 0.12
+                    top: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.15), // was 0.12
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,12 +88,13 @@ class _LoadGameState extends State<LoadGame>{
                       iconSize: 40,
                       icon: const Icon(Icons.close),
                       color: colours.AppColor.main,
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return saveGameMsg();
-                        },
-                      ),
+                      onPressed: () =>
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return saveGameMsg();
+                            },
+                          ),
                     ),
                     const Spacer(
                       flex: 5,
@@ -125,14 +140,32 @@ class _LoadGameState extends State<LoadGame>{
             ),
             body: SafeArea(
               child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height,
                   //alignment: Alignment.center,
                   padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width * 0.07,
-                      MediaQuery.of(context).size.height * 0.03, //was 0.05
-                      MediaQuery.of(context).size.width * 0.07,
-                      MediaQuery.of(context).size.height * 0.05),
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.07,
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.03, //was 0.05
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.07,
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.05),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -247,7 +280,8 @@ class _LoadGameState extends State<LoadGame>{
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: IntrinsicHeight(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
                                 //crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   //randomizer here
@@ -265,7 +299,7 @@ class _LoadGameState extends State<LoadGame>{
     );
   }
 
-  AlertDialog saveGameMsg(){
+  AlertDialog saveGameMsg() {
     AlertDialog alert = AlertDialog(
       insetPadding: EdgeInsets.all(10),
       title: const Text(
@@ -278,12 +312,15 @@ class _LoadGameState extends State<LoadGame>{
         ),
       ),
       shape: RoundedRectangleBorder(
-          side: BorderSide(width: MediaQuery.of(context).size.width),
+          side: BorderSide(width: MediaQuery
+              .of(context)
+              .size
+              .width),
           borderRadius: BorderRadius.circular(12)),
       actionsAlignment: MainAxisAlignment.center,
       actions: <Widget>[
         TextButton(
-          onPressed: (){
+          onPressed: () {
             FirebaseDatabase.instance
                 .ref('players/${currentUser?.uid}')
                 .set(widget.player.saveGameToJson())
@@ -315,7 +352,8 @@ class _LoadGameState extends State<LoadGame>{
         ),
         const SizedBox(width: 25),
         TextButton(
-            onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+            onPressed: () =>
+                Navigator.popUntil(context, (route) => route.isFirst),
             style: ButtonStyle(
               minimumSize: MaterialStateProperty.all(const Size(80, 20)),
               padding: MaterialStateProperty.all<EdgeInsets>(
@@ -362,8 +400,14 @@ class _LoadGameState extends State<LoadGame>{
         width: 20,
       ),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.37,
-        height: MediaQuery.of(context).size.width * 0.37,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.37,
+        height: MediaQuery
+            .of(context)
+            .size
+            .width * 0.37,
         child: Card(
             elevation: 8,
             shadowColor: colours.AppColor.main,
@@ -431,25 +475,33 @@ class _LoadGameState extends State<LoadGame>{
       'Commercial'
     ];
     return DragTarget<Building>(
-      onAccept: (data) => setState(() {
-        exist = widget.player.turn == 0
-            ? true
-            : rules(widget.player.map, index);
-        name = data.name;
-        exist ? widget.player.addItemToMap(index, name) : null;
-        exist ? widget.player.addTurn() : null;
-        exist ? widget.player.minusCoin() : null;
-        exist ? widget.player.calculatePoints(LoadGame.row) : null;
-        if (exist) {
-          LoadGame.num1 = GamePage.randomNum();
-          LoadGame.num2 = GamePage.randomNum();
-          // Loop to check if it is the same value, change if it's same value
-          while (LoadGame.num1 == LoadGame.num2) {
-            LoadGame.num1 = GamePage.randomNum();
-          }
-        }
-        //print(GamePage.player.map);
-      }),
+      onAccept: (data) =>
+          setState(() {
+            exist = widget.player.turn == 0
+                ? true
+                : rules(widget.player.map, index);
+            name = data.name;
+            exist ? widget.player.addItemToMap(index, name) : null;
+            exist ? widget.player.addTurn() : null;
+            exist ? widget.player.minusCoin() : null;
+            exist ? widget.player.calculatePoints(LoadGame.row) : null;
+            if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        EndGame(widget.player), //goes to end game page
+                  ));
+            }
+            if (exist) {
+              LoadGame.num1 = GamePage.randomNum();
+              LoadGame.num2 = GamePage.randomNum();
+              // Loop to check if it is the same value, change if it's same value
+              while (LoadGame.num1 == LoadGame.num2) {
+                LoadGame.num1 = GamePage.randomNum();
+              }
+            }
+            //print(GamePage.player.map);
+          }),
       builder: (context, accept, reject) {
         if (exist) {
           return returnBuildingTile(name);
@@ -481,28 +533,33 @@ class _LoadGameState extends State<LoadGame>{
         )
     );
   }
-}
 
-bool rules(List<String> map, int i) {
-  List<String> building = [
-    'Park',
-    'Industry',
-    'Residential',
-    'Road',
-    'Commercial'
-  ];
-  //center index is either +1 -1 +10 -10
-  if (building.contains(map[i])) {
-    return false;
-  } else if (map.asMap().containsKey(i - LoadGame.row) && map[i - LoadGame.row] != "-") { //check if there is smt below
-    return true;
-  } else if (map.asMap().containsKey(i + LoadGame.row) && map[i + LoadGame.row] != "-") { //check if there is smt on top
-    return true;
-  } else if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" && i % LoadGame.row != 0) { //check if there is smt on the left
-    return true;
-  } else if (map.asMap().containsKey(i + 1) && map[i + 1] != "-" &&(i + 1) % LoadGame.row != 0) { //check if there is smt on the right
-    return true;
-  } else {
-    return false;
+
+  bool rules(List<String> map, int i) {
+    List<String> building = [
+      'Park',
+      'Industry',
+      'Residential',
+      'Road',
+      'Commercial'
+    ];
+    //center index is either +1 -1 +10 -10
+    if (building.contains(map[i])) {
+      return false;
+    } else if (map.asMap().containsKey(i - LoadGame.row) &&
+        map[i - LoadGame.row] != "-") { //check if there is smt below
+      return true;
+    } else if (map.asMap().containsKey(i + LoadGame.row) &&
+        map[i + LoadGame.row] != "-") { //check if there is smt on top
+      return true;
+    } else if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" &&
+        i % LoadGame.row != 0) { //check if there is smt on the left
+      return true;
+    } else if (map.asMap().containsKey(i + 1) && map[i + 1] != "-" &&
+        (i + 1) % LoadGame.row != 0) { //check if there is smt on the right
+      return true;
+    } else {
+      return false;
+    }
   }
 }

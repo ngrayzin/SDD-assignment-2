@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/About.dart';
@@ -14,6 +15,7 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/BoardTile.dart';
 import 'package:sdd_assignment_2/BuildingCard.dart';
 import 'package:sdd_assignment_2/GameBoard.dart';
+import 'package:sdd_assignment_2/GameLevel.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
@@ -21,21 +23,28 @@ import 'MainMenu.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
+import 'package:flutter/src/widgets/container.dart';
 
 class EndGame extends StatefulWidget {
-  const EndGame({super.key});
+  final Player player ;
+  const EndGame(this.player);
 
   @override
-  State<EndGame> createState() => _EndGameState();
-
-//static Player player = Player("name", [], 0);
-
+  State<StatefulWidget> createState() => EndGameState();
 }
 
-class _EndGameState extends State<EndGame> {
 
-  final BoardSettings boardSettings = BoardSettings(cols: GamePage.player.level, rows: GamePage.player.level);
+class EndGameState extends State<EndGame> {
+  //int level;
+  //EndGameState(this.level);
+  @override
+  void initState() {
+    super.initState();
+    print("please work");
+    print(widget.player.level);
+  }
 
+  late BoardSettings boardSettings = BoardSettings(cols: widget.player.level, rows: widget.player.level);
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +73,16 @@ class _EndGameState extends State<EndGame> {
                   iconSize: 40,
                   icon: const Icon(Icons.close),
                   color: colours.AppColor.main,
-                  onPressed: () => showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return saveGameMsg();
-                    },
-                  ),
-                ),
+
+                  onPressed: () {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return saveGameMsg();
+                          });
+                    });
+                  }),
                 const Spacer(
                   flex: 5,
                 ),
@@ -192,7 +204,7 @@ class _EndGameState extends State<EndGame> {
                             ),
                           ),
                           Text(
-                            ' ${GamePage.player.turn}',
+                            ' ${widget.player.turn}',
                             style: TextStyle(
                               fontFamily: 'StickNoBills',
                               color: colours.AppColor.main,
@@ -213,10 +225,14 @@ class _EndGameState extends State<EndGame> {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       onPressed: () {
-                        GamePage.player.saveGame();
+                        widget.player.saveGame();
                         Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                          return const MainMenu();
+                            widget.player.map = [];
+                            widget.player.coin = 0;
+                            widget.player.turn = 0;
+                            widget.player.point = 0;
+                          return const GameLevel();
                           }));
                       },
                       style: ButtonStyle(
@@ -232,12 +248,12 @@ class _EndGameState extends State<EndGame> {
                       child: Container(
                           padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
                           child: Text(
-                              "SAVE GAME",
+                              "SAVE GAME & START NEW GAME",
                               style: TextStyle(
                                 fontFamily: 'StickNoBills',
                                 color: colours.AppColor.background,
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -274,7 +290,7 @@ class _EndGameState extends State<EndGame> {
           onPressed: (){
             FirebaseDatabase.instance
                 .ref('players/${currentUser?.uid}')
-                .set(GamePage.player.saveGameToJson())
+                .set(widget.player.saveGameToJson())
                 .then((_) {
               // Data saved successfully!
               Navigator.popUntil(context, (route) => route.isFirst);
@@ -338,7 +354,7 @@ class _EndGameState extends State<EndGame> {
           height: MediaQuery.of(context).size.width * (1-0.14) - 12.0,
           child: GridView.count(
             //padding: EdgeInsets.zero,
-            crossAxisCount: boardSettings.cols,
+            crossAxisCount: widget.player.level,
             crossAxisSpacing: 3,
             mainAxisSpacing: 3,
             children: [
@@ -363,39 +379,19 @@ class _EndGameState extends State<EndGame> {
     ];
     return DragTarget<Building>(
       onAccept: (data) => setState(() {
-        exist = GamePage.player.turn == 0
+        exist = widget.player.turn == 0
             ? true
-            : rules(GamePage.player.map, index);
+            : rules(widget.player.map, index);
         name = data.name;
-        exist ? GamePage.player.addItemToMap(index, name) : null;
-        exist ? GamePage.player.addTurn() : null;
-        exist ? GamePage.player.minusCoin() : null;
-        exist ? GamePage.player.calculatePoints(GamePage.row) : null;
-        if (GamePage.player.coin == 0){
-          Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    EndGame(), //goes to end game page
-              ));
-        }
-        if (exist) {
-          GamePage.num1 = GamePage.randomNum();
-          GamePage.num2 = GamePage.randomNum();
-          // Loop to check if it is the same value, change if it's same value
-          while (GamePage.num1 == GamePage.num2) {
-            GamePage.num1 = GamePage.randomNum();
-          }
-        }
-        //print(GamePage.player.map);
       }),
       builder: (context, accept, reject) {
         if (exist) {
           return returnBuildingTile(name);
         } else {
-          if (building.contains(GamePage.player.map[index])) {
-            return returnBuildingTile(GamePage.player.map[index]);
+          if (building.contains(widget.player.map[index])) {
+            return returnBuildingTile(widget.player.map[index]);
           } else {
-            GamePage.player.addItemToMap(index, "-");
+            widget.player.addItemToMap(index, "-");
             return Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
