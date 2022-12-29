@@ -5,6 +5,7 @@ import 'colours.dart' as colours;
 class Building {
   late int index;
   late String name;
+  bool check = false;
   final Map buildingList = {
     0: "Park",
     1: "Commercial",
