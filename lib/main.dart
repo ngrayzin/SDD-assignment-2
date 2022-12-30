@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
-      home: const Login(),//landingPage() ? const MainMenu() : const Login(),
+      home: landingPage() ? const MainMenu() : const Login(),
     );
   }
 }
