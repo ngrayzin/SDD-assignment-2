@@ -13,9 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/About.dart';
 import 'package:sdd_assignment_2/BoardSettings.dart';
-import 'package:sdd_assignment_2/BoardTile.dart';
-import 'package:sdd_assignment_2/BuildingCard.dart';
-import 'package:sdd_assignment_2/GameBoard.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
 import 'EndGame.dart';
@@ -50,7 +47,6 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   final BoardSettings boardSettings = BoardSettings(cols: GamePage.player.level, rows: GamePage.player.level);
-  late BoardTile boardTile;
 
   @override
   void initState() {

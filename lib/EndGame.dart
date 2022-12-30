@@ -12,9 +12,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/About.dart';
 import 'package:sdd_assignment_2/BoardSettings.dart';
-import 'package:sdd_assignment_2/BoardTile.dart';
-import 'package:sdd_assignment_2/BuildingCard.dart';
-import 'package:sdd_assignment_2/GameBoard.dart';
 import 'package:sdd_assignment_2/GameLevel.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';

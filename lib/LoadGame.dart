@@ -6,10 +6,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/BoardSettings.dart';
-import 'package:sdd_assignment_2/BuildingCard.dart';
-import 'package:sdd_assignment_2/GameBoard.dart';
 import 'About.dart';
-import 'BoardTile.dart';
 import 'Building.dart';
 import 'EndGame.dart';
 import 'GamePage.dart';
@@ -36,7 +33,6 @@ class LoadGame extends StatefulWidget{
 class _LoadGameState extends State<LoadGame> {
 
   late BoardSettings boardSettings = BoardSettings(cols: widget.level, rows: widget.level);
-  late BoardTile boardTile;
 
   @override
   void initState() {
