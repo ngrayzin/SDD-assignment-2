@@ -44,8 +44,8 @@ class GamePage extends StatefulWidget {
   static int num2 = 0;
   static int row = 0;
   static int col = 0;
-  static bool ran = true;
-  static bool ran2 = true;
+  static bool showboth = true;
+  static int showeither = 0;
 }
 
 class _GamePageState extends State<GamePage> {
@@ -166,10 +166,10 @@ class _GamePageState extends State<GamePage> {
                               child: SizedBox(
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                  const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
                                         'assets/images/Point.png',
@@ -202,10 +202,10 @@ class _GamePageState extends State<GamePage> {
                             child: SizedBox(
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       'TURN  ${GamePage.player.turn}',
@@ -231,10 +231,10 @@ class _GamePageState extends State<GamePage> {
                               child: SizedBox(
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                  const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
                                         'assets/images/Coin.png',
@@ -266,15 +266,7 @@ class _GamePageState extends State<GamePage> {
                       Padding(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: IntrinsicHeight(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              randomizer(GamePage.num1),
-                              const Spacer(),
-                              randomizer(GamePage.num2),
-                            ],
-                          )))
+                              child: options()))
                     ],
                   )),
             ),
@@ -283,12 +275,77 @@ class _GamePageState extends State<GamePage> {
   }
 
   Widget options(){
-    return randomizer(GamePage.num2);
+    if (GamePage.showboth == true){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          //randomizer here
+          Visibility(
+            child: randomizer0 (GamePage.num1),
+            visible: true,
+          ),
+          // BuildingCard(),
+          const Spacer(),
+          // BuildingCard(),
+          Visibility(
+            child: randomizer1 (GamePage.num2),
+            visible: true,
+          ),
+        ],
+      );
+    }
+    else {
+      //Random random = Random();
+      //GamePage.showeither = random.nextInt(2);
+      if (GamePage.showeither == 0){
+        print("rayzin so smart");
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //randomizer here
+            Visibility(
+              child: randomizer0 (GamePage.num1),
+              visible: true,
+            ),
+            // BuildingCard(),
+            const Spacer(),
+            // BuildingCard(),
+            Visibility(
+              child: randomizer1 (GamePage.num2),
+              visible: false,
+            ),
+          ],
+        );
+      }
+      else{
+        print("rayzin so handsome");
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //randomizer here
+            Visibility(
+              child: randomizer0 (GamePage.num1),
+              visible: false,
+            ),
+            // BuildingCard(),
+            const Spacer(),
+            // BuildingCard(),
+            Visibility(
+              child: randomizer1 (GamePage.num2),
+              visible: true,
+            ),
+          ],
+        );
+      }
+    }
   }
 
   AlertDialog saveGameMsg(){
     AlertDialog alert = AlertDialog(
-    insetPadding: EdgeInsets.all(10),
+      insetPadding: EdgeInsets.all(10),
       title: const Text(
         'SAVE GAME?',
         textAlign: TextAlign.center,
@@ -361,16 +418,10 @@ class _GamePageState extends State<GamePage> {
     return alert;
   }
 
-  Widget randomizer(int number) {
+  Widget randomizer0 (int number) {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
-      onDragStarted: () => setState((){
-        !GamePage.ran;
-      }),
-      onDragEnd: (_) => setState((){
-        !GamePage.ran;
-      }),
       feedback: SizedBox(
         width: 40,
         height: 40,
@@ -388,6 +439,22 @@ class _GamePageState extends State<GamePage> {
       childWhenDragging: const SizedBox(
         width: 20,
       ),
+      onDragStarted: (){
+        setState(() {
+          GamePage.showboth = false;
+          GamePage.showeither = 0;
+        });
+      },
+      onDragCompleted: (){
+        setState(() {
+          GamePage.showboth = true;
+        });
+      },
+      onDraggableCanceled: (Velocity velocity, Offset offset){
+        setState(() {
+          GamePage.showboth = true;
+        });
+      },
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.37,
         height: MediaQuery.of(context).size.width * 0.37,
@@ -399,31 +466,103 @@ class _GamePageState extends State<GamePage> {
               side: BorderSide(color: colours.AppColor.main, width: 2),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: Visibility(
-              visible: GamePage.ran,
-              child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('assets/images/${building.name}.png'),
-                        width: 70,
-                        height: 70,
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/${building.name}.png'),
+                      width: 70,
+                      height: 70,
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      building.name,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'StickNoBills',
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
                       ),
-                      const SizedBox(height: 5.0),
-                      Text(
-                        building.name,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontFamily: 'StickNoBills',
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )),
-            )),
+                    )
+                  ],
+                ))),
+      ),
+    );
+  }
+
+  Widget randomizer1 (int number) {
+    Building building = Building(number);
+    return Draggable<Building>(
+      data: building,
+      feedback: SizedBox(
+        width: 40,
+        height: 40,
+        child: Center(
+          child: Card(
+              color: colours.AppColor.background,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Center(
+                  child: Image.asset('assets/images/${building.name}.png'),
+                ),
+              )),
+        ),
+      ),
+      childWhenDragging: const SizedBox(
+        width: 20,
+      ),
+      onDragStarted: (){
+        setState(() {
+          GamePage.showboth = false;
+          GamePage.showeither = 1;
+        });
+      },
+      onDragCompleted: (){
+        setState(() {
+          GamePage.showboth = true;
+
+        });
+      },
+      onDraggableCanceled: (Velocity velocity, Offset offset){
+        setState(() {
+          GamePage.showboth = true;
+        });
+      },
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.37,
+        height: MediaQuery.of(context).size.width * 0.37,
+        child: Card(
+            elevation: 8,
+            shadowColor: colours.AppColor.main,
+            color: colours.AppColor.buttonBackground,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: colours.AppColor.main, width: 2),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/${building.name}.png'),
+                      width: 70,
+                      height: 70,
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      building.name,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'StickNoBills',
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ))),
       ),
     );
   }
@@ -461,9 +600,6 @@ class _GamePageState extends State<GamePage> {
       'Commercial'
     ];
     return DragTarget<Building>(
-      onMove: (detail) => setState(() {
-        detail.data.check = true;
-      }),
       onAccept: (data) => setState(() {
         exist = GamePage.player.turn == 0
             ? true
@@ -525,7 +661,7 @@ class _GamePageState extends State<GamePage> {
     return Container(
         color: colours.AppColor.background,
         child: Padding(
-          padding: const EdgeInsets.all(2.0),
+            padding: const EdgeInsets.all(2.0),
             child: Center(
               child: Image.asset('assets/images/$name.png'),
             )

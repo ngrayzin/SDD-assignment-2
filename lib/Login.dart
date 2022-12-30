@@ -277,15 +277,18 @@ class _LoginState extends State<Login>{
                 await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: mail,
                     password: pass,
-                ).then((credential) {
+                ).then((credential) async {
                   print(credential.user?.uid);
                   print(credential.user?.displayName);
                   formKey.currentState?.reset();
                   setState(() {
                     isLoading = false;
                   });
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                  const MainMenu()), (Route<dynamic> route) => false);
+                  DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${credential.user?.uid}');
+                  await newPlayer.update({
+                    "name": credential.user?.displayName,
+                  }).then((value) => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                  const MainMenu()), (Route<dynamic> route) => false));
                   // user exist
                   //Navigator.popUntil(context, (route) => route.isFirst);
                 });
@@ -348,14 +351,17 @@ class _LoginState extends State<Login>{
               idToken: googleSignInAuthentication.idToken,
             );
             await FirebaseAuth.instance.signInWithCredential(credential)
-              .then((value) {
+              .then((value) async {
                 final user = value.user;
                 print(user?.uid);
                 setState(() {
                   isLoading1 = false;
                 });
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                const MainMenu()), (Route<dynamic> route) => false);
+                DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${user?.uid}');
+                await newPlayer.update({
+                  "name": user?.displayName,
+                }).then((value) => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                const MainMenu()), (Route<dynamic> route) => false));
             });
           } on FirebaseAuthException catch (e) {
             setState(() {

@@ -390,16 +390,18 @@ class _SignupState extends State<Signup>{
                 await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: email,
                   password: pass,
-                ).then((credential) {
+                ).then((credential) async {
                   final user = credential.user;
                   print(user?.uid);
                   print("stringnig");
                   print(username);
                   credential.user?.updateDisplayName(username);
                   formKey.currentState?.reset();
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                      const MainMenu()), (Route<dynamic> route) => false);
-
+                  DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${user?.uid}');
+                  await newPlayer.update({
+                    "name": username,
+                  }).then((value) => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                  const MainMenu()), (Route<dynamic> route) => false));
                 });
               } on FirebaseAuthException catch (e) {
                 setState(() {
