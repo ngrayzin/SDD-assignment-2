@@ -30,6 +30,8 @@ class Player {
   //       json['turn'] as int);
   // }
 
+
+
   Map<String, dynamic> ToJson() {
     return {
       'map': map.toString(),
@@ -89,6 +91,9 @@ class Player {
             ref.set(score);
           }
         }
+        else{
+          ref.set(score);
+        }
         }).then((_) {
           finish.set(ToJson());
           remove.set(null);
@@ -109,6 +114,9 @@ class Player {
         if(score > i){
           check = true;
         }
+      }
+      else{
+        check = true;
       }
     });
     return check;
