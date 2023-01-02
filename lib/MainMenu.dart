@@ -80,6 +80,7 @@ class _MainMenuState extends State<MainMenu> {
                   //fit: BoxFit.contain,
                 ),
               ),
+              // hello
               Container(
                 padding: const EdgeInsets.only(top: 40, bottom: 10),
                 width: MediaQuery.of(context).size.width * 0.65,
