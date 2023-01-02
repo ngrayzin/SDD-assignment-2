@@ -32,22 +32,19 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-/*  GoogleSignInAccount? _currentUser;
+  late bool _isButtonDisabled;
+  var list = [];
+  late Player player;
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
-      setState(() {
-        _currentUser = account;
-      });
-      if (_currentUser != null) {
-        await FirebaseAuth.instance.signInAnonymously();
-      }
-    });
-    _googleSignIn.signInSilently();
-  }*/
+    returnSaveGame();
+  }
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => returnSaveGame());
     return Scaffold(
         backgroundColor: colours.AppColor.background,
         body: Container(
@@ -65,8 +62,8 @@ class _MainMenuState extends State<MainMenu> {
             children: [
               Expanded(
                 child: SizedBox(
-                  child: Image.asset("assets/images/App_logo.png"),
                   width: 200,
+                  child: Image.asset("assets/images/App_logo.png"),
                 ),
               ),
               const SizedBox(
@@ -127,44 +124,10 @@ class _MainMenuState extends State<MainMenu> {
               const SizedBox(
                 height: 10.0,
               ),
-              Container(
+              !isLoading? Container(
                 padding: const EdgeInsets.only(top: 40, bottom: 10),
                 width: MediaQuery.of(context).size.width * 0.65,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    final ref = FirebaseDatabase.instance.ref();
-                    var currentUser = FirebaseAuth.instance.currentUser;
-                    await ref.child('players/${currentUser?.uid}/saveGame').get()
-                        .then((snapshot){
-                      if (snapshot.exists) {
-                        var list = [];
-                        for (var item in snapshot.children) {
-                          print(item.value);
-                          list.add(item.value);
-                        }
-                        Player player = Player(currentUser?.displayName, [], list[4], list[0]);
-                        player.stringMap = list[2];
-                        player.deserializeMap();
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return LoadGame(player: player, coin: list[0], level: list[1], point: list[3],);
-                            }));
-                      }
-                      else {
-                        Fluttertoast.showToast(
-                            msg: "No previous saved game",
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            textColor: Colors.white,
-                            fontSize: 16.0
-                        );
-                      }
-                    });
-                    /*Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const LoadGame();
-                    }));*/
-                  },
                   style: ElevatedButton.styleFrom(
                     primary: colours.AppColor.main, //background color of button
                     side: const BorderSide(width:0, color:Colors.black), //border width and color
@@ -174,6 +137,12 @@ class _MainMenuState extends State<MainMenu> {
                     ),
                     padding: const EdgeInsets.fromLTRB(0, 15, 5, 12), //content padding inside button
                   ),
+                  onPressed: _isButtonDisabled ? null : () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                          return LoadGame(player: player, coin: list[0], level: list[1], point: list[3],);
+                        }));
+                  },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -199,7 +168,7 @@ class _MainMenuState extends State<MainMenu> {
                       ]
                   ),
                 ),
-              ),
+              ): const CircularProgressIndicator(),
               const SizedBox(
                 height: 10.0,
               ),
@@ -249,7 +218,7 @@ class _MainMenuState extends State<MainMenu> {
                     child: ElevatedButton(
                       onPressed: () => Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return const GameLevel();
+                            return const LeaderBoard();
                           })),
                       style: ElevatedButton.styleFrom(
                         primary: colours.AppColor.main, //background color of button
@@ -348,4 +317,41 @@ class _MainMenuState extends State<MainMenu> {
     );
   }
 
+  void returnSaveGame() async{
+    //late bool check;
+    //list = [];
+    final ref = FirebaseDatabase.instance.ref();
+    var currentUser = FirebaseAuth.instance.currentUser;
+    /*Future.delayed(const Duration(milliseconds: 1500),() async {
+
+    });*/
+    await ref.child('players/${currentUser?.uid}/saveGame').get()
+        .then((snapshot){
+      if (snapshot.exists) {
+        list = [];
+        for (var item in snapshot.children) {
+          print(item.value);
+          list.add(item.value);
+        }
+        player = Player(currentUser?.displayName, [], list[4], list[0]);
+        player.stringMap = list[2];
+        player.deserializeMap();
+        _isButtonDisabled = false;
+        setState(() {
+          list;
+          player;
+          isLoading = false;
+        });
+        //check = false;
+      }
+      else{
+        _isButtonDisabled = true;
+        setState(() {
+          isLoading = false;
+        });
+        //check = true;
+      }
+    });
+    //return check;
+  }
 }
