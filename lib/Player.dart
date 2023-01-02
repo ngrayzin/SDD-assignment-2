@@ -62,7 +62,6 @@ class Player {
   }
 
   int returnTurn() {
-    print(turn);
     return turn;
   }
 
@@ -110,7 +109,6 @@ class Player {
       if (snapshot.exists) {
         String string = snapshot.value.toString();
         int i = int.parse(string);
-        print(i);
         if(score > i){
           check = true;
         }

@@ -330,7 +330,7 @@ class _MainMenuState extends State<MainMenu> {
       if (snapshot.exists) {
         list = [];
         for (var item in snapshot.children) {
-          print(item.value);
+          //print(item.value);
           list.add(item.value);
         }
         player = Player(currentUser?.displayName, [], list[4], list[0]);
