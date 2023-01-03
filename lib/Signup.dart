@@ -90,7 +90,7 @@ class _SignupState extends State<Signup>{
           height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.fromLTRB(
             MediaQuery.of(context).size.width * 0.07,
-            MediaQuery.of(context).size.height * 0.01,
+            MediaQuery.of(context).size.height * 0.05,
             MediaQuery.of(context).size.width * 0.07,
             MediaQuery.of(context).size.height * 0.05),
           child: Form(

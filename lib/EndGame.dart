@@ -39,7 +39,7 @@ class EndGameState extends State<EndGame> {
     super.initState();
     print("object");
     print(widget.player.point);
-    widget.player.highscore(widget.player.point).then((value){
+    widget.player.highscore(widget.player.point, widget.player.level).then((value){
       print("value");
       if(value){
         print("asdauifvggfwoeufbeg");
@@ -227,7 +227,7 @@ class EndGameState extends State<EndGame> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              widget.player.saveGame(widget.player.point).then((value){
+                              widget.player.saveGame(widget.player.point, widget.player.level).then((value){
                                 Navigator.popUntil(context, (route) => route.isFirst);
                                 /*Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                 const GameLevel()), (Route<dynamic> route) => false);*/
@@ -259,9 +259,9 @@ class EndGameState extends State<EndGame> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              //DatabaseReference remove = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/saveGame');
-                              //remove.set(null).then((value) => Navigator.popUntil(context, (route) => route.isFirst));
-                              Navigator.popUntil(context, (route) => route.isFirst);
+                              DatabaseReference remove = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/saveGame');
+                              remove.set(null).then((value) => Navigator.popUntil(context, (route) => route.isFirst));
+                              //Navigator.popUntil(context, (route) => route.isFirst);
                             },
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
