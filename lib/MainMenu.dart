@@ -54,7 +54,7 @@ class _MainMenuState extends State<MainMenu> {
               MediaQuery.of(context).size.width * 0.07,
               MediaQuery.of(context).size.height * 0.05,
               MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.04),
+              MediaQuery.of(context).size.height * 0.035),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -181,7 +181,7 @@ class _MainMenuState extends State<MainMenu> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      //padding: const EdgeInsets.only(top: 8, bottom: 8),
                       //width: MediaQuery.of(context).size.width * 0.65,
                       child: ElevatedButton(
                         onPressed: () =>
@@ -215,7 +215,7 @@ class _MainMenuState extends State<MainMenu> {
                       width: 10.0,
                     ),
                     Container(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      //padding: const EdgeInsets.only(top: 8, bottom: 8),
                       //width: MediaQuery.of(context).size.width * 0.65,
                       child: ElevatedButton(
                         onPressed: () => Navigator.push(context,
@@ -284,7 +284,7 @@ class _MainMenuState extends State<MainMenu> {
 
                    */
                     Container(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      //padding: const EdgeInsets.only(top: 8, bottom: 8),
                       //width: MediaQuery.of(context).size.width * 0.65,
                       child: ElevatedButton(
                         onPressed: () => showDialog<String>(

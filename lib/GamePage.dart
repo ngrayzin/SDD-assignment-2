@@ -61,6 +61,9 @@ class _GamePageState extends State<GamePage> {
     //print(GamePage.player.map);
     GamePage.num1 = GamePage.randomNum();
     GamePage.num2 = GamePage.randomNum();
+    while (GamePage.num1 == GamePage.num2) {
+      GamePage.num1 = GamePage.randomNum();
+    }
     //print(GamePage.player.level);
   }
 

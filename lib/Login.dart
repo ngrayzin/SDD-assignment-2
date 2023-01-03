@@ -47,33 +47,53 @@ class _LoginState extends State<Login>{
             height: MediaQuery.of(context).size.height,
             padding: EdgeInsets.fromLTRB(
                 MediaQuery.of(context).size.width * 0.07,
-                MediaQuery.of(context).size.height * 0.04,
+                MediaQuery.of(context).size.height * 0.1,
                 MediaQuery.of(context).size.width * 0.07,
-                MediaQuery.of(context).size.height * 0.04),
+                MediaQuery.of(context).size.height * 0.1),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  const Text(
+                    "Welcome To",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'StickNoBills',
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  /*
                   Expanded(
                     child: SizedBox(
                       width: 240,
                       child: Image.asset("assets/images/App_logo.png"),
                     ),
                   ),
+
+                   */
                   const SizedBox(
                     height: 30.0,
                   ),
+
                   Container(
-                    padding: const EdgeInsets.only(top: 0),
+                    padding: const EdgeInsets.only(top: 10),
                     child: Image.asset(
                       "assets/images/App_name.png",
                       width: MediaQuery.of(context).size.width * 0.8,
                       //fit: BoxFit.contain,
                     ),
                   ),
+                  const Spacer(
+                    flex: 1,
+                  ),
                   Container(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0),
                     child: Form(
                       key: formKey,
                       child: Column(
@@ -81,16 +101,14 @@ class _LoginState extends State<Login>{
                           returnEmail(),
                           const SizedBox(height: 10),
                           returnPassword(),
-                          const SizedBox(height: 20),
-                          submit(),
                           const SizedBox(height: 10),
+                          submit(),
+                          const SizedBox(height: 15),
                           signUp(),
-                          /*
-                        const SizedBox(height: 10),
-                        or(),
-                        const SizedBox(height: 10),
-                        googleSignIn()
-                         */
+                          const SizedBox(height: 5),
+                          or(),
+                          const SizedBox(height: 15),
+                          googleSignIn()
                         ],
                       ),
                     ),
@@ -128,7 +146,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -219,7 +237,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -328,13 +346,13 @@ class _LoginState extends State<Login>{
               MaterialStateProperty.all<Color>(colours.AppColor.main),
               side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
           child: Container(
-            padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 6.0),
             child:!isLoading? const Text(
                 "Login",
                 style: TextStyle(
                   fontFamily: 'StickNoBills',
                   color: Colors.black,
-                  fontSize: 30,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 )
             ): Transform.scale(
@@ -347,10 +365,10 @@ class _LoginState extends State<Login>{
   }
 
   Widget googleSignIn(){
-    return SizedBox(
+    return Container(
       width: MediaQuery.of(context).size.width,
       child: OutlinedButton.icon(
-        icon: Image.asset("assets/images/google.png",width: 32,height: 32,fit: BoxFit.cover,),
+        icon: Image.asset("assets/images/google.png",width: 30,height: 30,fit: BoxFit.cover,),
         onPressed: () async {
           setState(() {
             isLoading1 = true;
@@ -390,21 +408,21 @@ class _LoginState extends State<Login>{
         label: !isLoading1? Text(
           "Sign in with google",
           style: TextStyle(
-              color: colours.AppColor.background, fontWeight: FontWeight.bold),
+              color: colours.AppColor.background, fontWeight: FontWeight.bold, fontSize: 20, fontFamily:'StickNoBills'),
         ): Transform.scale(
           scale: 0.5,
           child: const CircularProgressIndicator(),
         ),
         style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: const BorderSide(color: Colors.transparent)
-                )
-            ),
-            backgroundColor:
-            MaterialStateProperty.all<Color>(Colors.white),
-            side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+          padding: MaterialStateProperty.all(const EdgeInsets.only(top: 8.0, bottom: 6.0)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: const BorderSide(color: Colors.transparent)
+              )
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
       ),
     );
   }

@@ -42,6 +42,10 @@ class _LoadGameState extends State<LoadGame> {
     widget.player.point = widget.point;
     LoadGame.num1 = GamePage.randomNum();
     LoadGame.num2 = GamePage.randomNum();
+
+    while (LoadGame.num1 == LoadGame.num2) {
+      LoadGame.num1 = GamePage.randomNum();
+    }
     LoadGame.row = widget.player.level;
 
     if (widget.player.coin <= 0 || widget.player.endGrid() == true) {
@@ -161,7 +165,7 @@ class _LoadGameState extends State<LoadGame> {
                       MediaQuery
                           .of(context)
                           .size
-                          .height * 0.05),
+                          .height * 0.04),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -275,25 +279,106 @@ class _LoadGameState extends State<LoadGame> {
                       Padding(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: IntrinsicHeight(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceBetween,
-                                //crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  //randomizer here
-                                  randomizer(LoadGame.num1),
-                                  // BuildingCard(),
-                                  const Spacer(),
-                                  // BuildingCard(),
-                                  randomizer(LoadGame.num2),
-                                ],
-                              )))
+                              child: options())),
                     ],
                   )),
             ),
           )),
     );
   }
+
+
+
+  Widget options(){
+    if (GamePage.showboth == true){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          //randomizer here
+          Visibility(
+            child: randomizer0 (LoadGame.num1),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: true,
+          ),
+          // BuildingCard(),
+          const Spacer(),
+          // BuildingCard(),
+          Visibility(
+            child: randomizer1 (LoadGame.num2),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: true,
+          ),
+        ],
+      );
+    }
+    else {
+      //Random random = Random();
+      //GamePage.showeither = random.nextInt(2);
+      if (GamePage.showeither == 0){
+        print("rayzin so smart");
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //randomizer here
+            Visibility(
+              child: randomizer0 (LoadGame.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: true,
+            ),
+            // BuildingCard(),
+            const Spacer(),
+            // BuildingCard(),
+            Visibility(
+              child: randomizer1 (LoadGame.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: false,
+            ),
+          ],
+        );
+      }
+      else{
+        print("rayzin so handsome");
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //randomizer here
+            Visibility(
+              child: randomizer0 (LoadGame.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: false,
+            ),
+            // BuildingCard(),
+            const Spacer(),
+            // BuildingCard(),
+            Visibility(
+              child: randomizer1 (LoadGame.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: true,
+            ),
+          ],
+        );
+      }
+    }
+  }
+
+
+
+
 
   AlertDialog saveGameMsg() {
     AlertDialog alert = AlertDialog(
@@ -374,7 +459,7 @@ class _LoadGameState extends State<LoadGame> {
     return alert;
   }
 
-  Widget randomizer(int number) {
+  Widget randomizer0(int number) {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
@@ -395,6 +480,22 @@ class _LoadGameState extends State<LoadGame> {
       childWhenDragging: const SizedBox(
         width: 20,
       ),
+      onDragStarted: (){
+        setState(() {
+          GamePage.showboth = false;
+          GamePage.showeither = 0;
+        });
+      },
+      onDragCompleted: (){
+        setState(() {
+          GamePage.showboth = true;
+        });
+      },
+      onDraggableCanceled: (Velocity velocity, Offset offset){
+        setState(() {
+          GamePage.showboth = true;
+        });
+      },
       child: SizedBox(
         width: MediaQuery
             .of(context)
@@ -437,6 +538,88 @@ class _LoadGameState extends State<LoadGame> {
       ),
     );
   }
+
+
+  Widget randomizer1(int number) {
+    Building building = Building(number);
+    return Draggable<Building>(
+      data: building,
+      feedback: SizedBox(
+        width: 40,
+        height: 40,
+        child: Center(
+          child: Card(
+              color: colours.AppColor.background,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Center(
+                  child: Image.asset('assets/images/${building.name}.png'),
+                ),
+              )),
+        ),
+      ),
+      childWhenDragging: const SizedBox(
+        width: 20,
+      ),
+      onDragStarted: (){
+        setState(() {
+          GamePage.showboth = false;
+          GamePage.showeither = 0;
+        });
+      },
+      onDragCompleted: (){
+        setState(() {
+          GamePage.showboth = true;
+        });
+      },
+      onDraggableCanceled: (Velocity velocity, Offset offset){
+        setState(() {
+          GamePage.showboth = true;
+        });
+      },
+      child: SizedBox(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.37,
+        height: MediaQuery
+            .of(context)
+            .size
+            .width * 0.37,
+        child: Card(
+            elevation: 8,
+            shadowColor: colours.AppColor.main,
+            color: colours.AppColor.buttonBackground,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: colours.AppColor.main, width: 2),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/${building.name}.png'),
+                      width: 70,
+                      height: 70,
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      building.name,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'StickNoBills',
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ))),
+      ),
+    );
+  }
+
 
   Widget returnGameBoard() {
     return Expanded(
