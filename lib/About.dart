@@ -41,7 +41,7 @@ class AboutPage extends StatelessWidget {
                 const Spacer(
                   flex: 5,
                 ),
-                Text(
+                const Text(
                   'ABOUT N.A.C',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -83,12 +83,14 @@ class AboutPage extends StatelessWidget {
           child: Container(
             padding:  EdgeInsets.fromLTRB(
                 MediaQuery.of(context).size.width*0.07,
-                MediaQuery.of(context).size.height*0.05,
+                MediaQuery.of(context).size.height*0.04,
                 MediaQuery.of(context).size.width*0.07,
-                MediaQuery.of(context).size.height*0.05),
+                MediaQuery.of(context).size.height*0.04),
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   //const SizedBox(height: 5.0),
                   Container(

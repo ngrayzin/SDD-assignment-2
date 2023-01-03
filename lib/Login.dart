@@ -38,54 +38,85 @@ class _LoginState extends State<Login>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomInset: false,
         backgroundColor: colours.AppColor.background,
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.fromLTRB(
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.05,
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.01),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: Image.asset("assets/images/App_logo.png"),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Image.asset(
-                    "assets/images/App_name.png",
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    //fit: BoxFit.contain,
+        body: SingleChildScrollView(
+          reverse: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.1,
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.1),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Spacer(
+                    flex: 1,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: <Widget>[
-                        returnEmail(),
-                        returnPassword(),
-                        submit(),
-                        const SizedBox(height: 10),
-                        signUp(),
-                        const SizedBox(height: 10),
-                        or(),
-                        const SizedBox(height: 10),
-                        googleSignIn()
-                      ],
+                  const Text(
+                    "Welcome To",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'StickNoBills',
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ]
+                  /*
+                  Expanded(
+                    child: SizedBox(
+                      width: 240,
+                      child: Image.asset("assets/images/App_logo.png"),
+                    ),
+                  ),
+
+                   */
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+
+                  Container(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Image.asset(
+                      "assets/images/App_name.png",
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      //fit: BoxFit.contain,
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: <Widget>[
+                          returnEmail(),
+                          const SizedBox(height: 10),
+                          returnPassword(),
+                          const SizedBox(height: 10),
+                          submit(),
+                          const SizedBox(height: 15),
+                          signUp(),
+                          const SizedBox(height: 5),
+                          or(),
+                          const SizedBox(height: 15),
+                          googleSignIn()
+                        ],
+                      ),
+                    ),
+                  ),
+                ]
+            ),
           ),
-        )
+        ),
     );
   }
 
@@ -115,7 +146,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -132,7 +163,7 @@ class _LoginState extends State<Login>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -206,7 +237,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -216,7 +247,7 @@ class _LoginState extends State<Login>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -262,7 +293,7 @@ class _LoginState extends State<Login>{
   }
   Widget submit(){
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
@@ -314,27 +345,30 @@ class _LoginState extends State<Login>{
               backgroundColor:
               MaterialStateProperty.all<Color>(colours.AppColor.main),
               side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
-          child:!isLoading? const Text(
-            "Login",
-            style: TextStyle(
-            fontFamily: 'StickNoBills',
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          )
-          ): Transform.scale(
-            scale: 0.5,
-            child: const CircularProgressIndicator()),
+          child: Container(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 6.0),
+            child:!isLoading? const Text(
+                "Login",
+                style: TextStyle(
+                  fontFamily: 'StickNoBills',
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                )
+            ): Transform.scale(
+                scale: 0.5,
+                child: const CircularProgressIndicator()),
+          ),
         ),
       ),
     );
   }
 
   Widget googleSignIn(){
-    return SizedBox(
+    return Container(
       width: MediaQuery.of(context).size.width,
       child: OutlinedButton.icon(
-        icon: Image.asset("assets/images/google.png",width: 32,height: 32,fit: BoxFit.cover,),
+        icon: Image.asset("assets/images/google.png",width: 30,height: 30,fit: BoxFit.cover,),
         onPressed: () async {
           setState(() {
             isLoading1 = true;
@@ -374,21 +408,21 @@ class _LoginState extends State<Login>{
         label: !isLoading1? Text(
           "Sign in with google",
           style: TextStyle(
-              color: colours.AppColor.background, fontWeight: FontWeight.bold),
+              color: colours.AppColor.background, fontWeight: FontWeight.bold, fontSize: 20, fontFamily:'StickNoBills'),
         ): Transform.scale(
           scale: 0.5,
           child: const CircularProgressIndicator(),
         ),
         style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: const BorderSide(color: Colors.transparent)
-                )
-            ),
-            backgroundColor:
-            MaterialStateProperty.all<Color>(Colors.white),
-            side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+          padding: MaterialStateProperty.all(const EdgeInsets.only(top: 8.0, bottom: 6.0)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: const BorderSide(color: Colors.transparent)
+              )
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
       ),
     );
   }
@@ -399,11 +433,11 @@ class _LoginState extends State<Login>{
         children: [
           const TextSpan(
             text: "Don't have an account? ",
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.white70, letterSpacing: 0.35,fontSize: 15.0),
           ),
           TextSpan(
             text: 'Sign up here',
-            style: const TextStyle(color: Colors.blue),
+            style: const TextStyle(color: Colors.blue, letterSpacing: 0.35, fontSize: 15.0),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.push(context,

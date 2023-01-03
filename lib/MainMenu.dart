@@ -55,7 +55,7 @@ class _MainMenuState extends State<MainMenu> {
               MediaQuery.of(context).size.width * 0.07,
               MediaQuery.of(context).size.height * 0.05,
               MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.04),
+              MediaQuery.of(context).size.height * 0.035),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -68,7 +68,7 @@ class _MainMenuState extends State<MainMenu> {
                 ),
               ),
               const SizedBox(
-                height: 40.0,
+                height: 30.0,
               ),
               Container(
                 padding: EdgeInsets.only(top: 0),
@@ -81,7 +81,7 @@ class _MainMenuState extends State<MainMenu> {
               // hello
               Container(
                 padding: const EdgeInsets.only(top: 50, bottom: 10),
-                width: MediaQuery.of(context).size.width * 0.65,
+                width: MediaQuery.of(context).size.width * 0.75,
                 child: ElevatedButton(
                   onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
@@ -89,8 +89,49 @@ class _MainMenuState extends State<MainMenu> {
                   })),
                   style: ElevatedButton.styleFrom(
                     primary: colours.AppColor.main, //background color of button
-                    side: const BorderSide(
-                        width: 0, color: Colors.black), //border width and color
+                    side: const BorderSide(width:0, color:Colors.black), //border width and color
+                    elevation: 2, //elevation of button
+                    shape: RoundedRectangleBorder( //to set border radius to button
+                    borderRadius: BorderRadius.circular(15)
+                    ),
+                    padding: const EdgeInsets.fromLTRB(0, 15, 5, 12), //content padding inside button
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.play_arrow,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 15.0,
+                      ),
+                      Text("NEW GAME",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          letterSpacing: 1.0,
+                          fontSize: 32,
+                          color: Colors.black,
+                          fontFamily: 'StickNoBills',
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                    ]
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              !isLoading? Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 25),
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: colours.AppColor.main, //background color of button
+                    side: const BorderSide(width:0, color:Colors.black), //border width and color
                     elevation: 2, //elevation of button
                     shape: RoundedRectangleBorder(
                         //to set border radius to button
@@ -184,82 +225,80 @@ class _MainMenuState extends State<MainMenu> {
               ),
 
               //ROW     ROW      ROW      ROW      ROW      ROW      ROW
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    //width: MediaQuery.of(context).size.width * 0.65,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const ProfilePage();
-                      })),
-                      style: ElevatedButton.styleFrom(
-                        primary:
-                            colours.AppColor.main, //background color of button
-                        side: const BorderSide(
-                            width: 0,
-                            color: Colors.black), //border width and color
-                        elevation: 2, //elevation of button
-                        shape: RoundedRectangleBorder(
-                            //to set border radius to button
-                            borderRadius: BorderRadius.circular(15)),
-                        padding: const EdgeInsets.fromLTRB(
-                            12, 14, 12, 12), //content padding inside button
+              Container(
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      //padding: const EdgeInsets.only(top: 8, bottom: 8),
+                      //width: MediaQuery.of(context).size.width * 0.65,
+                      child: ElevatedButton(
+                        onPressed: () =>
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return const LeaderBoard();
+                                })),
+                        style: ElevatedButton.styleFrom(
+                          primary: colours.AppColor.main, //background color of button
+                          side: const BorderSide(width:0, color:Colors.black), //border width and color
+                          elevation: 2, //elevation of button
+                          shape: RoundedRectangleBorder( //to set border radius to button
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          padding: const EdgeInsets.all(15.0), //content padding inside button
+                        ),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.account_circle,
+                                size: 50,
+                                color: Colors.black,
+                              ),
+                            ]
+                        ),
                       ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.account_circle,
-                              size: 50,
-                              color: Colors.black,
-                            ),
-                          ]),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    //width: MediaQuery.of(context).size.width * 0.65,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const LeaderBoard();
-                      })),
-                      style: ElevatedButton.styleFrom(
-                        primary:
-                            colours.AppColor.main, //background color of button
-                        side: const BorderSide(
-                            width: 0,
-                            color: Colors.black), //border width and color
-                        elevation: 2, //elevation of button
-                        shape: RoundedRectangleBorder(
-                            //to set border radius to button
-                            borderRadius: BorderRadius.circular(15)),
-                        padding: const EdgeInsets.fromLTRB(
-                            12, 14, 12, 12), //content padding inside button
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    Container(
+                      //padding: const EdgeInsets.only(top: 8, bottom: 8),
+                      //width: MediaQuery.of(context).size.width * 0.65,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return const LeaderBoard();
+                            })),
+                        style: ElevatedButton.styleFrom(
+                          primary: colours.AppColor.main, //background color of button
+                          side: const BorderSide(width:0, color:Colors.black), //border width and color
+                          elevation: 2, //elevation of button
+                          shape: RoundedRectangleBorder( //to set border radius to button
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          padding: const EdgeInsets.all(15.0), //content padding inside button
+                        ),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.leaderboard,
+                                size: 50,
+                                color: Colors.black,
+                              ),
+                            ]
+                        ),
                       ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.leaderboard,
-                              size: 50,
-                              color: Colors.black,
-                            ),
-                          ]),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    /*
                   Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
@@ -296,41 +335,41 @@ class _MainMenuState extends State<MainMenu> {
                   const SizedBox(
                     width: 10.0,
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    //width: MediaQuery.of(context).size.width * 0.65,
-                    child: ElevatedButton(
-                      onPressed: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => PopUpMessage(
-                                value: MainMenu.value,
-                              )),
-                      style: ElevatedButton.styleFrom(
-                        primary:
-                            colours.AppColor.main, //background color of button
-                        side: const BorderSide(
-                            width: 0,
-                            color: Colors.black), //border width and color
-                        elevation: 2, //elevation of button
-                        shape: RoundedRectangleBorder(
-                            //to set border radius to button
-                            borderRadius: BorderRadius.circular(15)),
-                        padding: const EdgeInsets.fromLTRB(
-                            12, 14, 12, 12), //content padding inside button
+
+                   */
+                    Container(
+                      //padding: const EdgeInsets.only(top: 8, bottom: 8),
+                      //width: MediaQuery.of(context).size.width * 0.65,
+                      child: ElevatedButton(
+                        onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => PopUpMessage(
+                              value: MainMenu.value,
+                            )),
+                        style: ElevatedButton.styleFrom(
+                          primary: colours.AppColor.main, //background color of button
+                          side: const BorderSide(width:0, color:Colors.black), //border width and color
+                          elevation: 2, //elevation of button
+                          shape: RoundedRectangleBorder( //to set border radius to button
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          padding: const EdgeInsets.all(15.0), //content padding inside button
+                        ),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.exit_to_app,
+                                size: 50,
+                                color: Colors.black,
+                              ),
+                            ]
+                        ),
                       ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.exit_to_app,
-                              size: 50,
-                              color: Colors.black,
-                            ),
-                          ]),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
