@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +8,7 @@ import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/LeaderboardCard.dart';
+import 'package:sdd_assignment_2/MainMenu.dart';
 import 'package:sdd_assignment_2/Player.dart';
 import 'LeaderboardCard.dart';
 import 'colours.dart' as colours;
@@ -87,6 +90,85 @@ class LeaderBoard extends StatelessWidget {
           child: Column(
             children: [
               Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+                padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: colours.AppColor.buttonBackground,
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return LeaderBoard();
+                        })),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                colours.AppColor.main),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    side: BorderSide(
+                                        color: colours.AppColor.main,
+                                        width: 0)))),
+                        child: Text("Easy",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontFamily: 'StickNoBills')),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return LeaderBoard();
+                        })),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                colours.AppColor.main),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    side: BorderSide(
+                                        color: colours.AppColor.main,
+                                        width: 0)))),
+                        child: Text("Medium",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontFamily: 'StickNoBills')),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return LeaderBoard();
+                        })),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                colours.AppColor.main),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    side: BorderSide(
+                                        color: colours.AppColor.main,
+                                        width: 0)))),
+                        child: Text("Hard",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontFamily: 'StickNoBills')),
+                      ),
+                    ]),
+              ),
+              Container(
                 //margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
                 padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                 decoration: const BoxDecoration(
@@ -141,25 +223,31 @@ class LeaderBoard extends StatelessWidget {
   }
 
   Future<Widget> getTopTen() async {
-    List<Player> playerList = [];
+    var playerList = [];
+    Map<Object?, Object?> playersMap = new Map();
     final ref = FirebaseDatabase.instance.ref();
     final snapshot = await ref.child('players').get();
     List<Widget> widgetList = [];
+    List<Widget> leaderboardCards = [];
 
     if (snapshot.exists) {
       for (var item in snapshot.children) {
-        print(item.value);
-        Player player = Player.fromJson(item.value);
-        player.deserializeMap();
-        playerList.add(player);
-      }
-      playerList.sort(((a, b) => b.point.compareTo(a.point)));
+        if (item.child("highestScore").value != null) {
+          playersMap[item.child("name").value] =
+              item.child("highestScore").value;
+        }
 
-      List<Widget> leaderboardCards = [];
-
-      for (int i = 0; i < playerList.length; i++) {
-        leaderboardCards.add(returnLeaderboardCard(playerList[i], i + 1));
+        // Player player = Player.fromJson(item.value);
+        // player.deserializeMap();
+        // playerList.add(player);
       }
+      print(playersMap);
+
+      // playerList.sort(((a, b) => b.point.compareTo(a.point)));
+
+      // for (int i = 0; i < playersMap.length; i++) {
+      //   leaderboardCards.add(returnLeaderboardCard(playerList[i], i + 1));
+      // }
 
       return Expanded(
         child: ListView(
@@ -172,7 +260,7 @@ class LeaderBoard extends StatelessWidget {
     return Text("FUCK");
   }
 
-  returnLeaderboardCard(Player player, int position) {
+  returnLeaderboardCard(String playerName, int playerScore, int? position) {
     String positionText = "";
     if (position == 1) {
       positionText = position.toString() + "st";
@@ -207,13 +295,13 @@ class LeaderBoard extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         Text(
-          "${player.name}", //Replace with player.name
+          "${playerName}", //Replace with player.name
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
           textAlign: TextAlign.center,
         ),
         Text(
-          "${player.point}", //Replace with player.points
+          "${playerScore}", //Replace with player.points
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
           textAlign: TextAlign.center,
