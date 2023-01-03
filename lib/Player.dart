@@ -16,6 +16,7 @@ class Player {
 
   Player(this.name, this.map, this.turn, this.level);
 
+
   Player.fromJson(dynamic json)
       : name = FirebaseAuth.instance.currentUser?.displayName,
         map = [],
@@ -42,6 +43,14 @@ class Player {
     };
   }
 
+  void nerf(){
+    if(level == 5){
+      coin -= 8;
+    }
+    else if(level == 7){
+      coin -= 4;
+    }
+  }
 
   void deserializeMap() {
     stringMap = stringMap.substring(1, stringMap.length - 1);
@@ -74,11 +83,22 @@ class Player {
     return true;
   }
 
-  Future<void> saveGame(int score) async {
+  Future<void> saveGame(int score, int level) async {
     //final user =  FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}');
+    var ref;
+    switch(level){
+      case 5:
+        ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_easy');
+        break;
+      case 7:
+        ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_medium');
+        break;
+      case 10:
+        ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_hard');
+        break;
+    }
     final newPostKey =
         FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/finishGame').push().key;
-    final ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore');
     DatabaseReference finish = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/finishGame/$newPostKey');
     DatabaseReference remove = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/saveGame');
     await ref.get()
@@ -101,9 +121,20 @@ class Player {
     //await ref.update(saveGameToJson());
   }
 
-  Future<bool> highscore(int score) async {
+  Future<bool> highscore(int score, int level) async {
     bool check = false;
-    final ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore');
+    var ref;
+    switch(level){
+      case 5:
+        ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_easy');
+        break;
+      case 7:
+        ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_medium');
+        break;
+      case 10:
+        ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_hard');
+        break;
+    }
     await ref.get()
         .then((snapshot){
       if (snapshot.exists) {
