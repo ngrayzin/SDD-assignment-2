@@ -40,7 +40,19 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
-    returnSaveGame();
+    //returnSaveGame();
+  }
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+  @override
+  void dispose() {
+    // ignore: avoid_print
+    print('Dispose used');
+    super.dispose();
   }
 
   @override
