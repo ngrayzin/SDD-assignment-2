@@ -38,54 +38,67 @@ class _LoginState extends State<Login>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomInset: false,
         backgroundColor: colours.AppColor.background,
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.fromLTRB(
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.05,
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.01),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: Image.asset("assets/images/App_logo.png"),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Image.asset(
-                    "assets/images/App_name.png",
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    //fit: BoxFit.contain,
+        body: SingleChildScrollView(
+          reverse: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.04,
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.04),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      width: 240,
+                      child: Image.asset("assets/images/App_logo.png"),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: <Widget>[
-                        returnEmail(),
-                        returnPassword(),
-                        submit(),
-                        const SizedBox(height: 10),
-                        signUp(),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 0),
+                    child: Image.asset(
+                      "assets/images/App_name.png",
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      //fit: BoxFit.contain,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: <Widget>[
+                          returnEmail(),
+                          const SizedBox(height: 10),
+                          returnPassword(),
+                          const SizedBox(height: 20),
+                          submit(),
+                          const SizedBox(height: 10),
+                          signUp(),
+                          /*
                         const SizedBox(height: 10),
                         or(),
                         const SizedBox(height: 10),
                         googleSignIn()
-                      ],
+                         */
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ]
+                ]
+            ),
           ),
-        )
+        ),
     );
   }
 
@@ -115,7 +128,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -132,7 +145,7 @@ class _LoginState extends State<Login>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -206,7 +219,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -216,7 +229,7 @@ class _LoginState extends State<Login>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -262,7 +275,7 @@ class _LoginState extends State<Login>{
   }
   Widget submit(){
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
@@ -314,17 +327,20 @@ class _LoginState extends State<Login>{
               backgroundColor:
               MaterialStateProperty.all<Color>(colours.AppColor.main),
               side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
-          child:!isLoading? const Text(
-            "Login",
-            style: TextStyle(
-            fontFamily: 'StickNoBills',
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          )
-          ): Transform.scale(
-            scale: 0.5,
-            child: const CircularProgressIndicator()),
+          child: Container(
+            padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
+            child:!isLoading? const Text(
+                "Login",
+                style: TextStyle(
+                  fontFamily: 'StickNoBills',
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                )
+            ): Transform.scale(
+                scale: 0.5,
+                child: const CircularProgressIndicator()),
+          ),
         ),
       ),
     );
@@ -399,11 +415,11 @@ class _LoginState extends State<Login>{
         children: [
           const TextSpan(
             text: "Don't have an account? ",
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.white70, letterSpacing: 0.35,fontSize: 15.0),
           ),
           TextSpan(
             text: 'Sign up here',
-            style: const TextStyle(color: Colors.blue),
+            style: const TextStyle(color: Colors.blue, letterSpacing: 0.35, fontSize: 15.0),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.push(context,

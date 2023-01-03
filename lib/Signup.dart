@@ -26,7 +26,7 @@ class _SignupState extends State<Signup>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomInset: false,
         backgroundColor: colours.AppColor.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -36,7 +36,7 @@ class _SignupState extends State<Signup>{
           centerTitle: true,
           flexibleSpace: Padding(
             padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.1),
+            EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,31 +85,36 @@ class _SignupState extends State<Signup>{
             ),
           ),
         ),
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.fromLTRB(
-            MediaQuery.of(context).size.width * 0.07,
-            MediaQuery.of(context).size.height * 0.05,
-            MediaQuery.of(context).size.width * 0.07,
-            MediaQuery.of(context).size.height * 0.05),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                returnName(),
-                const SizedBox(height: 10),
-                returnEmail(),
-                const SizedBox(height: 10),
-                returnPassword(),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-                submit(context),
-                const SizedBox(height: 10),
-                login(context),
-              ],
+        body: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          reverse: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            //height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.03,
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.04),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  returnName(),
+                  const SizedBox(height: 10),
+                  returnEmail(),
+                  const SizedBox(height: 10),
+                  returnPassword(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                  submit(context),
+                  const SizedBox(height: 10),
+                  login(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -296,7 +301,7 @@ class _SignupState extends State<Signup>{
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 5.0, top: 12.0),
+          margin: const EdgeInsets.only(left: 5.0, top: 5.0),
           child: const Text(
             "Username:",
             textAlign: TextAlign.left,
@@ -452,11 +457,11 @@ class _SignupState extends State<Signup>{
         children: [
           const TextSpan(
             text: "Already have an account? ",
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.white70, letterSpacing: 0.35,fontSize: 15.0),
           ),
           TextSpan(
             text: ' Login here',
-            style: const TextStyle(color: Colors.blue),
+            style: const TextStyle(color: Colors.blue, letterSpacing: 0.35,fontSize: 15.0),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.pop(context);

@@ -143,7 +143,7 @@ class EndGameState extends State<EndGame> {
                   MediaQuery
                       .of(context)
                       .size
-                      .height * 0.05),
+                      .height * 0.04),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -251,7 +251,7 @@ class EndGameState extends State<EndGame> {
                                     style: TextStyle(
                                       fontFamily: 'StickNoBills',
                                       color: colours.AppColor.background,
-                                      fontSize: 23,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -274,14 +274,14 @@ class EndGameState extends State<EndGame> {
                                 MaterialStateProperty.all<Color>(colours.AppColor.main),
                                 side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
                             child: Container(
-                              padding: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 5, left: 5),
+                              padding: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 0, left: 0),
                               child: Text(
                                 "DISCARD SCORE",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'StickNoBills',
                                   color: colours.AppColor.background,
-                                  fontSize: 23,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

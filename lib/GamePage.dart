@@ -78,7 +78,7 @@ class _GamePageState extends State<GamePage> {
               backgroundColor: colours.AppColor.background,
               flexibleSpace: Padding(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.15), // was 0.12
+                    top: MediaQuery.of(context).size.width * 0.12), // was 0.12
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,9 +148,11 @@ class _GamePageState extends State<GamePage> {
                       MediaQuery.of(context).size.width * 0.07,
                       MediaQuery.of(context).size.height * 0.03, //was 0.05
                       MediaQuery.of(context).size.width * 0.07,
-                      MediaQuery.of(context).size.height * 0.05),
+                      MediaQuery.of(context).size.height * 0.04),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +175,7 @@ class _GamePageState extends State<GamePage> {
                                         height: 30,
                                         fit: BoxFit.fitWidth,
                                       ),
-                                      SizedBox(width: 10.0),
+                                      const SizedBox(width: 10.0),
                                       Text(
                                         '${GamePage.player.point}',
                                         textAlign: TextAlign.center,
@@ -254,15 +256,19 @@ class _GamePageState extends State<GamePage> {
                               )),
                         ],
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 30.0)),
+                      const Spacer(
+                        flex: 2,
+                      ),
                       returnGameBoard(),
-
-                      //SizedBox(height: 20.0),
+                      const Spacer(
+                        flex: 3,
+                      ),
 
                       Padding(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: IntrinsicHeight(
-                              child: options()))
+                              child: options())),
+
                     ],
                   )),
             ),
@@ -279,6 +285,9 @@ class _GamePageState extends State<GamePage> {
           //randomizer here
           Visibility(
             child: randomizer0 (GamePage.num1),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
             visible: true,
           ),
           // BuildingCard(),
@@ -286,6 +295,9 @@ class _GamePageState extends State<GamePage> {
           // BuildingCard(),
           Visibility(
             child: randomizer1 (GamePage.num2),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
             visible: true,
           ),
         ],
@@ -303,6 +315,9 @@ class _GamePageState extends State<GamePage> {
             //randomizer here
             Visibility(
               child: randomizer0 (GamePage.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: true,
             ),
             // BuildingCard(),
@@ -310,6 +325,9 @@ class _GamePageState extends State<GamePage> {
             // BuildingCard(),
             Visibility(
               child: randomizer1 (GamePage.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: false,
             ),
           ],
@@ -324,6 +342,9 @@ class _GamePageState extends State<GamePage> {
             //randomizer here
             Visibility(
               child: randomizer0 (GamePage.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: false,
             ),
             // BuildingCard(),
@@ -331,6 +352,9 @@ class _GamePageState extends State<GamePage> {
             // BuildingCard(),
             Visibility(
               child: randomizer1 (GamePage.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: true,
             ),
           ],
@@ -476,9 +500,9 @@ class _GamePageState extends State<GamePage> {
                     Text(
                       building.name,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'StickNoBills',
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     )
@@ -551,9 +575,9 @@ class _GamePageState extends State<GamePage> {
                     Text(
                       building.name,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'StickNoBills',
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     )
@@ -564,9 +588,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   Widget returnGameBoard() {
-    return Expanded(
-      //margin: const EdgeInsets.only(top: 10.0),
-      child: Container(
+    return Container(
         margin: const EdgeInsets.all(0.0),
         child: SizedBox(
           height: 350,
@@ -581,7 +603,6 @@ class _GamePageState extends State<GamePage> {
             ],
           ),
         ),
-      ),
     );
   }
 
