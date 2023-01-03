@@ -138,49 +138,8 @@ class _MainMenuState extends State<MainMenu> {
                 height: 10.0,
               ),
               !isLoading? Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 25),
-                width: MediaQuery.of(context).size.width * 0.75,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: colours.AppColor.main, //background color of button
-                    side: const BorderSide(width:0, color:Colors.black), //border width and color
-                    elevation: 2, //elevation of button
-                    shape: RoundedRectangleBorder(
-                        //to set border radius to button
-                        borderRadius: BorderRadius.circular(15)),
-                    padding: const EdgeInsets.fromLTRB(
-                        0, 15, 5, 12), //content padding inside button
-                  ),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.play_arrow,
-                          size: 50,
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Text("NEW GAME",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                letterSpacing: 1.0,
-                                fontSize: 32,
-                                color: Colors.black,
-                                fontFamily: 'StickNoBills',
-                                fontWeight: FontWeight.bold)),
-                      ]),
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              !isLoading
-                  ? Container(
                       padding: const EdgeInsets.only(top: 10, bottom: 25),
-                      width: MediaQuery.of(context).size.width * 0.65,
+                      width: MediaQuery.of(context).size.width * 0.75,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           primary: colours
@@ -247,11 +206,13 @@ class _MainMenuState extends State<MainMenu> {
                       //padding: const EdgeInsets.only(top: 8, bottom: 8),
                       //width: MediaQuery.of(context).size.width * 0.65,
                       child: ElevatedButton(
-                        onPressed: () =>
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                                  return const LeaderBoard();
-                                })),
+                        onPressed: () {
+                          var currentUser = FirebaseAuth.instance.currentUser;
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                                return ProfilePage(currentUser: currentUser);
+                              }));
+                        },
                         style: ElevatedButton.styleFrom(
                           primary: colours.AppColor.main, //background color of button
                           side: const BorderSide(width:0, color:Colors.black), //border width and color
