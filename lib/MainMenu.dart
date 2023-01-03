@@ -32,22 +32,19 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-/*  GoogleSignInAccount? _currentUser;
+  late bool _isButtonDisabled;
+  var list = [];
+  late Player player;
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) async {
-      setState(() {
-        _currentUser = account;
-      });
-      if (_currentUser != null) {
-        await FirebaseAuth.instance.signInAnonymously();
-      }
-    });
-    _googleSignIn.signInSilently();
-  }*/
+    returnSaveGame();
+  }
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => returnSaveGame());
     return Scaffold(
         backgroundColor: colours.AppColor.background,
         body: Container(
@@ -55,20 +52,24 @@ class _MainMenuState extends State<MainMenu> {
           height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.fromLTRB(
               MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.025,
+              MediaQuery.of(context).size.height * 0.05,
               MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.05),
+              MediaQuery.of(context).size.height * 0.04),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Expanded(
                 child: SizedBox(
+                  width: 240,
                   child: Image.asset("assets/images/App_logo.png"),
-                  width: 200,
                 ),
               ),
-              Padding(
+              const SizedBox(
+                height: 40.0,
+              ),
+              Container(
                 padding: EdgeInsets.only(top: 0),
                 child: Image.asset(
                   "assets/images/App_name.png",
@@ -76,160 +77,281 @@ class _MainMenuState extends State<MainMenu> {
                   //fit: BoxFit.contain,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40, bottom: 10),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: TextButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
+              // hello
+              Container(
+                padding: const EdgeInsets.only(top: 50, bottom: 10),
+                width: MediaQuery.of(context).size.width * 0.65,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
                       return const GameLevel();
-                    })),
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            colours.AppColor.background),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    side: BorderSide(
-                                        color: colours.AppColor.main,
-                                        width: 3)))),
-                    child: Text("START NEW GAME",
+                  })),
+                  style: ElevatedButton.styleFrom(
+                    primary: colours.AppColor.main, //background color of button
+                    side: const BorderSide(width:0, color:Colors.black), //border width and color
+                    elevation: 2, //elevation of button
+                    shape: RoundedRectangleBorder( //to set border radius to button
+                    borderRadius: BorderRadius.circular(15)
+                    ),
+                    padding: const EdgeInsets.fromLTRB(0, 15, 5, 12), //content padding inside button
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.play_arrow,
+                        size: 50,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 15.0,
+                      ),
+                      Text("NEW GAME",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.white,
-                            fontFamily: 'StickNoBills')),
+                          letterSpacing: 1.0,
+                          fontSize: 32,
+                          color: Colors.black,
+                          fontFamily: 'StickNoBills',
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                    ]
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: TextButton(
-                    onPressed: () async {
-                      final ref = FirebaseDatabase.instance.ref();
-                      var currentUser = FirebaseAuth.instance.currentUser;
-                      await ref.child('players/${currentUser?.uid}/saveGame').get()
-                          .then((snapshot){
-                            if (snapshot.exists) {
-                              var list = [];
-                              for (var item in snapshot.children) {
-                                print(item.value);
-                                list.add(item.value);
-                              }
-                              Player player = Player(currentUser?.displayName, [], list[4], list[0]);
-                              player.stringMap = list[2];
-                              player.deserializeMap();
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return LoadGame(player: player, coin: list[0], level: list[1], point: list[3],);
-                                  }));
-                            }
-                            else {
-                              Fluttertoast.showToast(
-                                  msg: "No previous saved game",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  timeInSecForIosWeb: 1,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0
-                              );
-                            }
-                        });
-                      /*Navigator.push(context,
+              const SizedBox(
+                height: 10.0,
+              ),
+              !isLoading? Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 25),
+                width: MediaQuery.of(context).size.width * 0.65,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: colours.AppColor.main, //background color of button
+                    side: const BorderSide(width:0, color:Colors.black), //border width and color
+                    elevation: 2, //elevation of button
+                    shape: RoundedRectangleBorder( //to set border radius to button
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    padding: const EdgeInsets.fromLTRB(0, 15, 5, 12), //content padding inside button
+                  ),
+                  onPressed: _isButtonDisabled ? null : () {
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const LoadGame();
-                    }));*/
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            colours.AppColor.background),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    side: BorderSide(
-                                        color: colours.AppColor.main,
-                                        width: 3)))),
-                    child: Text("LOAD SAVE GAME",
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.white,
-                            fontFamily: 'StickNoBills')),
+                          return LoadGame(player: player, coin: list[0], level: list[1], point: list[3],);
+                        }));
+                  },
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.restart_alt,
+                          size: 50,
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          width: 15.0,
+                        ),
+                        Text("CONTINUE",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                letterSpacing: 1.0,
+                                fontSize: 32,
+                                color: Colors.black,
+                                fontFamily: 'StickNoBills',
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                      ]
                   ),
                 ),
+              ): const CircularProgressIndicator(),
+              const SizedBox(
+                height: 10.0,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LeaderBoard(),
-                          ));
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            colours.AppColor.background),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    side: BorderSide(
-                                        color: colours.AppColor.main,
-                                        width: 3)))),
-                    child: Text("LEADERBOARD",
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.white,
-                            fontFamily: 'StickNoBills')),
+
+              //ROW     ROW      ROW      ROW      ROW      ROW      ROW
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    //width: MediaQuery.of(context).size.width * 0.65,
+                    child: ElevatedButton(
+                      onPressed: () =>
+                        Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                          return const LeaderBoard();
+                        })),
+                      style: ElevatedButton.styleFrom(
+                        primary: colours.AppColor.main, //background color of button
+                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        elevation: 2, //elevation of button
+                        shape: RoundedRectangleBorder( //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.account_circle,
+                              size: 50,
+                              color: Colors.black,
+                            ),
+                          ]
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: TextButton(
-                    onPressed: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => PopUpMessage(
-                              value: MainMenu.value,
-                            )),
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.fromLTRB(0, 16.0, 0, 16.0)),
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            colours.AppColor.background),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    side: BorderSide(
-                                        color: colours.AppColor.main,
-                                        width: 3)))),
-                    child: Text("EXIT GAME",
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.white,
-                            fontFamily: 'StickNoBills')),
+                  const SizedBox(
+                    width: 10.0,
                   ),
-                ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    //width: MediaQuery.of(context).size.width * 0.65,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const LeaderBoard();
+                          })),
+                      style: ElevatedButton.styleFrom(
+                        primary: colours.AppColor.main, //background color of button
+                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        elevation: 2, //elevation of button
+                        shape: RoundedRectangleBorder( //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.leaderboard,
+                              size: 50,
+                              color: Colors.black,
+                            ),
+                          ]
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    //width: MediaQuery.of(context).size.width * 0.65,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return const GameLevel();
+                          })),
+                      style: ElevatedButton.styleFrom(
+                        primary: colours.AppColor.main, //background color of button
+                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        elevation: 2, //elevation of button
+                        shape: RoundedRectangleBorder( //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.settings,
+                              size: 50,
+                              color: Colors.black,
+                            ),
+                          ]
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    //width: MediaQuery.of(context).size.width * 0.65,
+                    child: ElevatedButton(
+                      onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => PopUpMessage(
+                            value: MainMenu.value,
+                          )),
+                      style: ElevatedButton.styleFrom(
+                        primary: colours.AppColor.main, //background color of button
+                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        elevation: 2, //elevation of button
+                        shape: RoundedRectangleBorder( //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            Icon(
+                              Icons.exit_to_app,
+                              size: 50,
+                              color: Colors.black,
+                            ),
+                          ]
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ));
+        )
+    );
   }
 
+  void returnSaveGame() async{
+    //late bool check;
+    //list = [];
+    final ref = FirebaseDatabase.instance.ref();
+    var currentUser = FirebaseAuth.instance.currentUser;
+    /*Future.delayed(const Duration(milliseconds: 1500),() async {
+
+    });*/
+    await ref.child('players/${currentUser?.uid}/saveGame').get()
+        .then((snapshot){
+      if (snapshot.exists) {
+        list = [];
+        for (var item in snapshot.children) {
+          //print(item.value);
+          list.add(item.value);
+        }
+        player = Player(currentUser?.displayName, [], list[4], list[0]);
+        player.stringMap = list[2];
+        player.deserializeMap();
+        _isButtonDisabled = false;
+        setState(() {
+          list;
+          player;
+          isLoading = false;
+        });
+        //check = false;
+      }
+      else{
+        _isButtonDisabled = true;
+        setState(() {
+          isLoading = false;
+        });
+        //check = true;
+      }
+    });
+    //return check;
+  }
 }

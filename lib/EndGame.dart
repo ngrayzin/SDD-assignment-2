@@ -259,9 +259,9 @@ class EndGameState extends State<EndGame> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              //DatabaseReference remove = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/saveGame');
-                              //remove.set(null).then((value) => Navigator.popUntil(context, (route) => route.isFirst));
-                              Navigator.popUntil(context, (route) => route.isFirst);
+                              DatabaseReference remove = FirebaseDatabase.instance.ref('players/${currentUser?.uid}/saveGame');
+                              remove.set(null).then((value) => Navigator.popUntil(context, (route) => route.isFirst));
+                              //Navigator.popUntil(context, (route) => route.isFirst);
                             },
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
