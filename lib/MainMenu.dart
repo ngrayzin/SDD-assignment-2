@@ -40,7 +40,19 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
-    returnSaveGame();
+    //returnSaveGame();
+  }
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+  @override
+  void dispose() {
+    // ignore: avoid_print
+    print('Dispose used');
+    super.dispose();
   }
 
   @override
@@ -192,10 +204,13 @@ class _MainMenuState extends State<MainMenu> {
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.push(context,
+                      onPressed: () {
+                        var currentUser = FirebaseAuth.instance.currentUser;
+                        Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return const ProfilePage();
-                      })),
+                        return ProfilePage(currentUser: currentUser,);
+                      }));
+                      },
                       style: ElevatedButton.styleFrom(
                         primary:
                             colours.AppColor.main, //background color of button

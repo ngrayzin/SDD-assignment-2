@@ -35,6 +35,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  static var currentUser = FirebaseAuth.instance.currentUser;
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
@@ -51,9 +52,8 @@ class MyApp extends StatelessWidget {
 }
 
 bool landingPage(){
-  var currentUser = FirebaseAuth.instance.currentUser;
-  if (currentUser != null) {
-    print(currentUser.uid);
+  if (MyApp.currentUser != null) {
+    print(MyApp.currentUser?.uid);
     print("fuck");
     return true;
   }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -5,12 +6,22 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sdd_assignment_2/Firebase_Services.dart';
+import 'package:sdd_assignment_2/Login.dart';
+import 'package:sdd_assignment_2/main.dart';
 import 'colours.dart' as colours;
 import 'firebase_options.dart';
 import 'MainMenu.dart';
+import 'Firebase_Services.dart';
+
+//var currentUser = FirebaseAuth.instance.currentUser;
+
+bool isLoading = true;
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({super.key, required this.currentUser});
+  final User? currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -55,16 +66,16 @@ class ProfilePage extends StatelessWidget {
                 flex: 5,
               ),
               Visibility(
+                maintainAnimation: true,
+                maintainSize: true,
+                maintainState: true,
+                visible: false,
                 child: IconButton(
                   iconSize: 40,
                   icon: const Icon(Icons.close),
                   color: colours.AppColor.main,
                   onPressed: () => Navigator.pop(context),
                 ),
-                maintainAnimation: true,
-                maintainSize: true,
-                maintainState: true,
-                visible: false,
               ),
               const Spacer(
                 flex: 1,
@@ -90,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                       child: RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                          text: "NAME:\n",
+                          text: "NAME\n",
                           style: TextStyle(
                             fontSize: 30,
                             color: colours.AppColor.main,
@@ -99,10 +110,10 @@ class ProfilePage extends StatelessWidget {
                           ),
                           // Player Name goes here
                           children: [
-                            const WidgetSpan(child: SizedBox(height: 35)),
-                            const TextSpan(
-                              text: 'Player',
-                              style: TextStyle(
+                             const WidgetSpan(child: SizedBox(height: 35)),
+                             TextSpan(
+                              text: '${currentUser?.displayName}',
+                              style: const TextStyle(
                                   fontSize: 30,
                                   fontWeight: FontWeight.normal,
                                   color: Colors.white),
@@ -112,169 +123,170 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    Container(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: "EMAIL:\n",
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: colours.AppColor.main,
-                            fontFamily: 'StickNoBills',
-                            fontWeight: FontWeight.bold,
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: "EMAIL\n",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: colours.AppColor.main,
+                          fontFamily: 'StickNoBills',
+                          fontWeight: FontWeight.bold,
+                        ),
+                        // Player's Email Address goes here
+                        children: [
+                          const WidgetSpan(child: SizedBox(height: 35)),
+                          TextSpan(
+                            text: '${currentUser?.email}',
+                            style: const TextStyle(
+                                letterSpacing: 0.5,
+                                fontSize: 30,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white),
                           ),
-                          // Player's Email Address goes here
-                          children: [
-                            const WidgetSpan(child: SizedBox(height: 35)),
-                            const TextSpan(
-                              text: 'player24808@gmail.com',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 30),
-                    Container(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: "HIGHEST SCORE:\n",
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: colours.AppColor.main,
-                            fontFamily: 'StickNoBills',
-                            fontWeight: FontWeight.bold,
-                          ),
-                          // Player's Highest Score goes here
-                          children: [
-                            const WidgetSpan(child: SizedBox(height: 35)),
-                            const TextSpan(
-                              text: '350',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Container(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: "GAMES PLAYED:\n",
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: colours.AppColor.main,
-                            fontFamily: 'StickNoBills',
-                            fontWeight: FontWeight.bold,
-                          ),
-                          // Player's Email Address goes here
-                          children: [
-                            const WidgetSpan(child: SizedBox(height: 35)),
-                            const TextSpan(
-                              text: '6',
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    //Difficulty
-                    Container(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: const TextSpan(
-                            text: "EASY LEVEL:\n",
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontFamily: 'StickNoBills',
-                              fontWeight: FontWeight.bold,
-                            ),
-                            // Probably insert the grid here?
+                    FutureBuilder(
+                        future: getGamesPlayed(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return snapshot.data;
+                          }
+
+                          return Column(
                             children: [
-                              WidgetSpan(child: SizedBox(height: 10)),
-                              TextSpan(
-                                text: 'Locked',
+                              Text(
+                                "GAMES FINISHED",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white),
+                                  fontFamily: 'StickNoBills',
+                                  color: colours.AppColor.main,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ]),
+                              const SizedBox(height: 5),
+                              Transform.scale(
+                                scale: 0.5,
+                                child: const CircularProgressIndicator(),
+                              ),
+                            ],
+                          );
+                        }),
+                    const SizedBox(height: 30),
+                    Text(
+                      "HIGHEST SCORES",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'StickNoBills',
+                        color: colours.AppColor.main,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                    const SizedBox(height: 30),
+                    FutureBuilder(
+                        future: getHighestScoreEasy(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return snapshot.data;
+                          }
+                          return Column(
+                            children: [
+                              const Text(
+                                "EASY LEVEL",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'StickNoBills',
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Transform.scale(
+                                scale: 0.5,
+                                child: const CircularProgressIndicator(),
+                              ),
+                            ],
+                          );
+                        }),
+                    const SizedBox(height: 30),
+                    FutureBuilder(
+                        future: getHighestScoreMedium(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return snapshot.data;
+                          }
+                          return Column(
+                            children: [
+                              const Text(
+                                "MEDIUM LEVEL",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'StickNoBills',
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Transform.scale(
+                                scale: 0.5,
+                                child: const CircularProgressIndicator(),
+                              ),
+                            ],
+                          );
+                        }),
                     const SizedBox(height: 40),
-                    Container(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: const TextSpan(
-                            text: "MEDIUM LEVEL:\n",
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontFamily: 'StickNoBills',
-                              fontWeight: FontWeight.bold,
-                            ),
-                            // Probably insert the grid here?
+                    FutureBuilder(
+                        future: getHighestScoreHard(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return snapshot.data;
+                          }
+                          return Column(
                             children: [
-                              WidgetSpan(child: SizedBox(height: 10)),
-                              TextSpan(
-                                text: 'Locked',
+                              const Text(
+                                "HARD LEVEL",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white),
+                                  fontFamily: 'StickNoBills',
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ]),
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    Container(
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: const TextSpan(
-                            text: "HARD LEVEL:\n",
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontFamily: 'StickNoBills',
-                              fontWeight: FontWeight.bold,
-                            ),
-                            // Probably insert the grid here?
-                            children: [
-                              WidgetSpan(child: SizedBox(height: 10)),
-                              TextSpan(
-                                text: 'Locked',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white),
+                              const SizedBox(height: 5),
+                              Transform.scale(
+                                scale: 0.5,
+                                child: const CircularProgressIndicator(),
                               ),
-                            ]),
-                      ),
-                    ),
+                            ],
+                          );
+                        }),
                     // Log Out Button
                     const SizedBox(height: 40),
                     Container(
                       padding: const EdgeInsets.only(top: 50, bottom: 10),
                       width: MediaQuery.of(context).size.width * 0.65,
                       child: ElevatedButton(
-                        onPressed: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const MainMenu();
-                        })),
+                        onPressed: () async {
+                          if(currentUser?.providerData.any((UserInfo info) => info.providerId == "google.com") == true){
+                            await GoogleSignIn().signOut().then((value){
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                              const Login()), (Route<dynamic> route) => false);
+                            });
+                          }
+                          else{
+                            await FirebaseAuth.instance.signOut().then((value){
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                              const Login()), (Route<dynamic> route) => false);
+                            });
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           primary: colours
                               .AppColor.main, //background color of button
@@ -313,4 +325,144 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  Future<Widget> getGamesPlayed () async {
+    var list = [];
+    int i = 0;
+    final gamesPlayed = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/finishGame');
+    await gamesPlayed.get().then((snapshot) {
+      if(snapshot.exists){
+        for(var item in snapshot.children){
+          list.add(item);
+        }
+        i = list.length;
+      }
+    });
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        text: "GAMES FINISHED\n",
+        style: TextStyle(
+          fontSize: 30,
+          color: colours.AppColor.main,
+          fontFamily: 'StickNoBills',
+          fontWeight: FontWeight.bold,
+        ),
+        // Player's Email Address goes here
+        children: [
+          const WidgetSpan(child: SizedBox(height: 35)),
+          TextSpan(
+            text: '$i',
+            style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.normal,
+                color: Colors.white),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<Widget> getHighestScoreEasy() async {
+    final ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_easy');
+    int score = 0;
+    await ref.get().then((snapshot) {
+      if(snapshot.exists){
+        String string = snapshot.value.toString();
+        int i = int.parse(string);
+        score = i;
+      }
+    });
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+          text: "EASY LEVEL\n",
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontFamily: 'StickNoBills',
+            fontWeight: FontWeight.normal,
+          ),
+          // Probably insert the grid here?
+          children: [
+            const WidgetSpan(child: SizedBox(height: 10)),
+            TextSpan(
+              text: '$score',
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white),
+            ),
+          ]),
+    );
+  }
+
+  Future<Widget> getHighestScoreMedium() async {
+    final ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_medium');
+    int score = 0;
+    await ref.get().then((snapshot) {
+      if(snapshot.exists){
+        String string = snapshot.value.toString();
+        int i = int.parse(string);
+        score = i;
+      }
+    });
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+          text: "MEDIUM LEVEL\n",
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontFamily: 'StickNoBills',
+            fontWeight: FontWeight.normal,
+          ),
+          // Probably insert the grid here?
+          children: [
+            const WidgetSpan(child: SizedBox(height: 10)),
+            TextSpan(
+              text: '$score',
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white),
+            ),
+          ]),
+    );
+  }
+
+  Future<Widget> getHighestScoreHard() async {
+    final ref = FirebaseDatabase.instance.ref().child('players/${currentUser?.uid}/highestScore_hard');
+    int score = 0;
+    await ref.get().then((snapshot) {
+      if(snapshot.exists){
+        String string = snapshot.value.toString();
+        int i = int.parse(string);
+        score = i;
+      }
+    });
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+          text: "HARD LEVEL\n",
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontFamily: 'StickNoBills',
+            fontWeight: FontWeight.normal,
+          ),
+          // Probably insert the grid here?
+          children: [
+            const WidgetSpan(child: SizedBox(height: 10)),
+            TextSpan(
+              text: '$score',
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white),
+            ),
+          ]),
+    );
+  }
+
 }
