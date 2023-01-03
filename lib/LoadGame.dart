@@ -664,6 +664,7 @@ class _LoadGameState extends State<LoadGame> {
             exist ? widget.player.addTurn() : null;
             exist ? widget.player.minusCoin() : null;
             exist ? widget.player.calculatePoints(LoadGame.row) : null;
+            widget.player.nerf();
             if (widget.player.coin == 0 || widget.player.endGrid() == true){
               Navigator.of(context).push(
                   MaterialPageRoute(

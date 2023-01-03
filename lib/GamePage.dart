@@ -55,6 +55,7 @@ class _GamePageState extends State<GamePage> {
     //GamePage.randomizer();
     GamePage.row = GamePage.player.level;
     GamePage.col = GamePage.player.level;
+    GamePage.player.nerf();
     for (var i = 0; i < boardSettings.totalTiles(); i++) {
       GamePage.player.map.add("-");
     }
@@ -629,6 +630,7 @@ class _GamePageState extends State<GamePage> {
         exist ? GamePage.player.addTurn() : null;
         exist ? GamePage.player.minusCoin() : null;
         exist ? GamePage.player.calculatePoints(GamePage.row) : null;
+        GamePage.player.nerf();
         if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
           Navigator.of(context).push(
               MaterialPageRoute(
