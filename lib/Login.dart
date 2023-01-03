@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdd_assignment_2/MainMenu.dart';
 import 'Firebase_Services.dart';
@@ -297,10 +298,54 @@ class _LoginState extends State<Login>{
                 setState(() {
                   isLoading = false;
                 });
-                if (e.code == 'user-not-found') {
-                  print('No user found for that email.');
-                } else if (e.code == 'wrong-password') {
-                  print('Wrong password provided for that user.');
+                print(e.code);
+                switch (e.code) {
+                  case "wrong-email":
+                   print("Your email address appears to be malformed.");
+                    Fluttertoast.showToast(
+                        msg: "No user found for that email.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                    break;
+                  case "wrong-password":
+                    print("Your password is wrong.");
+                    Fluttertoast.showToast(
+                        msg: "Your password is wrong.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                    break;
+                  case "user-not-found":
+                    print("User with this email doesn't exist.");
+                    Fluttertoast.showToast(
+                        msg: "User with this email doesn't exist.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                    break;
+                  case "ERROR_USER_DISABLED":
+                  case "ERROR_TOO_MANY_REQUESTS":
+                  case "ERROR_OPERATION_NOT_ALLOWED":
+                  default:
+                    print("An undefined Error happened.");
+                    Fluttertoast.showToast(
+                        msg: "Login failed. Please try again.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
                 }
               }
             }
