@@ -14,8 +14,20 @@ import 'LeaderboardCard.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 
-class LeaderBoard extends StatelessWidget {
+class LeaderBoard extends StatefulWidget {
   const LeaderBoard({super.key});
+
+  @override
+  State<LeaderBoard> createState() => _Leaderboard();
+}
+
+class _Leaderboard extends State<LeaderBoard> {
+  var selectedTab = 1;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,69 +113,84 @@ class LeaderBoard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return LeaderBoard();
-                        })),
+                        onPressed: () {
+                          setState(() {
+                            selectedTab = 1;
+                          });
+                        },
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                colours.AppColor.main),
+                            backgroundColor: selectedTab == 1
+                                ? MaterialStateProperty.all<Color>(
+                                    colours.AppColor.main)
+                                : MaterialStateProperty.all<Color>(
+                                    colours.AppColor.buttonBackground),
                             shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(
-                                        color: colours.AppColor.main,
-                                        width: 0)))),
+                                        color: Colors.transparent, width: 0)))),
                         child: Text("Easy",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 18,
-                                color: Colors.black,
+                                color: selectedTab == 1
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontFamily: 'StickNoBills')),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return LeaderBoard();
-                        })),
+                        onPressed: () {
+                          setState(() {
+                            selectedTab = 2;
+                          });
+                        },
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                colours.AppColor.main),
+                            backgroundColor: selectedTab == 2
+                                ? MaterialStateProperty.all<Color>(
+                                    colours.AppColor.main)
+                                : MaterialStateProperty.all<Color>(
+                                    colours.AppColor.buttonBackground),
                             shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(
-                                        color: colours.AppColor.main,
-                                        width: 0)))),
+                                        color: Colors.transparent, width: 0)))),
                         child: Text("Medium",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 18,
-                                color: Colors.black,
+                                color: selectedTab == 2
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontFamily: 'StickNoBills')),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return LeaderBoard();
-                        })),
+                        onPressed: () {
+                          setState(() {
+                            selectedTab = 3;
+                          });
+                        },
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                colours.AppColor.main),
+                            backgroundColor: selectedTab == 3
+                                ? MaterialStateProperty.all<Color>(
+                                    colours.AppColor.main)
+                                : MaterialStateProperty.all<Color>(
+                                    colours.AppColor.buttonBackground),
                             shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(
-                                        color: colours.AppColor.main,
-                                        width: 0)))),
+                                        color: Colors.transparent, width: 0)))),
                         child: Text("Hard",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 18,
-                                color: Colors.black,
+                                color: selectedTab == 3
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontFamily: 'StickNoBills')),
                       ),
                     ]),
@@ -204,7 +231,7 @@ class LeaderBoard extends StatelessWidget {
                     ]),
               ),
               FutureBuilder(
-                  future: getTopTen(),
+                  future: getTopTenEasy(selectedTab),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       return snapshot.data;
@@ -222,32 +249,43 @@ class LeaderBoard extends StatelessWidget {
     );
   }
 
-  Future<Widget> getTopTen() async {
+  Future<Widget> getTopTenEasy(int selectedTab) async {
     var playerList = [];
-    Map<Object?, Object?> playersMap = new Map();
     final ref = FirebaseDatabase.instance.ref();
     final snapshot = await ref.child('players').get();
     List<Widget> widgetList = [];
     List<Widget> leaderboardCards = [];
 
-    if (snapshot.exists) {
-      for (var item in snapshot.children) {
-        if (item.child("highestScore").value != null) {
-          playersMap[item.child("name").value] =
-              item.child("highestScore").value;
-        }
+    String firebaseChild = "";
 
+    if (snapshot.exists) {
+      if (selectedTab == 1) {
+        firebaseChild = "highestScore_easy";
+      }
+      if (selectedTab == 2) {
+        firebaseChild = "highestScore_medium";
+      }
+      if (selectedTab == 3) {
+        firebaseChild = "highestScore_hard";
+      }
+      for (var item in snapshot.children) {
+        if (item.child("${firebaseChild}").value != null) {
+          var playerName = item.child("name").value;
+          var playerHighScore = item.child("${firebaseChild}").value;
+          Player player = Player.fromPlayer(playerName, playerHighScore);
+          playerList.add(player);
+          print(playerName);
+          print(playerHighScore);
+        }
         // Player player = Player.fromJson(item.value);
         // player.deserializeMap();
         // playerList.add(player);
       }
-      print(playersMap);
+      playerList.sort(((a, b) => b.highScore.compareTo(a.highScore)));
 
-      // playerList.sort(((a, b) => b.point.compareTo(a.point)));
-
-      // for (int i = 0; i < playersMap.length; i++) {
-      //   leaderboardCards.add(returnLeaderboardCard(playerList[i], i + 1));
-      // }
+      for (int i = 0; i < playerList.length; i++) {
+        leaderboardCards.add(returnLeaderboardCard(playerList[i], i + 1));
+      }
 
       return Expanded(
         child: ListView(
@@ -257,10 +295,10 @@ class LeaderBoard extends StatelessWidget {
     } else {
       print('No data available.');
     }
-    return Text("FUCK");
+    return Text("No data available.");
   }
 
-  returnLeaderboardCard(String playerName, int playerScore, int? position) {
+  returnLeaderboardCard(Player player, int position) {
     String positionText = "";
     if (position == 1) {
       positionText = position.toString() + "st";
@@ -295,13 +333,13 @@ class LeaderBoard extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         Text(
-          "${playerName}", //Replace with player.name
+          "${player.name}", //Replace with player.name
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
           textAlign: TextAlign.center,
         ),
         Text(
-          "${playerScore}", //Replace with player.points
+          "${player.highScore}", //Replace with player.points
           style: TextStyle(
               fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
           textAlign: TextAlign.center,

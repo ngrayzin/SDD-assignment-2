@@ -8,14 +8,19 @@ import 'package:sdd_assignment_2/GamePage.dart';
 class Player {
   String? name;
   String stringMap = "";
-  List<String> map;
+  List<String> map = [];
   int turn = 0;
   int point = 0;
   int coin = 16;
-  int level;
-  int highestScore = 0;
+  int level = 0;
+  int highScore = 0;
 
   Player(this.name, this.map, this.turn, this.level);
+
+  Player.fromPlayer(var playerName, var playerHighScore) {
+    name = playerName;
+    highScore = playerHighScore;
+  }
 
   Player.fromJson(dynamic json)
       : name = FirebaseAuth.instance.currentUser?.displayName,
@@ -24,8 +29,7 @@ class Player {
         turn = json['turn'],
         point = json['point'],
         coin = json['coin'],
-        level = json['level'],
-        highestScore = json['highestScore'];
+        level = json['level'];
 
   // factory Player.fromJson(dynamic json) {
   //   return Player(json['name'] as String, json['map'] as List<String>,
