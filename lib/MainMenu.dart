@@ -57,12 +57,12 @@ class _MainMenuState extends State<MainMenu> {
               MediaQuery.of(context).size.height * 0.04),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Expanded(
                 child: SizedBox(
-                  width: 200,
+                  width: 240,
                   child: Image.asset("assets/images/App_logo.png"),
                 ),
               ),
@@ -79,7 +79,7 @@ class _MainMenuState extends State<MainMenu> {
               ),
               // hello
               Container(
-                padding: const EdgeInsets.only(top: 40, bottom: 10),
+                padding: const EdgeInsets.only(top: 50, bottom: 10),
                 width: MediaQuery.of(context).size.width * 0.65,
                 child: ElevatedButton(
                   onPressed: () => Navigator.push(context,
@@ -125,7 +125,7 @@ class _MainMenuState extends State<MainMenu> {
                 height: 10.0,
               ),
               !isLoading? Container(
-                padding: const EdgeInsets.only(top: 40, bottom: 10),
+                padding: const EdgeInsets.only(top: 10, bottom: 25),
                 width: MediaQuery.of(context).size.width * 0.65,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -179,7 +179,7 @@ class _MainMenuState extends State<MainMenu> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: const EdgeInsets.only(top: 40, bottom: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
                       onPressed: () =>
@@ -213,7 +213,7 @@ class _MainMenuState extends State<MainMenu> {
                     width: 10.0,
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 40, bottom: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
                       onPressed: () => Navigator.push(context,
@@ -246,7 +246,7 @@ class _MainMenuState extends State<MainMenu> {
                     width: 10.0,
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 40, bottom: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
                       onPressed: () => Navigator.push(context,
@@ -279,7 +279,7 @@ class _MainMenuState extends State<MainMenu> {
                     width: 10.0,
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 40, bottom: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
                       onPressed: () => showDialog<String>(
