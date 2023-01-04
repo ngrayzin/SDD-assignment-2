@@ -31,6 +31,8 @@ class LoadGame extends StatefulWidget{
   static int num1 = 0;
   static int num2 = 0;
   static int row = 0;
+  static bool showboth = true;
+  static int showeither = 0;
 }
 
 class _LoadGameState extends State<LoadGame> {
@@ -79,7 +81,7 @@ class _LoadGameState extends State<LoadGame> {
                     top: MediaQuery
                         .of(context)
                         .size
-                        .width * 0.15), // was 0.12
+                        .width * 0.12), // was 0.12
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -293,7 +295,7 @@ class _LoadGameState extends State<LoadGame> {
 
 
   Widget options(){
-    if (GamePage.showboth == true){
+    if (LoadGame.showboth == true){
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -322,7 +324,7 @@ class _LoadGameState extends State<LoadGame> {
     else {
       //Random random = Random();
       //GamePage.showeither = random.nextInt(2);
-      if (GamePage.showeither == 0){
+      if (LoadGame.showeither == 0){
         print("rayzin so smart");
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -485,18 +487,18 @@ class _LoadGameState extends State<LoadGame> {
       ),
       onDragStarted: (){
         setState(() {
-          GamePage.showboth = false;
-          GamePage.showeither = 0;
+          LoadGame.showboth = false;
+          LoadGame.showeither = 0;
         });
       },
       onDragCompleted: (){
         setState(() {
-          GamePage.showboth = true;
+          LoadGame.showboth = true;
         });
       },
       onDraggableCanceled: (Velocity velocity, Offset offset){
         setState(() {
-          GamePage.showboth = true;
+          LoadGame.showboth = true;
         });
       },
       child: SizedBox(
@@ -530,7 +532,7 @@ class _LoadGameState extends State<LoadGame> {
                     Text(
                       building.name,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'StickNoBills',
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
@@ -566,18 +568,18 @@ class _LoadGameState extends State<LoadGame> {
       ),
       onDragStarted: (){
         setState(() {
-          GamePage.showboth = false;
-          GamePage.showeither = 0;
+          LoadGame.showboth = false;
+          LoadGame.showeither = 1;
         });
       },
       onDragCompleted: (){
         setState(() {
-          GamePage.showboth = true;
+          LoadGame.showboth = true;
         });
       },
       onDraggableCanceled: (Velocity velocity, Offset offset){
         setState(() {
-          GamePage.showboth = true;
+          LoadGame.showboth = true;
         });
       },
       child: SizedBox(
@@ -611,7 +613,7 @@ class _LoadGameState extends State<LoadGame> {
                     Text(
                       building.name,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'StickNoBills',
                         fontWeight: FontWeight.w800,
                         color: Colors.white,

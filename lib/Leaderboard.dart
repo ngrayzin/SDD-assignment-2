@@ -119,7 +119,7 @@ class _Leaderboard extends State<LeaderBoard> {
                           });
                         },
                         style: TextButton.styleFrom(
-                          padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                          padding: const EdgeInsets.only(left: 23.0, right: 23.0),
                           backgroundColor: selectedTab == 1? colours.AppColor.main : colours.AppColor.buttonBackground,
                           shape:
                               RoundedRectangleBorder(
@@ -143,7 +143,7 @@ class _Leaderboard extends State<LeaderBoard> {
                           });
                         },
                         style: TextButton.styleFrom(
-                            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                            padding: const EdgeInsets.only(left: 23.0, right: 23.0),
                             backgroundColor: selectedTab == 2? colours.AppColor.main : colours.AppColor.buttonBackground,
                             shape:
                             RoundedRectangleBorder(
@@ -182,7 +182,7 @@ class _Leaderboard extends State<LeaderBoard> {
                           });
                         },
                         style: TextButton.styleFrom(
-                            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                            padding: const EdgeInsets.only(left: 23.0, right: 23.0),
                             backgroundColor: selectedTab == 3? colours.AppColor.main : colours.AppColor.buttonBackground,
                             shape:
                             RoundedRectangleBorder(

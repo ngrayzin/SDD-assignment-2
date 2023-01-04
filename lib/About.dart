@@ -109,7 +109,7 @@ class AboutPage extends StatelessWidget {
                           WidgetSpan(child: SizedBox(height: 35)),
                           TextSpan(
                             text:
-                            'The player is the mayor of Ngee Ann City, and the goal of the game is to build the happiest and most prosperous city possible, i.e., score the most points.\n',
+                            'The player is the mayor of Ngee Ann City, and the goal of the game is to build the happiest and most prosperous city possible, i.e. score the most points.\n',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -118,7 +118,7 @@ class AboutPage extends StatelessWidget {
                           WidgetSpan(child: SizedBox(height: 35)),
                           TextSpan(
                             text:
-                            'This city-building game begins with 16 coins. In each turn, the player will construct one of two randomly-selected buildings in the 10x10 city. Each construction cost 1 coin. For the first building, the player can build anywhere in the city. For subsequent constructions, the player can only build on squares that are connected to existing buildings. The other building that was not built is discarded.\n',
+                            'In each turn, the player will construct one of two randomly-selected buildings in the city grid. Each construction cost 1 coin. For the first building, the player can build anywhere in the city. For subsequent constructions, the player can only build adjacently to existing buildings.\n',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -127,7 +127,16 @@ class AboutPage extends StatelessWidget {
                           WidgetSpan(child: SizedBox(height: 35)),
                           TextSpan(
                             text:
-                            'Each building scores in a different way. The objective of the game is to build a city that scores as many points as possible.\n',
+                            'To place the buildings, drag one of the building card and drop it into the squares. There are 3 different difficulties in this game: Easy, Medium and Hard, with 8, 12 and 16 coins given in each respective difficulties\n',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          WidgetSpan(child: SizedBox(height: 35)),
+                          TextSpan(
+                            text:
+                            'Each of the building has different synergies with other buildings. The objective of the game is to build a city that scores as many points as possible.\n',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -139,9 +148,10 @@ class AboutPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 60),
                   Container(
-                    // Container for BUILDINGS title
+                    width: MediaQuery.of(context).size.width,
                     child: const Text(
                       "BUILDINGS:",
+                      textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 30,
                         color: Colors.white,
@@ -162,8 +172,8 @@ class AboutPage extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.center,
                               constraints: const BoxConstraints(
-                                maxWidth: 100,
-                                maxHeight: 100,
+                                maxWidth: 90,
+                                maxHeight: 90,
                               ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
@@ -200,8 +210,8 @@ class AboutPage extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.center,
                               constraints: const BoxConstraints(
-                                maxWidth: 100,
-                                maxHeight: 100,
+                                maxWidth: 90,
+                                maxHeight: 90,
                               ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
@@ -238,8 +248,8 @@ class AboutPage extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.center,
                               constraints: const BoxConstraints(
-                                maxWidth: 100,
-                                maxHeight: 100,
+                                maxWidth: 90,
+                                maxHeight: 90,
                               ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
@@ -276,8 +286,8 @@ class AboutPage extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.center,
                               constraints: const BoxConstraints(
-                                maxWidth: 100,
-                                maxHeight: 100,
+                                maxWidth: 90,
+                                maxHeight: 90,
                               ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
@@ -314,8 +324,8 @@ class AboutPage extends StatelessWidget {
                             child: Container(
                               alignment: Alignment.center,
                               constraints: const BoxConstraints(
-                                maxWidth: 100,
-                                maxHeight: 100,
+                                maxWidth: 90,
+                                maxHeight: 90,
                               ),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),

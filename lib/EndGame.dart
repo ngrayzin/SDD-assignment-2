@@ -76,7 +76,7 @@ class EndGameState extends State<EndGame> {
                   top: MediaQuery
                       .of(context)
                       .size
-                      .width * 0.15), // was 0.12
+                      .width * 0.12), // was 0.12
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

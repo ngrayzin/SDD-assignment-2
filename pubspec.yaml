@@ -75,6 +75,7 @@ flutter:
     - assets/images/
     - assets/images/App_name.png
     - assets/images/App_logo.png
+    - assets/images/App_logo_2.png
     - assets/images/Coin.png
     - assets/images/Point.png
     - assets/images/Industry.png

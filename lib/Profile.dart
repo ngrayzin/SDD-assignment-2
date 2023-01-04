@@ -248,30 +248,35 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     const SizedBox(height: 30),
-                    Text(
-                      "Your High Scores",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'StickNoBills',
-                        color: colours.AppColor.main,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "(by level)",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'StickNoBills',
-                        letterSpacing: 1,
-                        color: colours.AppColor.main,
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Your High Scores",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'StickNoBills',
+                            color: colours.AppColor.main,
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "(by level)",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'StickNoBills',
+                            letterSpacing: 1,
+                            color: colours.AppColor.main,
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 30),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -535,8 +540,9 @@ class ProfilePage extends StatelessWidget {
           TextSpan(
             text: '$i',
             style: const TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.normal,
+                fontSize: 58,
+                fontFamily: 'StickNoBills',
+                fontWeight: FontWeight.bold,
                 color: Colors.white),
           ),
     );

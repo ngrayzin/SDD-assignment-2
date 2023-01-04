@@ -86,10 +86,62 @@ class _LoginState extends State<Login>{
 
                   Container(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Image.asset(
-                      "assets/images/App_name.png",
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      //fit: BoxFit.contain,
+                    child: RichText(
+                        textAlign: TextAlign.center,
+                        text:
+                        TextSpan(
+                          text: "N",
+                          style: const TextStyle(
+                            fontSize: 54,
+                            color: Colors.white,
+                            fontFamily: 'StickNoBills',
+                            fontWeight: FontWeight.w900,
+                          ),
+                          // Player's Email Address goes here
+                          children: [
+                            TextSpan(
+                              text: 'GEE.',
+                              style: TextStyle(
+                                  fontSize: 54,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                  color: colours.AppColor.main),
+                            ),
+                            const TextSpan(
+                                text: "A",
+                                style: TextStyle(
+                                  fontSize: 54,
+                                  color: Colors.white,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                ),
+                            ),
+                            TextSpan(
+                              text: 'NN.',
+                              style: TextStyle(
+                                  fontSize: 54,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                  color: colours.AppColor.main),
+                            ),
+                            const TextSpan(
+                              text: "C",
+                              style: TextStyle(
+                                fontSize: 54,
+                                color: Colors.white,
+                                fontFamily: 'StickNoBills',
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'ITY',
+                              style: TextStyle(
+                                  fontSize: 54,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                  color: colours.AppColor.main),
+                            ),
+                          ]),
                     ),
                   ),
                   const Spacer(
