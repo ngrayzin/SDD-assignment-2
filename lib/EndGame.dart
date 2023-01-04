@@ -16,11 +16,14 @@ import 'package:sdd_assignment_2/GameLevel.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
+import 'Login.dart';
 import 'MainMenu.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:flutter/src/widgets/container.dart';
+
+import 'main.dart';
 
 class EndGame extends StatefulWidget {
   final Player player ;

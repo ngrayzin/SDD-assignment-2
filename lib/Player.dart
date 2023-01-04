@@ -5,6 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 
+import 'Login.dart';
+
 class Player {
   String? name;
   String stringMap = "";
@@ -134,6 +136,7 @@ class Player {
 
   Future<bool> highscore(int score, int level) async {
     bool check = false;
+    var currentUser = FirebaseAuth.instance.currentUser;
     var ref;
     switch (level) {
       case 5:

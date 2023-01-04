@@ -11,6 +11,8 @@ import 'Player.dart';
 import 'Signup.dart';
 import 'colours.dart' as colours;
 
+var currentUser = FirebaseAuth.instance.currentUser;
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -23,10 +25,9 @@ class _LoginState extends State<Login>{
   @override
   void initState() {
     super.initState();
-    var currentUser = FirebaseAuth.instance.currentUser;
     print(currentUser);
     if (currentUser != null) {
-      print(currentUser.uid);
+      print(currentUser?.uid);
       print("fuck");
     }
   }
@@ -311,6 +312,7 @@ class _LoginState extends State<Login>{
                     email: mail,
                     password: pass,
                 ).then((credential) async {
+                  currentUser = credential.user;
                   print(credential.user?.uid);
                   print(credential.user?.displayName);
                   formKey.currentState?.reset();
@@ -432,14 +434,14 @@ class _LoginState extends State<Login>{
             );
             await FirebaseAuth.instance.signInWithCredential(credential)
               .then((value) async {
-                final user = value.user;
-                print(user?.uid);
+                currentUser = value.user;
+                print(currentUser?.uid);
                 setState(() {
                   isLoading1 = false;
                 });
-                DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${user?.uid}');
+                DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${currentUser?.uid}');
                 await newPlayer.update({
-                  "name": user?.displayName,
+                  "name": currentUser?.displayName,
                 }).then((value) => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                 const MainMenu()), (Route<dynamic> route) => false));
             });

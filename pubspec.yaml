@@ -46,11 +46,6 @@ dependencies:
   fluttertoast: ^8.1.2
   flutter_launcher_icons: ^0.11.0
 
-flutter_icons:
-  image_path: "assets/images/App_logo.png"
-  android: true # can specify file name here e.g. "ic_launcher"
-  ios: true # can specify file name here e.g. "My-Launcher-Icon"
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -64,7 +59,10 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_icons:
+  image_path: "assets/app_logo.png"
+  android: true # can specify file name here e.g. "ic_launcher"
+  ios: true # can specify file name here e.g. f"My-Launcher-Icon"
 # The following section is specific to Flutter packages.
 flutter:
 

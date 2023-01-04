@@ -16,11 +16,11 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
 import 'EndGame.dart';
+import 'Login.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
-
-var currentUser = FirebaseAuth.instance.currentUser;
+import 'main.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -630,7 +630,7 @@ class _GamePageState extends State<GamePage> {
         exist ? GamePage.player.addTurn() : null;
         exist ? GamePage.player.minusCoin() : null;
         exist ? GamePage.player.calculatePoints(GamePage.row) : null;
-        GamePage.player.nerf();
+        exist ? GamePage.player.nerf() : null;
         if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
           Navigator.of(context).push(
               MaterialPageRoute(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sdd_assignment_2/MainMenu.dart';
 import 'package:sdd_assignment_2/Player.dart';
 import 'Firebase_Services.dart';
+import 'Login.dart';
 import 'colours.dart' as colours;
 
 class Signup extends StatefulWidget{
@@ -329,6 +330,9 @@ class _SignupState extends State<Signup>{
               if (value == null || value.isEmpty) {
                 return 'Please enter username';
               }
+              if(value.length > 9){
+                return 'Name should be 9 characters or shorter';
+              }
               return null;
             },
             decoration: InputDecoration(
@@ -396,13 +400,13 @@ class _SignupState extends State<Signup>{
                   email: email,
                   password: pass,
                 ).then((credential) async {
-                  final user = credential.user;
-                  print(user?.uid);
+                  currentUser = credential.user;
+                  print(currentUser?.uid);
                   print("stringnig");
                   print(username);
                   credential.user?.updateDisplayName(username);
                   formKey.currentState?.reset();
-                  DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${user?.uid}');
+                  DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${currentUser?.uid}');
                   await newPlayer.update({
                     "name": username,
                   }).then((value) => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>

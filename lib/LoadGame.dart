@@ -10,10 +10,13 @@ import 'About.dart';
 import 'Building.dart';
 import 'EndGame.dart';
 import 'GamePage.dart';
+import 'Login.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:flutter/src/widgets/container.dart';
+
+import 'main.dart';
 
 class LoadGame extends StatefulWidget{
   final Player player;
@@ -664,7 +667,7 @@ class _LoadGameState extends State<LoadGame> {
             exist ? widget.player.addTurn() : null;
             exist ? widget.player.minusCoin() : null;
             exist ? widget.player.calculatePoints(LoadGame.row) : null;
-            widget.player.nerf();
+            exist ? widget.player.nerf() : null;
             if (widget.player.coin == 0 || widget.player.endGrid() == true){
               Navigator.of(context).push(
                   MaterialPageRoute(

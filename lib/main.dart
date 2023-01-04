@@ -17,6 +17,7 @@ import 'Firebase_options.dart';
 import 'package:flutter/services.dart';
 //import 'firebase_options.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -35,14 +36,13 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static var currentUser = FirebaseAuth.instance.currentUser;
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        //primarySwatch: Colors.blue,
+        //primarySwatch: Color.blue,
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
 }
 
 bool landingPage(){
-  if (MyApp.currentUser != null) {
-    print(MyApp.currentUser?.uid);
+  if (currentUser != null) {
+    print(currentUser?.uid);
     print("fuck");
     return true;
   }
