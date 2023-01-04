@@ -330,8 +330,8 @@ class _SignupState extends State<Signup>{
               if (value == null || value.isEmpty) {
                 return 'Please enter username';
               }
-              if(value.length > 9){
-                return 'Name should be 9 characters or shorter';
+              if(value.length > 12){
+                return 'Name should be 12 characters or shorter';
               }
               return null;
             },
