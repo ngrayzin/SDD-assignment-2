@@ -94,9 +94,9 @@ class _Leaderboard extends State<LeaderBoard> {
           child: Container(
         padding: EdgeInsets.fromLTRB(
             MediaQuery.of(context).size.width * 0.07,
-            MediaQuery.of(context).size.height * 0.025,
+            MediaQuery.of(context).size.height * 0.03,
             MediaQuery.of(context).size.width * 0.07,
-            MediaQuery.of(context).size.height * 0.05),
+            MediaQuery.of(context).size.height * 0.04),
         child: Center(
             child: Container(
           child: Column(
@@ -107,10 +107,10 @@ class _Leaderboard extends State<LeaderBoard> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: colours.AppColor.buttonBackground,
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
                 ),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
                         onPressed: () {
@@ -118,22 +118,19 @@ class _Leaderboard extends State<LeaderBoard> {
                             selectedTab = 1;
                           });
                         },
-                        style: ButtonStyle(
-                            backgroundColor: selectedTab == 1
-                                ? MaterialStateProperty.all<Color>(
-                                    colours.AppColor.main)
-                                : MaterialStateProperty.all<Color>(
-                                    colours.AppColor.buttonBackground),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    side: BorderSide(
-                                        color: Colors.transparent, width: 0)))),
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                          backgroundColor: selectedTab == 1? colours.AppColor.main : colours.AppColor.buttonBackground,
+                          shape:
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100),
+                                  side: BorderSide(
+                                      color: Colors.transparent, width: 0))),
                         child: Text("Easy",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                                 color: selectedTab == 1
                                     ? Colors.black
                                     : Colors.white,
@@ -145,6 +142,15 @@ class _Leaderboard extends State<LeaderBoard> {
                             selectedTab = 2;
                           });
                         },
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                            backgroundColor: selectedTab == 2? colours.AppColor.main : colours.AppColor.buttonBackground,
+                            shape:
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100.0),
+                                side: BorderSide(
+                                    color: Colors.transparent, width: 0))),
+                        /*
                         style: ButtonStyle(
                             backgroundColor: selectedTab == 2
                                 ? MaterialStateProperty.all<Color>(
@@ -157,10 +163,13 @@ class _Leaderboard extends State<LeaderBoard> {
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(
                                         color: Colors.transparent, width: 0)))),
+
+                         */
                         child: Text("Medium",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                                 color: selectedTab == 2
                                     ? Colors.black
                                     : Colors.white,
@@ -172,6 +181,15 @@ class _Leaderboard extends State<LeaderBoard> {
                             selectedTab = 3;
                           });
                         },
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                            backgroundColor: selectedTab == 3? colours.AppColor.main : colours.AppColor.buttonBackground,
+                            shape:
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100.0),
+                                side: BorderSide(
+                                    color: Colors.transparent, width: 0))),
+                        /*
                         style: ButtonStyle(
                             backgroundColor: selectedTab == 3
                                 ? MaterialStateProperty.all<Color>(
@@ -184,10 +202,13 @@ class _Leaderboard extends State<LeaderBoard> {
                                     borderRadius: BorderRadius.circular(8.0),
                                     side: BorderSide(
                                         color: Colors.transparent, width: 0)))),
+
+                         */
                         child: Text("Hard",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                                 color: selectedTab == 3
                                     ? Colors.black
                                     : Colors.white,
@@ -197,7 +218,7 @@ class _Leaderboard extends State<LeaderBoard> {
               ),
               Container(
                 //margin: const EdgeInsets.fromLTRB(18.0, 10, 20, 2),
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
@@ -338,12 +359,15 @@ class _Leaderboard extends State<LeaderBoard> {
               fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
           textAlign: TextAlign.center,
         ),
-        Text(
-          "${player.highScore}", //Replace with player.points
-          style: TextStyle(
-              fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
-          textAlign: TextAlign.center,
+        Center(
+          child: Text(
+            "${player.highScore}", //Replace with player.points
+            style: TextStyle(
+                fontSize: 24, color: Colors.white, fontFamily: 'StickNoBills'),
+            textAlign: TextAlign.center,
+          ),
         ),
+
       ]),
     );
   }
