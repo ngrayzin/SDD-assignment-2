@@ -35,7 +35,7 @@ class ProfilePage extends StatelessWidget {
         centerTitle: true,
         flexibleSpace: Padding(
           padding:
-              EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.1),
+              EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,66 +88,129 @@ class ProfilePage extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.fromLTRB(
                 MediaQuery.of(context).size.width * 0.07,
-                MediaQuery.of(context).size.height * 0.05,
+                MediaQuery.of(context).size.height * 0.03,
                 MediaQuery.of(context).size.width * 0.07,
-                MediaQuery.of(context).size.height * 0.05),
+                MediaQuery.of(context).size.height * 0.04),
             child: SingleChildScrollView(
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    SizedBox(
+                        width: 240,
+                        child: Image.asset("assets/images/Profile.png"),
+                      ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
                     Container(
                       child: RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                          text: "NAME\n",
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: colours.AppColor.main,
+                          text: '${currentUser?.displayName}',
+                          style: const TextStyle(
+                            fontSize: 50,
+                            color: Colors.white,
                             fontFamily: 'StickNoBills',
                             fontWeight: FontWeight.bold,
-                          ),
-                          // Player Name goes here
-                          children: [
-                             const WidgetSpan(child: SizedBox(height: 35)),
-                             TextSpan(
-                              text: '${currentUser?.displayName}',
-                              style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white),
-                            ),
-                          ],
+                          ), // Player Name goes here
                         ),
                       ),
                     ),
+                    const SizedBox(height: 5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.email,
+                          size: 20,
+                          color: colours.AppColor.main,
+                        ),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: '${currentUser?.email}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              letterSpacing: 1,
+                              color: Colors.white,
+                              fontFamily: 'StickNoBills',
+                              fontWeight: FontWeight.normal,
+                            ),
+                            // Player's Email Address goes here
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    const Divider(
+                          indent: 10,
+                          endIndent: 10,
+                          thickness: 2,
+                          color: Colors.white,
+                        ),
                     const SizedBox(height: 30),
                     RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        text: "EMAIL\n",
+                        text: "Your Completed Games",
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 25,
                           color: colours.AppColor.main,
                           fontFamily: 'StickNoBills',
                           fontWeight: FontWeight.bold,
                         ),
-                        // Player's Email Address goes here
-                        children: [
-                          const WidgetSpan(child: SizedBox(height: 35)),
-                          TextSpan(
-                            text: '${currentUser?.email}',
-                            style: const TextStyle(
-                                letterSpacing: 0.5,
-                                fontSize: 30,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white),
-                          ),
-                        ],
-                      ),
+                      )
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 10),
+                    FutureBuilder(
+                        future: getGamesPlayed(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return snapshot.data;
+                          }
+
+                          return Column(
+                            children: [
+                              Text(
+                                "Data not found",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'StickNoBills',
+                                  color: colours.AppColor.main,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Transform.scale(
+                                scale: 0.5,
+                                child: const CircularProgressIndicator(),
+                              ),
+                            ],
+                          );
+                        }
+                    ),
+                    RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          text: "GAME(S)",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontFamily: 'StickNoBills',
+                            fontWeight: FontWeight.normal,
+                          ),
+                        )
+                    ),
+
+                    /*
                     FutureBuilder(
                         future: getGamesPlayed(),
                         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -175,18 +238,130 @@ class ProfilePage extends StatelessWidget {
                             ],
                           );
                         }),
+
+                     */
+                    const SizedBox(height: 30),
+                    const Divider(
+                      indent: 10,
+                      endIndent: 10,
+                      thickness: 2,
+                      color: Colors.white,
+                    ),
                     const SizedBox(height: 30),
                     Text(
-                      "HIGHEST SCORES",
+                      "Your High Scores",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'StickNoBills',
                         color: colours.AppColor.main,
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Text(
+                      "(by level)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'StickNoBills',
+                        letterSpacing: 1,
+                        color: colours.AppColor.main,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                     const SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FutureBuilder(
+                              future: getHighestScoreEasy(),
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return snapshot.data;
+                                }
+                                return Column(
+                                  children: [
+                                    const Text(
+                                      "EASY",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'StickNoBills',
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Transform.scale(
+                                      scale: 0.5,
+                                      child: const CircularProgressIndicator(),
+                                    ),
+                                  ],
+                                );
+                              }),
+                          const SizedBox(height: 30),
+                          FutureBuilder(
+                              future: getHighestScoreMedium(),
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return snapshot.data;
+                                }
+                                return Column(
+                                  children: [
+                                    const Text(
+                                      "MEDIUM",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'StickNoBills',
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Transform.scale(
+                                      scale: 0.5,
+                                      child: const CircularProgressIndicator(),
+                                    ),
+                                  ],
+                                );
+                              }),
+                          const SizedBox(height: 40),
+                          FutureBuilder(
+                              future: getHighestScoreHard(),
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return snapshot.data;
+                                }
+                                return Column(
+                                  children: [
+                                    const Text(
+                                      "HARD",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'StickNoBills',
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Transform.scale(
+                                      scale: 0.5,
+                                      child: const CircularProgressIndicator(),
+                                    ),
+                                  ],
+                                );
+                              }),
+                        ],
+                      ),
+                    ),
+
+
+                    /*
                     FutureBuilder(
                         future: getHighestScoreEasy(),
                         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -267,11 +442,13 @@ class ProfilePage extends StatelessWidget {
                             ],
                           );
                         }),
+
+                     */
                     // Log Out Button
                     const SizedBox(height: 40),
                     Container(
                       padding: const EdgeInsets.only(top: 50, bottom: 10),
-                      width: MediaQuery.of(context).size.width * 0.65,
+                      //width: MediaQuery.of(context).size.width * 0.65,
                       child: ElevatedButton(
                         onPressed: () async {
                           if(currentUser?.providerData.any((UserInfo info) => info.providerId == "google.com") == true){
@@ -340,7 +517,9 @@ class ProfilePage extends StatelessWidget {
     });
     return RichText(
       textAlign: TextAlign.center,
-      text: TextSpan(
+      text:
+          /*
+      TextSpan(
         text: "GAMES FINISHED\n",
         style: TextStyle(
           fontSize: 30,
@@ -351,15 +530,15 @@ class ProfilePage extends StatelessWidget {
         // Player's Email Address goes here
         children: [
           const WidgetSpan(child: SizedBox(height: 35)),
+
+           */
           TextSpan(
             text: '$i',
             style: const TextStyle(
-                fontSize: 30,
+                fontSize: 50,
                 fontWeight: FontWeight.normal,
                 color: Colors.white),
           ),
-        ],
-      ),
     );
   }
 
@@ -376,19 +555,19 @@ class ProfilePage extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: "EASY LEVEL\n",
+          text: '$score\n',
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 55,
             color: Colors.white,
             fontFamily: 'StickNoBills',
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.bold,
           ),
           // Probably insert the grid here?
-          children: [
-            const WidgetSpan(child: SizedBox(height: 10)),
+          children: const [
+            WidgetSpan(child: SizedBox(height: 10)),
             TextSpan(
-              text: '$score',
-              style: const TextStyle(
+              text: "EASY",
+              style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
                   color: Colors.white),
@@ -410,19 +589,19 @@ class ProfilePage extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: "MEDIUM LEVEL\n",
+          text: '$score\n',
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 55,
             color: Colors.white,
             fontFamily: 'StickNoBills',
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.bold,
           ),
           // Probably insert the grid here?
-          children: [
-            const WidgetSpan(child: SizedBox(height: 10)),
+          children: const [
+            WidgetSpan(child: SizedBox(height: 10)),
             TextSpan(
-              text: '$score',
-              style: const TextStyle(
+              text: "MEDIUM",
+              style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
                   color: Colors.white),
@@ -444,19 +623,19 @@ class ProfilePage extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: "HARD LEVEL\n",
+          text: '$score\n',
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 55,
             color: Colors.white,
             fontFamily: 'StickNoBills',
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.bold,
           ),
           // Probably insert the grid here?
-          children: [
-            const WidgetSpan(child: SizedBox(height: 10)),
+          children: const [
+            WidgetSpan(child: SizedBox(height: 10)),
             TextSpan(
-              text: '$score',
-              style: const TextStyle(
+              text: "HARD",
+              style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
                   color: Colors.white),
