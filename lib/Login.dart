@@ -384,7 +384,15 @@ class _LoginState extends State<Login>{
                   isLoading = false;
                 });
                 print(e.code);
-                switch (e.code) {
+                Fluttertoast.showToast(
+                    msg: e.code,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+                /*switch (e.code) {
                   case "wrong-email":
                    print("Your email address appears to be malformed.");
                     Fluttertoast.showToast(
@@ -423,15 +431,8 @@ class _LoginState extends State<Login>{
                   case "ERROR_OPERATION_NOT_ALLOWED":
                   default:
                     print("An undefined Error happened.");
-                    Fluttertoast.showToast(
-                        msg: "Login failed. Please try again.",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        textColor: Colors.white,
-                        fontSize: 16.0
-                    );
-                }
+
+                }*/
               }
             }
           },
@@ -465,7 +466,7 @@ class _LoginState extends State<Login>{
   }
 
   Widget googleSignIn(){
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: OutlinedButton.icon(
         icon: Image.asset("assets/images/google.png",width: 30,height: 30,fit: BoxFit.cover,),
@@ -502,7 +503,14 @@ class _LoginState extends State<Login>{
               isLoading1 = false;
             });
             print(e.message);
-            throw e;
+            Fluttertoast.showToast(
+                msg: e.code,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
           }
         },
         label: !isLoading1? Text(

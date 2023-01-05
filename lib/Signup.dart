@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sdd_assignment_2/MainMenu.dart';
 import 'package:sdd_assignment_2/Player.dart';
 import 'Firebase_Services.dart';
@@ -248,6 +249,9 @@ class _SignupState extends State<Signup>{
               if (value == null || value.isEmpty) {
                 return 'Please enter password';
               }
+              if(value.length < 6){
+                return 'Weak password';
+              }
               return null;
             },
             decoration: InputDecoration(
@@ -416,11 +420,14 @@ class _SignupState extends State<Signup>{
                 setState(() {
                   isLoading = false;
                 });
-                if (e.code == 'user-not-found') {
-                  print('No user found for that email.');
-                } else if (e.code == 'wrong-password') {
-                  print('Wrong password provided for that user.');
-                }
+                Fluttertoast.showToast(
+                    msg: e.code,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
               }
             }
             //const CircularProgressIndicator();
