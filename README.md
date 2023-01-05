@@ -2,9 +2,9 @@
 
 ## Members
 - Yong Zong Han Ryan
-- Tan Jin datt
+- Tan Jin Datt
 - Ng Ray Zin
-- Low Hong wei
+- Low Hong Wei
 - Simon Kwek Zheng Feng
 
 ## Description
