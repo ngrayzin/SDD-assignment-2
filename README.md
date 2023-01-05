@@ -19,10 +19,10 @@ Each of the building has different synergies with other buildings. The objective
 
 ## Appendix:
 
-## Music sources:
-[Background music](https://pixabay.com/music/beats-weeknds-122592/)
+## Sound effect sources:
+[Background sound effect](https://pixabay.com/music/beats-weeknds-122592/)
 
-[Placement music](https://pixabay.com/sound-effects/lego-piece-pressed-105360/)
+[Placement sound effect](https://pixabay.com/sound-effects/lego-piece-pressed-105360/)
 
 ## Screenshots:
 ### Login:
