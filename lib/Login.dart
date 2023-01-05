@@ -3,12 +3,15 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sdd_assignment_2/MainMenu.dart';
 import 'Firebase_Services.dart';
 import 'Player.dart';
 import 'Signup.dart';
 import 'colours.dart' as colours;
+
+var currentUser = FirebaseAuth.instance.currentUser;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -22,9 +25,10 @@ class _LoginState extends State<Login>{
   @override
   void initState() {
     super.initState();
-    var currentUser = FirebaseAuth.instance.currentUser;
+    print(currentUser);
     if (currentUser != null) {
-      print(currentUser.uid);
+      print(currentUser?.uid);
+      print("fuck");
     }
   }
 
@@ -37,54 +41,137 @@ class _LoginState extends State<Login>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomInset: false,
         backgroundColor: colours.AppColor.background,
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.fromLTRB(
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.05,
-              MediaQuery.of(context).size.width * 0.07,
-              MediaQuery.of(context).size.height * 0.01),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: Image.asset("assets/images/App_logo.png"),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Image.asset(
-                    "assets/images/App_name.png",
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    //fit: BoxFit.contain,
+        body: SingleChildScrollView(
+          reverse: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.1,
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.1),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Spacer(
+                    flex: 1,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: <Widget>[
-                        returnEmail(),
-                        returnPassword(),
-                        submit(),
-                        const SizedBox(height: 10),
-                        signUp(),
-                        const SizedBox(height: 10),
-                        or(),
-                        const SizedBox(height: 10),
-                        googleSignIn()
-                      ],
+                  const Text(
+                    "Welcome To",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'StickNoBills',
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ]
+                  /*
+                  Expanded(
+                    child: SizedBox(
+                      width: 240,
+                      child: Image.asset("assets/images/App_logo.png"),
+                    ),
+                  ),
+
+                   */
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+
+                  Container(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: RichText(
+                        textAlign: TextAlign.center,
+                        text:
+                        TextSpan(
+                          text: "N",
+                          style: const TextStyle(
+                            fontSize: 54,
+                            color: Colors.white,
+                            fontFamily: 'StickNoBills',
+                            fontWeight: FontWeight.w900,
+                          ),
+                          // Player's Email Address goes here
+                          children: [
+                            TextSpan(
+                              text: 'GEE.',
+                              style: TextStyle(
+                                  fontSize: 54,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                  color: colours.AppColor.main),
+                            ),
+                            const TextSpan(
+                                text: "A",
+                                style: TextStyle(
+                                  fontSize: 54,
+                                  color: Colors.white,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                ),
+                            ),
+                            TextSpan(
+                              text: 'NN.',
+                              style: TextStyle(
+                                  fontSize: 54,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                  color: colours.AppColor.main),
+                            ),
+                            const TextSpan(
+                              text: "C",
+                              style: TextStyle(
+                                fontSize: 54,
+                                color: Colors.white,
+                                fontFamily: 'StickNoBills',
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'ITY',
+                              style: TextStyle(
+                                  fontSize: 54,
+                                  fontFamily: 'StickNoBills',
+                                  fontWeight: FontWeight.w900,
+                                  color: colours.AppColor.main),
+                            ),
+                          ]),
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: <Widget>[
+                          returnEmail(),
+                          const SizedBox(height: 10),
+                          returnPassword(),
+                          const SizedBox(height: 10),
+                          submit(),
+                          const SizedBox(height: 15),
+                          signUp(),
+                          const SizedBox(height: 5),
+                          or(),
+                          const SizedBox(height: 15),
+                          googleSignIn()
+                        ],
+                      ),
+                    ),
+                  ),
+                ]
+            ),
           ),
-        )
+        ),
     );
   }
 
@@ -114,7 +201,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -131,7 +218,7 @@ class _LoginState extends State<Login>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -205,7 +292,7 @@ class _LoginState extends State<Login>{
             style: const TextStyle(
               fontFamily: 'StickNoBills',
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
             validator: (value) {
@@ -215,7 +302,7 @@ class _LoginState extends State<Login>{
               return null;
             },
             decoration: InputDecoration(
-                contentPadding: const EdgeInsets.fromLTRB(20.0, 12.0, 20.0, 12.0),
+                contentPadding: const EdgeInsets.fromLTRB(22.0, 15.0, 22.0, 15.0),
                 filled: true,
                 fillColor: colours.AppColor.buttonBackground,
                 focusedErrorBorder: OutlineInputBorder(
@@ -261,7 +348,7 @@ class _LoginState extends State<Login>{
   }
   Widget submit(){
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
+      padding: const EdgeInsets.only(top: 20.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: ElevatedButton(
@@ -277,6 +364,7 @@ class _LoginState extends State<Login>{
                     email: mail,
                     password: pass,
                 ).then((credential) async {
+                  currentUser = credential.user;
                   print(credential.user?.uid);
                   print(credential.user?.displayName);
                   formKey.currentState?.reset();
@@ -295,11 +383,56 @@ class _LoginState extends State<Login>{
                 setState(() {
                   isLoading = false;
                 });
-                if (e.code == 'user-not-found') {
-                  print('No user found for that email.');
-                } else if (e.code == 'wrong-password') {
-                  print('Wrong password provided for that user.');
-                }
+                print(e.code);
+                Fluttertoast.showToast(
+                    msg: e.code,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+                /*switch (e.code) {
+                  case "wrong-email":
+                   print("Your email address appears to be malformed.");
+                    Fluttertoast.showToast(
+                        msg: "No user found for that email.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                    break;
+                  case "wrong-password":
+                    print("Your password is wrong.");
+                    Fluttertoast.showToast(
+                        msg: "Your password is wrong.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                    break;
+                  case "user-not-found":
+                    print("User with this email doesn't exist.");
+                    Fluttertoast.showToast(
+                        msg: "User with this email doesn't exist.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                    break;
+                  case "ERROR_USER_DISABLED":
+                  case "ERROR_TOO_MANY_REQUESTS":
+                  case "ERROR_OPERATION_NOT_ALLOWED":
+                  default:
+                    print("An undefined Error happened.");
+
+                }*/
               }
             }
           },
@@ -313,17 +446,20 @@ class _LoginState extends State<Login>{
               backgroundColor:
               MaterialStateProperty.all<Color>(colours.AppColor.main),
               side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
-          child:!isLoading? const Text(
-            "Login",
-            style: TextStyle(
-            fontFamily: 'StickNoBills',
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          )
-          ): Transform.scale(
-            scale: 0.5,
-            child: const CircularProgressIndicator()),
+          child: Container(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 6.0),
+            child:!isLoading? const Text(
+                "Login",
+                style: TextStyle(
+                  fontFamily: 'StickNoBills',
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                )
+            ): Transform.scale(
+                scale: 0.5,
+                child: const CircularProgressIndicator()),
+          ),
         ),
       ),
     );
@@ -333,7 +469,7 @@ class _LoginState extends State<Login>{
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: OutlinedButton.icon(
-        icon: Image.asset("assets/images/google.png",width: 32,height: 32,fit: BoxFit.cover,),
+        icon: Image.asset("assets/images/google.png",width: 30,height: 30,fit: BoxFit.cover,),
         onPressed: () async {
           setState(() {
             isLoading1 = true;
@@ -351,14 +487,14 @@ class _LoginState extends State<Login>{
             );
             await FirebaseAuth.instance.signInWithCredential(credential)
               .then((value) async {
-                final user = value.user;
-                print(user?.uid);
+                currentUser = value.user;
+                print(currentUser?.uid);
                 setState(() {
                   isLoading1 = false;
                 });
-                DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${user?.uid}');
+                DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${currentUser?.uid}');
                 await newPlayer.update({
-                  "name": user?.displayName,
+                  "name": currentUser?.displayName,
                 }).then((value) => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                 const MainMenu()), (Route<dynamic> route) => false));
             });
@@ -367,27 +503,34 @@ class _LoginState extends State<Login>{
               isLoading1 = false;
             });
             print(e.message);
-            throw e;
+            Fluttertoast.showToast(
+                msg: e.code,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
           }
         },
         label: !isLoading1? Text(
           "Sign in with google",
           style: TextStyle(
-              color: colours.AppColor.background, fontWeight: FontWeight.bold),
+              color: colours.AppColor.background, fontWeight: FontWeight.bold, fontSize: 20, fontFamily:'StickNoBills'),
         ): Transform.scale(
           scale: 0.5,
           child: const CircularProgressIndicator(),
         ),
         style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: const BorderSide(color: Colors.transparent)
-                )
-            ),
-            backgroundColor:
-            MaterialStateProperty.all<Color>(Colors.white),
-            side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
+          padding: MaterialStateProperty.all(const EdgeInsets.only(top: 8.0, bottom: 6.0)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: const BorderSide(color: Colors.transparent)
+              )
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
       ),
     );
   }
@@ -398,11 +541,11 @@ class _LoginState extends State<Login>{
         children: [
           const TextSpan(
             text: "Don't have an account? ",
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.white70, letterSpacing: 0.35,fontSize: 15.0),
           ),
           TextSpan(
             text: 'Sign up here',
-            style: const TextStyle(color: Colors.blue),
+            style: const TextStyle(color: Colors.blue, letterSpacing: 0.35, fontSize: 15.0),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.push(context,

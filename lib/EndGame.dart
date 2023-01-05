@@ -16,11 +16,14 @@ import 'package:sdd_assignment_2/GameLevel.dart';
 import 'package:sdd_assignment_2/GamePage.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
+import 'Login.dart';
 import 'MainMenu.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:flutter/src/widgets/container.dart';
+
+import 'main.dart';
 
 class EndGame extends StatefulWidget {
   final Player player ;
@@ -39,7 +42,7 @@ class EndGameState extends State<EndGame> {
     super.initState();
     print("object");
     print(widget.player.point);
-    widget.player.highscore(widget.player.point).then((value){
+    widget.player.highscore(widget.player.point, widget.player.level).then((value){
       print("value");
       if(value){
         print("asdauifvggfwoeufbeg");
@@ -73,7 +76,7 @@ class EndGameState extends State<EndGame> {
                   top: MediaQuery
                       .of(context)
                       .size
-                      .width * 0.15), // was 0.12
+                      .width * 0.12), // was 0.12
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,7 +146,7 @@ class EndGameState extends State<EndGame> {
                   MediaQuery
                       .of(context)
                       .size
-                      .height * 0.05),
+                      .height * 0.04),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -227,7 +230,7 @@ class EndGameState extends State<EndGame> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              widget.player.saveGame(widget.player.point).then((value){
+                              widget.player.saveGame(widget.player.point, widget.player.level).then((value){
                                 Navigator.popUntil(context, (route) => route.isFirst);
                                 /*Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                 const GameLevel()), (Route<dynamic> route) => false);*/
@@ -251,7 +254,7 @@ class EndGameState extends State<EndGame> {
                                     style: TextStyle(
                                       fontFamily: 'StickNoBills',
                                       color: colours.AppColor.background,
-                                      fontSize: 23,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -274,14 +277,14 @@ class EndGameState extends State<EndGame> {
                                 MaterialStateProperty.all<Color>(colours.AppColor.main),
                                 side: MaterialStateProperty.all<BorderSide>(BorderSide.none)),
                             child: Container(
-                              padding: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 5, left: 5),
+                              padding: const EdgeInsets.only(top: 10.0, bottom: 8.0, right: 0, left: 0),
                               child: Text(
                                 "DISCARD SCORE",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'StickNoBills',
                                   color: colours.AppColor.background,
-                                  fontSize: 23,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

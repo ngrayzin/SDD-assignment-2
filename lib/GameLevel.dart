@@ -44,7 +44,7 @@ class _GameLevelState extends State<GameLevel> {
                 top: MediaQuery
                     .of(context)
                     .size
-                    .width * 0.15), // was 0.12
+                    .width * 0.12), // was 0.12
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +112,7 @@ class _GameLevelState extends State<GameLevel> {
                 MediaQuery
                     .of(context)
                     .size
-                    .height * 0.1, //was 0.05
+                    .height * 0.04, //was 0.05
                 MediaQuery
                     .of(context)
                     .size
@@ -120,10 +120,11 @@ class _GameLevelState extends State<GameLevel> {
                 MediaQuery
                     .of(context)
                     .size
-                    .height * 0.1),
+                    .height * 0.04),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Center(
                   child: ElevatedButton(
@@ -277,6 +278,9 @@ class _GameLevelState extends State<GameLevel> {
                       ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*0.2,
                 ),
               ],
             ),

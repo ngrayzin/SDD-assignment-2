@@ -17,11 +17,11 @@ import 'package:sdd_assignment_2/BoardSettings.dart';
 import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
 import 'EndGame.dart';
+import 'Login.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
-
-var currentUser = FirebaseAuth.instance.currentUser;
+import 'main.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -59,12 +59,16 @@ class _GamePageState extends State<GamePage> {
     //GamePage.randomizer();
     GamePage.row = GamePage.player.level;
     GamePage.col = GamePage.player.level;
+    GamePage.player.nerf();
     for (var i = 0; i < boardSettings.totalTiles(); i++) {
       GamePage.player.map.add("-");
     }
     //print(GamePage.player.map);
     GamePage.num1 = GamePage.randomNum();
     GamePage.num2 = GamePage.randomNum();
+    while (GamePage.num1 == GamePage.num2) {
+      GamePage.num1 = GamePage.randomNum();
+    }
     //print(GamePage.player.level);
   }
 
@@ -82,7 +86,7 @@ class _GamePageState extends State<GamePage> {
               backgroundColor: colours.AppColor.background,
               flexibleSpace: Padding(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.15), // was 0.12
+                    top: MediaQuery.of(context).size.width * 0.12), // was 0.12
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,9 +155,11 @@ class _GamePageState extends State<GamePage> {
                       MediaQuery.of(context).size.width * 0.07,
                       MediaQuery.of(context).size.height * 0.03, //was 0.05
                       MediaQuery.of(context).size.width * 0.07,
-                      MediaQuery.of(context).size.height * 0.05),
+                      MediaQuery.of(context).size.height * 0.04),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,7 +182,7 @@ class _GamePageState extends State<GamePage> {
                                         height: 30,
                                         fit: BoxFit.fitWidth,
                                       ),
-                                      SizedBox(width: 10.0),
+                                      const SizedBox(width: 10.0),
                                       Text(
                                         '${GamePage.player.point}',
                                         textAlign: TextAlign.center,
@@ -257,14 +263,20 @@ class _GamePageState extends State<GamePage> {
                               )),
                         ],
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 30.0)),
+                      const Spacer(
+                        flex: 2,
+                      ),
                       returnGameBoard(),
-
-                      //SizedBox(height: 20.0),
+                      const Spacer(
+                        flex: 3,
+                      ),
 
                       Padding(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          child: IntrinsicHeight(child: options()))
+
+                          child: IntrinsicHeight(
+                              child: options())),
+
                     ],
                   )),
             ),
@@ -280,14 +292,20 @@ class _GamePageState extends State<GamePage> {
         children: [
           //randomizer here
           Visibility(
-            child: randomizer0(GamePage.num1),
+            child: randomizer0 (GamePage.num1),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
             visible: true,
           ),
           // BuildingCard(),
           const Spacer(),
           // BuildingCard(),
           Visibility(
-            child: randomizer1(GamePage.num2),
+            child: randomizer1 (GamePage.num2),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
             visible: true,
           ),
         ],
@@ -302,14 +320,20 @@ class _GamePageState extends State<GamePage> {
           children: [
             //randomizer here
             Visibility(
-              child: randomizer0(GamePage.num1),
+              child: randomizer0 (GamePage.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: true,
             ),
             // BuildingCard(),
             const Spacer(),
             // BuildingCard(),
             Visibility(
-              child: randomizer1(GamePage.num2),
+              child: randomizer1 (GamePage.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: false,
             ),
           ],
@@ -321,14 +345,20 @@ class _GamePageState extends State<GamePage> {
           children: [
             //randomizer here
             Visibility(
-              child: randomizer0(GamePage.num1),
+              child: randomizer0 (GamePage.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: false,
             ),
             // BuildingCard(),
             const Spacer(),
             // BuildingCard(),
             Visibility(
-              child: randomizer1(GamePage.num2),
+              child: randomizer1 (GamePage.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
               visible: true,
             ),
           ],
@@ -475,9 +505,9 @@ class _GamePageState extends State<GamePage> {
                     Text(
                       building.name,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'StickNoBills',
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     )
@@ -549,9 +579,9 @@ class _GamePageState extends State<GamePage> {
                     Text(
                       building.name,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'StickNoBills',
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     )
@@ -562,9 +592,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   Widget returnGameBoard() {
-    return Expanded(
-      //margin: const EdgeInsets.only(top: 10.0),
-      child: Container(
+    return Container(
         margin: const EdgeInsets.all(0.0),
         child: SizedBox(
           height: 350,
@@ -579,7 +607,6 @@ class _GamePageState extends State<GamePage> {
             ],
           ),
         ),
-      ),
     );
   }
 
@@ -611,11 +638,13 @@ class _GamePageState extends State<GamePage> {
         exist ? GamePage.player.minusCoin() : null;
         exist ? GamePage.player.calculatePoints(GamePage.row) : null;
         audioPlayer.resume();
-        if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true) {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                EndGame(GamePage.player), //goes to end game page
-          ));
+        exist ? GamePage.player.nerf() : null;
+        if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    EndGame(GamePage.player), //goes to end game page
+              ));
         }
         if (exist) {
           GamePage.num1 = GamePage.randomNum();

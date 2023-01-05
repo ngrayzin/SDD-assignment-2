@@ -3,9 +3,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sdd_assignment_2/MainMenu.dart';
 import 'package:sdd_assignment_2/Player.dart';
 import 'Firebase_Services.dart';
+import 'Login.dart';
 import 'colours.dart' as colours;
 
 class Signup extends StatefulWidget{
@@ -26,7 +28,7 @@ class _SignupState extends State<Signup>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomInset: false,
         backgroundColor: colours.AppColor.background,
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -36,7 +38,7 @@ class _SignupState extends State<Signup>{
           centerTitle: true,
           flexibleSpace: Padding(
             padding:
-            EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.1),
+            EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,31 +87,36 @@ class _SignupState extends State<Signup>{
             ),
           ),
         ),
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.fromLTRB(
-            MediaQuery.of(context).size.width * 0.07,
-            MediaQuery.of(context).size.height * 0.05,
-            MediaQuery.of(context).size.width * 0.07,
-            MediaQuery.of(context).size.height * 0.05),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                returnName(),
-                const SizedBox(height: 10),
-                returnEmail(),
-                const SizedBox(height: 10),
-                returnPassword(),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-                submit(context),
-                const SizedBox(height: 10),
-                login(context),
-              ],
+        body: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          reverse: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            //height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.fromLTRB(
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.03,
+                MediaQuery.of(context).size.width * 0.07,
+                MediaQuery.of(context).size.height * 0.04),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  returnName(),
+                  const SizedBox(height: 10),
+                  returnEmail(),
+                  const SizedBox(height: 10),
+                  returnPassword(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                  submit(context),
+                  const SizedBox(height: 10),
+                  login(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -242,6 +249,9 @@ class _SignupState extends State<Signup>{
               if (value == null || value.isEmpty) {
                 return 'Please enter password';
               }
+              if(value.length < 6){
+                return 'Weak password';
+              }
               return null;
             },
             decoration: InputDecoration(
@@ -296,7 +306,7 @@ class _SignupState extends State<Signup>{
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 5.0, top: 12.0),
+          margin: const EdgeInsets.only(left: 5.0, top: 5.0),
           child: const Text(
             "Username:",
             textAlign: TextAlign.left,
@@ -323,6 +333,9 @@ class _SignupState extends State<Signup>{
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter username';
+              }
+              if(value.length > 12){
+                return 'Name should be 12 characters or shorter';
               }
               return null;
             },
@@ -391,13 +404,13 @@ class _SignupState extends State<Signup>{
                   email: email,
                   password: pass,
                 ).then((credential) async {
-                  final user = credential.user;
-                  print(user?.uid);
+                  currentUser = credential.user;
+                  print(currentUser?.uid);
                   print("stringnig");
                   print(username);
                   credential.user?.updateDisplayName(username);
                   formKey.currentState?.reset();
-                  DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${user?.uid}');
+                  DatabaseReference newPlayer = FirebaseDatabase.instance.ref('players/${currentUser?.uid}');
                   await newPlayer.update({
                     "name": username,
                   }).then((value) => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
@@ -407,11 +420,14 @@ class _SignupState extends State<Signup>{
                 setState(() {
                   isLoading = false;
                 });
-                if (e.code == 'user-not-found') {
-                  print('No user found for that email.');
-                } else if (e.code == 'wrong-password') {
-                  print('Wrong password provided for that user.');
-                }
+                Fluttertoast.showToast(
+                    msg: e.code,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
               }
             }
             //const CircularProgressIndicator();
@@ -452,11 +468,11 @@ class _SignupState extends State<Signup>{
         children: [
           const TextSpan(
             text: "Already have an account? ",
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.white70, letterSpacing: 0.35,fontSize: 15.0),
           ),
           TextSpan(
             text: ' Login here',
-            style: const TextStyle(color: Colors.blue),
+            style: const TextStyle(color: Colors.blue, letterSpacing: 0.35,fontSize: 15.0),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 Navigator.pop(context);

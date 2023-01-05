@@ -10,13 +10,16 @@ import 'About.dart';
 import 'Building.dart';
 import 'EndGame.dart';
 import 'GamePage.dart';
+import 'Login.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-class LoadGame extends StatefulWidget {
+import 'main.dart';
+
+class LoadGame extends StatefulWidget{
   final Player player;
   final int coin;
   final int level;
@@ -34,6 +37,8 @@ class LoadGame extends StatefulWidget {
   static int num1 = 0;
   static int num2 = 0;
   static int row = 0;
+  static bool showboth = true;
+  static int showeither = 0;
 }
 
 class _LoadGameState extends State<LoadGame> {
@@ -49,6 +54,10 @@ class _LoadGameState extends State<LoadGame> {
     widget.player.point = widget.point;
     LoadGame.num1 = GamePage.randomNum();
     LoadGame.num2 = GamePage.randomNum();
+
+    while (LoadGame.num1 == LoadGame.num2) {
+      LoadGame.num1 = GamePage.randomNum();
+    }
     LoadGame.row = widget.player.level;
 
     if (widget.player.coin <= 0 || widget.player.endGrid() == true) {
@@ -72,7 +81,10 @@ class _LoadGameState extends State<LoadGame> {
               backgroundColor: colours.AppColor.background,
               flexibleSpace: Padding(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.width * 0.15), // was 0.12
+                    top: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.12), // was 0.12
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,10 +150,22 @@ class _LoadGameState extends State<LoadGame> {
                   height: MediaQuery.of(context).size.height,
                   //alignment: Alignment.center,
                   padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width * 0.07,
-                      MediaQuery.of(context).size.height * 0.03, //was 0.05
-                      MediaQuery.of(context).size.width * 0.07,
-                      MediaQuery.of(context).size.height * 0.05),
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.07,
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.03, //was 0.05
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.07,
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.04),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -255,24 +279,106 @@ class _LoadGameState extends State<LoadGame> {
                       Padding(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: IntrinsicHeight(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              //randomizer here
-                              randomizer(LoadGame.num1),
-                              // BuildingCard(),
-                              const Spacer(),
-                              // BuildingCard(),
-                              randomizer(LoadGame.num2),
-                            ],
-                          )))
+                              child: options())),
                     ],
                   )),
             ),
           )),
     );
   }
+
+
+
+  Widget options(){
+    if (LoadGame.showboth == true){
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          //randomizer here
+          Visibility(
+            child: randomizer0 (LoadGame.num1),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: true,
+          ),
+          // BuildingCard(),
+          const Spacer(),
+          // BuildingCard(),
+          Visibility(
+            child: randomizer1 (LoadGame.num2),
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            visible: true,
+          ),
+        ],
+      );
+    }
+    else {
+      //Random random = Random();
+      //GamePage.showeither = random.nextInt(2);
+      if (LoadGame.showeither == 0){
+        print("rayzin so smart");
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //randomizer here
+            Visibility(
+              child: randomizer0 (LoadGame.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: true,
+            ),
+            // BuildingCard(),
+            const Spacer(),
+            // BuildingCard(),
+            Visibility(
+              child: randomizer1 (LoadGame.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: false,
+            ),
+          ],
+        );
+      }
+      else{
+        print("rayzin so handsome");
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            //randomizer here
+            Visibility(
+              child: randomizer0 (LoadGame.num1),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: false,
+            ),
+            // BuildingCard(),
+            const Spacer(),
+            // BuildingCard(),
+            Visibility(
+              child: randomizer1 (LoadGame.num2),
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: true,
+            ),
+          ],
+        );
+      }
+    }
+  }
+
+
+
+
 
   AlertDialog saveGameMsg() {
     AlertDialog alert = AlertDialog(
@@ -350,7 +456,7 @@ class _LoadGameState extends State<LoadGame> {
     return alert;
   }
 
-  Widget randomizer(int number) {
+  Widget randomizer0(int number) {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
@@ -371,6 +477,103 @@ class _LoadGameState extends State<LoadGame> {
       childWhenDragging: const SizedBox(
         width: 20,
       ),
+      onDragStarted: (){
+        setState(() {
+          LoadGame.showboth = false;
+          LoadGame.showeither = 0;
+        });
+      },
+      onDragCompleted: (){
+        setState(() {
+          LoadGame.showboth = true;
+        });
+      },
+      onDraggableCanceled: (Velocity velocity, Offset offset){
+        setState(() {
+          LoadGame.showboth = true;
+        });
+      },
+      child: SizedBox(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width * 0.37,
+        height: MediaQuery
+            .of(context)
+            .size
+            .width * 0.37,
+        child: Card(
+            elevation: 8,
+            shadowColor: colours.AppColor.main,
+            color: colours.AppColor.buttonBackground,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: colours.AppColor.main, width: 2),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/${building.name}.png'),
+                      width: 70,
+                      height: 70,
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      building.name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'StickNoBills',
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ))),
+      ),
+    );
+  }
+
+
+  Widget randomizer1(int number) {
+    Building building = Building(number);
+    return Draggable<Building>(
+      data: building,
+      feedback: SizedBox(
+        width: 40,
+        height: 40,
+        child: Center(
+          child: Card(
+              color: colours.AppColor.background,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Center(
+                  child: Image.asset('assets/images/${building.name}.png'),
+                ),
+              )),
+        ),
+      ),
+      childWhenDragging: const SizedBox(
+        width: 20,
+      ),
+      onDragStarted: (){
+        setState(() {
+          LoadGame.showboth = false;
+          LoadGame.showeither = 1;
+        });
+      },
+      onDragCompleted: (){
+        setState(() {
+          LoadGame.showboth = true;
+        });
+      },
+      onDraggableCanceled: (Velocity velocity, Offset offset){
+        setState(() {
+          LoadGame.showboth = true;
+        });
+      },
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.37,
         height: MediaQuery.of(context).size.width * 0.37,
@@ -396,7 +599,7 @@ class _LoadGameState extends State<LoadGame> {
                     Text(
                       building.name,
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'StickNoBills',
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
@@ -407,6 +610,7 @@ class _LoadGameState extends State<LoadGame> {
       ),
     );
   }
+
 
   Widget returnGameBoard() {
     return Expanded(
@@ -448,31 +652,35 @@ class _LoadGameState extends State<LoadGame> {
       'Commercial'
     ];
     return DragTarget<Building>(
-      onAccept: (data) => setState(() {
-        exist =
-            widget.player.turn == 0 ? true : rules(widget.player.map, index);
-        name = data.name;
-        exist ? audioPlayer.resume() : null;
-        exist ? widget.player.addItemToMap(index, name) : null;
-        exist ? widget.player.addTurn() : null;
-        exist ? widget.player.minusCoin() : null;
-        exist ? widget.player.calculatePoints(LoadGame.row) : null;
-        if (widget.player.coin == 0 || widget.player.endGrid() == true) {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                EndGame(widget.player), //goes to end game page
-          ));
-        }
-        if (exist) {
-          LoadGame.num1 = GamePage.randomNum();
-          LoadGame.num2 = GamePage.randomNum();
-          // Loop to check if it is the same value, change if it's same value
-          while (LoadGame.num1 == LoadGame.num2) {
-            LoadGame.num1 = GamePage.randomNum();
-          }
-        }
-        //print(GamePage.player.map);
-      }),
+      onAccept: (data) =>
+          setState(() {
+            exist = widget.player.turn == 0
+                ? true
+                : rules(widget.player.map, index);
+            name = data.name;
+            exist ? audioPlayer.resume() : null;
+            exist ? widget.player.addItemToMap(index, name) : null;
+            exist ? widget.player.addTurn() : null;
+            exist ? widget.player.minusCoin() : null;
+            exist ? widget.player.calculatePoints(LoadGame.row) : null;
+            exist ? widget.player.nerf() : null;
+            if (widget.player.coin == 0 || widget.player.endGrid() == true){
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        EndGame(widget.player), //goes to end game page
+                  ));
+            }
+            if (exist) {
+              LoadGame.num1 = GamePage.randomNum();
+              LoadGame.num2 = GamePage.randomNum();
+              // Loop to check if it is the same value, change if it's same value
+              while (LoadGame.num1 == LoadGame.num2) {
+                LoadGame.num1 = GamePage.randomNum();
+              }
+            }
+            //print(GamePage.player.map);
+          }),
       builder: (context, accept, reject) {
         if (exist) {
           return returnBuildingTile(name);
