@@ -1,6 +1,6 @@
 # Ngee Ann City
 
-## Members
+## Team:
 - Yong Zong Han Ryan
 - Tan Jin Datt
 - Ng Ray Zin
