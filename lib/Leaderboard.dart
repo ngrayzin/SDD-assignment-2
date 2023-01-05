@@ -119,13 +119,15 @@ class _Leaderboard extends State<LeaderBoard> {
                           });
                         },
                         style: TextButton.styleFrom(
-                          padding: const EdgeInsets.only(left: 23.0, right: 23.0),
-                          backgroundColor: selectedTab == 1? colours.AppColor.main : colours.AppColor.buttonBackground,
-                          shape:
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  side: BorderSide(
-                                      color: Colors.transparent, width: 0))),
+                            padding:
+                                const EdgeInsets.only(left: 23.0, right: 23.0),
+                            backgroundColor: selectedTab == 1
+                                ? colours.AppColor.main
+                                : colours.AppColor.buttonBackground,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                side: BorderSide(
+                                    color: Colors.transparent, width: 0))),
                         child: Text("Easy",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -143,10 +145,12 @@ class _Leaderboard extends State<LeaderBoard> {
                           });
                         },
                         style: TextButton.styleFrom(
-                            padding: const EdgeInsets.only(left: 23.0, right: 23.0),
-                            backgroundColor: selectedTab == 2? colours.AppColor.main : colours.AppColor.buttonBackground,
-                            shape:
-                            RoundedRectangleBorder(
+                            padding:
+                                const EdgeInsets.only(left: 23.0, right: 23.0),
+                            backgroundColor: selectedTab == 2
+                                ? colours.AppColor.main
+                                : colours.AppColor.buttonBackground,
+                            shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(100.0),
                                 side: BorderSide(
                                     color: Colors.transparent, width: 0))),
@@ -182,10 +186,12 @@ class _Leaderboard extends State<LeaderBoard> {
                           });
                         },
                         style: TextButton.styleFrom(
-                            padding: const EdgeInsets.only(left: 23.0, right: 23.0),
-                            backgroundColor: selectedTab == 3? colours.AppColor.main : colours.AppColor.buttonBackground,
-                            shape:
-                            RoundedRectangleBorder(
+                            padding:
+                                const EdgeInsets.only(left: 23.0, right: 23.0),
+                            backgroundColor: selectedTab == 3
+                                ? colours.AppColor.main
+                                : colours.AppColor.buttonBackground,
+                            shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(100.0),
                                 side: BorderSide(
                                     color: Colors.transparent, width: 0))),
@@ -306,6 +312,9 @@ class _Leaderboard extends State<LeaderBoard> {
 
       for (int i = 0; i < playerList.length; i++) {
         leaderboardCards.add(returnLeaderboardCard(playerList[i], i + 1));
+        if (i + 1 == 10) {
+          break;
+        }
       }
 
       return Expanded(
@@ -367,7 +376,6 @@ class _Leaderboard extends State<LeaderBoard> {
             textAlign: TextAlign.center,
           ),
         ),
-
       ]),
     );
   }
