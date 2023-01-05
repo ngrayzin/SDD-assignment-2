@@ -7,7 +7,7 @@
 - Low Hong Wei
 - Simon Kwek Zheng Feng
 
-## Description
+## Description:
 
 The player is the mayor of Ngee Ann City, and the goal of the game is to build the happiest and most prosperous city possible, i.e. score the most points. 
 
