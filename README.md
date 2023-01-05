@@ -19,6 +19,11 @@ Each of the building has different synergies with other buildings. The objective
 
 ## Appendix:
 
+## Music sources:
+[Background music](https://pixabay.com/music/beats-weeknds-122592/)
+
+[Placement music](https://pixabay.com/sound-effects/lego-piece-pressed-105360/)
+
 ## Screenshots:
 ### Login:
 ![Login:](https://user-images.githubusercontent.com/94064635/210839826-0ef558fe-4d44-40a7-8c8a-2aaed2dcc096.png)
@@ -58,8 +63,3 @@ Each of the building has different synergies with other buildings. The objective
 
 ### Save Game:
 ![Save Game:](https://user-images.githubusercontent.com/94064635/210841115-b66caf94-a2c2-47b2-91c7-346ac0821c7e.png)
-
-## Music sources:
-[Background music](https://pixabay.com/music/beats-weeknds-122592/)
-
-[placement music](https://pixabay.com/sound-effects/lego-piece-pressed-105360/)
