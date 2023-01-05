@@ -56,7 +56,5 @@ Each of the building has different synergies with other buildings. The objective
 
 ![About2:](https://user-images.githubusercontent.com/94064635/210840798-ee7ab2d2-d5fb-4295-83d0-11544aabf699.png)
 
-![About3:](https://user-images.githubusercontent.com/94064635/210840859-c3dfd294-aa4f-4171-b215-e442075beaa6.png)
-
 ## #Save Game:
 ![Save Game:](https://user-images.githubusercontent.com/94064635/210841115-b66caf94-a2c2-47b2-91c7-346ac0821c7e.png)
