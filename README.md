@@ -1,6 +1,6 @@
 # sdd_assignment_2
 
-##Members
+## Members
 - Yong Zong Han Ryan
 - Tan Jin datt
 - Ng Ray Zin
