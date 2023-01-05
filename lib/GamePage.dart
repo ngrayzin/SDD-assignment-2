@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
@@ -46,12 +47,15 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  final BoardSettings boardSettings = BoardSettings(cols: GamePage.player.level, rows: GamePage.player.level);
+  AudioPlayer audioPlayer = AudioPlayer();
+  final BoardSettings boardSettings =
+      BoardSettings(cols: GamePage.player.level, rows: GamePage.player.level);
 
   @override
   void initState() {
     super.initState();
-    GamePage.player = Player(currentUser?.displayName, [], 0, GamePage.player.level);
+    GamePage.player =
+        Player(currentUser?.displayName, [], 0, GamePage.player.level);
     //GamePage.randomizer();
     GamePage.row = GamePage.player.level;
     GamePage.col = GamePage.player.level;
@@ -120,11 +124,10 @@ class _GamePageState extends State<GamePage> {
                         color: colours.AppColor.main,
                         onPressed: () {
                           print("hello");
-                          Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    AboutPage(), //goes to about page
-                              ));
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                AboutPage(), //goes to about page
+                          ));
                         },
                       ),
                       maintainAnimation: true,
@@ -162,10 +165,10 @@ class _GamePageState extends State<GamePage> {
                               child: SizedBox(
                                 child: Padding(
                                   padding:
-                                  const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
                                         'assets/images/Point.png',
@@ -198,10 +201,10 @@ class _GamePageState extends State<GamePage> {
                             child: SizedBox(
                               child: Padding(
                                 padding:
-                                const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                    const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       'TURN  ${GamePage.player.turn}',
@@ -227,10 +230,10 @@ class _GamePageState extends State<GamePage> {
                               child: SizedBox(
                                 child: Padding(
                                   padding:
-                                  const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
                                         'assets/images/Coin.png',
@@ -261,8 +264,7 @@ class _GamePageState extends State<GamePage> {
 
                       Padding(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          child: IntrinsicHeight(
-                              child: options()))
+                          child: IntrinsicHeight(child: options()))
                     ],
                   )),
             ),
@@ -270,67 +272,63 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  Widget options(){
-    if (GamePage.showboth == true){
+  Widget options() {
+    if (GamePage.showboth == true) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           //randomizer here
           Visibility(
-            child: randomizer0 (GamePage.num1),
+            child: randomizer0(GamePage.num1),
             visible: true,
           ),
           // BuildingCard(),
           const Spacer(),
           // BuildingCard(),
           Visibility(
-            child: randomizer1 (GamePage.num2),
+            child: randomizer1(GamePage.num2),
             visible: true,
           ),
         ],
       );
-    }
-    else {
+    } else {
       //Random random = Random();
       //GamePage.showeither = random.nextInt(2);
-      if (GamePage.showeither == 0){
-        print("rayzin so smart");
+      if (GamePage.showeither == 0) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             //randomizer here
             Visibility(
-              child: randomizer0 (GamePage.num1),
+              child: randomizer0(GamePage.num1),
               visible: true,
             ),
             // BuildingCard(),
             const Spacer(),
             // BuildingCard(),
             Visibility(
-              child: randomizer1 (GamePage.num2),
+              child: randomizer1(GamePage.num2),
               visible: false,
             ),
           ],
         );
-      }
-      else{
-        print("rayzin so handsome");
+      } else {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             //randomizer here
             Visibility(
-              child: randomizer0 (GamePage.num1),
+              child: randomizer0(GamePage.num1),
               visible: false,
             ),
             // BuildingCard(),
             const Spacer(),
             // BuildingCard(),
             Visibility(
-              child: randomizer1 (GamePage.num2),
+              child: randomizer1(GamePage.num2),
               visible: true,
             ),
           ],
@@ -339,7 +337,7 @@ class _GamePageState extends State<GamePage> {
     }
   }
 
-  AlertDialog saveGameMsg(){
+  AlertDialog saveGameMsg() {
     AlertDialog alert = AlertDialog(
       insetPadding: EdgeInsets.all(10),
       title: const Text(
@@ -357,7 +355,7 @@ class _GamePageState extends State<GamePage> {
       actionsAlignment: MainAxisAlignment.center,
       actions: <Widget>[
         TextButton(
-          onPressed: (){
+          onPressed: () {
             FirebaseDatabase.instance
                 .ref('players/${currentUser?.uid}/saveGame')
                 .set(GamePage.player.ToJson())
@@ -372,11 +370,11 @@ class _GamePageState extends State<GamePage> {
           style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(const Size(80, 50)),
             padding:
-            MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
+                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
             foregroundColor: MaterialStateProperty.all<Color>(
                 colours.AppColor.buttonBackground),
             backgroundColor:
-            MaterialStateProperty.all<Color>(colours.AppColor.main),
+                MaterialStateProperty.all<Color>(colours.AppColor.main),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             ),
@@ -389,7 +387,8 @@ class _GamePageState extends State<GamePage> {
         ),
         const SizedBox(width: 25),
         TextButton(
-            onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+            onPressed: () =>
+                Navigator.popUntil(context, (route) => route.isFirst),
             style: ButtonStyle(
               minimumSize: MaterialStateProperty.all(const Size(80, 20)),
               padding: MaterialStateProperty.all<EdgeInsets>(
@@ -397,7 +396,7 @@ class _GamePageState extends State<GamePage> {
               foregroundColor: MaterialStateProperty.all<Color>(
                   colours.AppColor.buttonBackground),
               backgroundColor:
-              MaterialStateProperty.all<Color>(colours.AppColor.main),
+                  MaterialStateProperty.all<Color>(colours.AppColor.main),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
@@ -414,7 +413,7 @@ class _GamePageState extends State<GamePage> {
     return alert;
   }
 
-  Widget randomizer0 (int number) {
+  Widget randomizer0(int number) {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
@@ -435,18 +434,18 @@ class _GamePageState extends State<GamePage> {
       childWhenDragging: const SizedBox(
         width: 20,
       ),
-      onDragStarted: (){
+      onDragStarted: () {
         setState(() {
           GamePage.showboth = false;
           GamePage.showeither = 0;
         });
       },
-      onDragCompleted: (){
+      onDragCompleted: () {
         setState(() {
           GamePage.showboth = true;
         });
       },
-      onDraggableCanceled: (Velocity velocity, Offset offset){
+      onDraggableCanceled: (Velocity velocity, Offset offset) {
         setState(() {
           GamePage.showboth = true;
         });
@@ -488,7 +487,7 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  Widget randomizer1 (int number) {
+  Widget randomizer1(int number) {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
@@ -509,19 +508,18 @@ class _GamePageState extends State<GamePage> {
       childWhenDragging: const SizedBox(
         width: 20,
       ),
-      onDragStarted: (){
+      onDragStarted: () {
         setState(() {
           GamePage.showboth = false;
           GamePage.showeither = 1;
         });
       },
-      onDragCompleted: (){
+      onDragCompleted: () {
         setState(() {
           GamePage.showboth = true;
-
         });
       },
-      onDraggableCanceled: (Velocity velocity, Offset offset){
+      onDraggableCanceled: (Velocity velocity, Offset offset) {
         setState(() {
           GamePage.showboth = true;
         });
@@ -585,7 +583,14 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
+  void loadSound() async {
+    final player = AudioCache(prefix: 'assets/audio/');
+    final url = await player.load('lego.mp3');
+    audioPlayer.setSourceUrl(url.path);
+  }
+
   Widget returnBoardTile(int index) {
+    loadSound();
     bool exist = false;
     String name = "";
     List<String> building = [
@@ -605,12 +610,12 @@ class _GamePageState extends State<GamePage> {
         exist ? GamePage.player.addTurn() : null;
         exist ? GamePage.player.minusCoin() : null;
         exist ? GamePage.player.calculatePoints(GamePage.row) : null;
-        if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
-          Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    EndGame(GamePage.player), //goes to end game page
-              ));
+        audioPlayer.resume();
+        if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                EndGame(GamePage.player), //goes to end game page
+          ));
         }
         if (exist) {
           GamePage.num1 = GamePage.randomNum();
@@ -660,9 +665,7 @@ class _GamePageState extends State<GamePage> {
             padding: const EdgeInsets.all(2.0),
             child: Center(
               child: Image.asset('assets/images/$name.png'),
-            )
-        )
-    );
+            )));
   }
 }
 
@@ -677,13 +680,23 @@ bool rules(List<String> map, int i) {
   //center index is either +1 -1 +10 -10
   if (building.contains(map[i])) {
     return false;
-  } else if (map.asMap().containsKey(i - GamePage.row) && map[i - GamePage.row] != "-") { //check if there is smt below
+  } else if (map.asMap().containsKey(i - GamePage.row) &&
+      map[i - GamePage.row] != "-") {
+    //check if there is smt below
     return true;
-  } else if (map.asMap().containsKey(i + GamePage.row) && map[i + GamePage.row] != "-") { //check if there is smt on top
+  } else if (map.asMap().containsKey(i + GamePage.row) &&
+      map[i + GamePage.row] != "-") {
+    //check if there is smt on top
     return true;
-  } else if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" && i % GamePage.row != 0) { //check if there is smt on the left
+  } else if (map.asMap().containsKey(i - 1) &&
+      map[i - 1] != "-" &&
+      i % GamePage.row != 0) {
+    //check if there is smt on the left
     return true;
-  } else if (map.asMap().containsKey(i + 1) && map[i + 1] != "-" &&(i + 1) % GamePage.row != 0) { //check if there is smt on the right
+  } else if (map.asMap().containsKey(i + 1) &&
+      map[i + 1] != "-" &&
+      (i + 1) % GamePage.row != 0) {
+    //check if there is smt on the right
     return true;
   } else {
     return false;

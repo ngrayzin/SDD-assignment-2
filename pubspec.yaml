@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: ^4.2.3
   google_sign_in: ^5.4.2
   fluttertoast: ^8.1.2
+  audioplayers: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,6 +68,11 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/audio/
+    - assets/audio/block.mp3
+    - assets/audio/lego.mp3
+    - assets/audio/mainSong.mp3
+    - assets/audio/chiwawa.mp3
     - assets/images/
     - assets/images/App_name.png
     - assets/images/App_logo.png

@@ -25,7 +25,6 @@ class _LoginState extends State<Login>{
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       print(currentUser.uid);
-      print("fuck");
     }
   }
 

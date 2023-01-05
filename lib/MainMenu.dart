@@ -17,6 +17,7 @@ import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import "Leaderboard.dart";
+import 'package:audioplayers/audioplayers.dart';
 
 /*final GoogleSignIn _googleSignIn = GoogleSignIn(
   signInOption: SignInOption.games,
@@ -32,6 +33,8 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  AudioPlayer audioPlayer = AudioPlayer();
+  bool menu = true;
   late bool _isButtonDisabled;
   var list = [];
   late Player player;
@@ -41,10 +44,12 @@ class _MainMenuState extends State<MainMenu> {
     super.initState();
     returnSaveGame();
   }
+
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => returnSaveGame());
+    loadSound();
+    audioPlayer.resume();
+    WidgetsBinding.instance.addPostFrameCallback((_) => returnSaveGame());
     return Scaffold(
         backgroundColor: colours.AppColor.background,
         body: Container(
@@ -82,93 +87,109 @@ class _MainMenuState extends State<MainMenu> {
                 padding: const EdgeInsets.only(top: 50, bottom: 10),
                 width: MediaQuery.of(context).size.width * 0.65,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) {
-                      return const GameLevel();
-                  })),
-                  style: ElevatedButton.styleFrom(
-                    primary: colours.AppColor.main, //background color of button
-                    side: const BorderSide(width:0, color:Colors.black), //border width and color
-                    elevation: 2, //elevation of button
-                    shape: RoundedRectangleBorder( //to set border radius to button
-                    borderRadius: BorderRadius.circular(15)
+                  onPressed: () => {
+                    menu = false,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const GameLevel();
+                        },
+                      ),
                     ),
-                    padding: const EdgeInsets.fromLTRB(0, 15, 5, 12), //content padding inside button
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.play_arrow,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: 15.0,
-                      ),
-                      Text("NEW GAME",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          letterSpacing: 1.0,
-                          fontSize: 32,
-                          color: Colors.black,
-                          fontFamily: 'StickNoBills',
-                          fontWeight: FontWeight.bold
-                        )
-                      ),
-                    ]
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              !isLoading? Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 25),
-                width: MediaQuery.of(context).size.width * 0.65,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: colours.AppColor.main, //background color of button
-                    side: const BorderSide(width:0, color:Colors.black), //border width and color
-                    elevation: 2, //elevation of button
-                    shape: RoundedRectangleBorder( //to set border radius to button
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    padding: const EdgeInsets.fromLTRB(0, 15, 5, 12), //content padding inside button
-                  ),
-                  onPressed: _isButtonDisabled ? null : () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                          return LoadGame(player: player, coin: list[0], level: list[1], point: list[3],);
-                        }));
                   },
+                  style: ElevatedButton.styleFrom(
+                    primary: colours.AppColor.main, //background color of button
+                    side: const BorderSide(
+                        width: 0, color: Colors.black), //border width and color
+                    elevation: 2, //elevation of button
+                    shape: RoundedRectangleBorder(
+                        //to set border radius to button
+                        borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.fromLTRB(
+                        0, 15, 5, 12), //content padding inside button
+                  ),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: const [
                         Icon(
-                          Icons.restart_alt,
+                          Icons.play_arrow,
                           size: 50,
                           color: Colors.black,
                         ),
                         SizedBox(
                           width: 15.0,
                         ),
-                        Text("CONTINUE",
+                        Text("NEW GAME",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 letterSpacing: 1.0,
                                 fontSize: 32,
                                 color: Colors.black,
                                 fontFamily: 'StickNoBills',
-                                fontWeight: FontWeight.bold
-                            )
-                        ),
-                      ]
-                  ),
+                                fontWeight: FontWeight.bold)),
+                      ]),
                 ),
-              ): const CircularProgressIndicator(),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              !isLoading
+                  ? Container(
+                      padding: const EdgeInsets.only(top: 10, bottom: 25),
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: colours
+                              .AppColor.main, //background color of button
+                          side: const BorderSide(
+                              width: 0,
+                              color: Colors.black), //border width and color
+                          elevation: 2, //elevation of button
+                          shape: RoundedRectangleBorder(
+                              //to set border radius to button
+                              borderRadius: BorderRadius.circular(15)),
+                          padding: const EdgeInsets.fromLTRB(
+                              0, 15, 5, 12), //content padding inside button
+                        ),
+                        onPressed: _isButtonDisabled
+                            ? null
+                            : () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return LoadGame(
+                                    player: player,
+                                    coin: list[0],
+                                    level: list[1],
+                                    point: list[3],
+                                  );
+                                }));
+                              },
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.restart_alt,
+                                size: 50,
+                                color: Colors.black,
+                              ),
+                              SizedBox(
+                                width: 15.0,
+                              ),
+                              Text("CONTINUE",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      letterSpacing: 1.0,
+                                      fontSize: 32,
+                                      color: Colors.black,
+                                      fontFamily: 'StickNoBills',
+                                      fontWeight: FontWeight.bold)),
+                            ]),
+                      ),
+                    )
+                  : const CircularProgressIndicator(),
               const SizedBox(
                 height: 10.0,
               ),
@@ -182,19 +203,29 @@ class _MainMenuState extends State<MainMenu> {
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
-                      onPressed: () =>
-                        Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                          return const LeaderBoard();
-                        })),
+                      onPressed: () => {
+                        menu = false,
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const LeaderBoard();
+                            },
+                          ),
+                        )
+                      },
                       style: ElevatedButton.styleFrom(
-                        primary: colours.AppColor.main, //background color of button
-                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        primary:
+                            colours.AppColor.main, //background color of button
+                        side: const BorderSide(
+                            width: 0,
+                            color: Colors.black), //border width and color
                         elevation: 2, //elevation of button
-                        shape: RoundedRectangleBorder( //to set border radius to button
-                            borderRadius: BorderRadius.circular(15)
-                        ),
-                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                        shape: RoundedRectangleBorder(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)),
+                        padding: const EdgeInsets.fromLTRB(
+                            12, 14, 12, 12), //content padding inside button
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -205,8 +236,7 @@ class _MainMenuState extends State<MainMenu> {
                               size: 50,
                               color: Colors.black,
                             ),
-                          ]
-                      ),
+                          ]),
                     ),
                   ),
                   const SizedBox(
@@ -216,18 +246,29 @@ class _MainMenuState extends State<MainMenu> {
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return const LeaderBoard();
-                          })),
+                      onPressed: () => {
+                        menu = false,
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const LeaderBoard();
+                            },
+                          ),
+                        )
+                      },
                       style: ElevatedButton.styleFrom(
-                        primary: colours.AppColor.main, //background color of button
-                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        primary:
+                            colours.AppColor.main, //background color of button
+                        side: const BorderSide(
+                            width: 0,
+                            color: Colors.black), //border width and color
                         elevation: 2, //elevation of button
-                        shape: RoundedRectangleBorder( //to set border radius to button
-                            borderRadius: BorderRadius.circular(15)
-                        ),
-                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                        shape: RoundedRectangleBorder(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)),
+                        padding: const EdgeInsets.fromLTRB(
+                            12, 14, 12, 12), //content padding inside button
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -238,8 +279,7 @@ class _MainMenuState extends State<MainMenu> {
                               size: 50,
                               color: Colors.black,
                             ),
-                          ]
-                      ),
+                          ]),
                     ),
                   ),
                   const SizedBox(
@@ -249,18 +289,29 @@ class _MainMenuState extends State<MainMenu> {
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     //width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return const GameLevel();
-                          })),
+                      onPressed: () => {
+                        menu = false,
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const GameLevel();
+                            },
+                          ),
+                        )
+                      },
                       style: ElevatedButton.styleFrom(
-                        primary: colours.AppColor.main, //background color of button
-                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        primary:
+                            colours.AppColor.main, //background color of button
+                        side: const BorderSide(
+                            width: 0,
+                            color: Colors.black), //border width and color
                         elevation: 2, //elevation of button
-                        shape: RoundedRectangleBorder( //to set border radius to button
-                            borderRadius: BorderRadius.circular(15)
-                        ),
-                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                        shape: RoundedRectangleBorder(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)),
+                        padding: const EdgeInsets.fromLTRB(
+                            12, 14, 12, 12), //content padding inside button
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -271,8 +322,7 @@ class _MainMenuState extends State<MainMenu> {
                               size: 50,
                               color: Colors.black,
                             ),
-                          ]
-                      ),
+                          ]),
                     ),
                   ),
                   const SizedBox(
@@ -285,16 +335,20 @@ class _MainMenuState extends State<MainMenu> {
                       onPressed: () => showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => PopUpMessage(
-                            value: MainMenu.value,
-                          )),
+                                value: MainMenu.value,
+                              )),
                       style: ElevatedButton.styleFrom(
-                        primary: colours.AppColor.main, //background color of button
-                        side: const BorderSide(width:0, color:Colors.black), //border width and color
+                        primary:
+                            colours.AppColor.main, //background color of button
+                        side: const BorderSide(
+                            width: 0,
+                            color: Colors.black), //border width and color
                         elevation: 2, //elevation of button
-                        shape: RoundedRectangleBorder( //to set border radius to button
-                            borderRadius: BorderRadius.circular(15)
-                        ),
-                        padding: const EdgeInsets.fromLTRB(12, 14, 12, 12), //content padding inside button
+                        shape: RoundedRectangleBorder(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(15)),
+                        padding: const EdgeInsets.fromLTRB(
+                            12, 14, 12, 12), //content padding inside button
                       ),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -305,19 +359,17 @@ class _MainMenuState extends State<MainMenu> {
                               size: 50,
                               color: Colors.black,
                             ),
-                          ]
-                      ),
+                          ]),
                     ),
                   ),
                 ],
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 
-  void returnSaveGame() async{
+  void returnSaveGame() async {
     //late bool check;
     //list = [];
     final ref = FirebaseDatabase.instance.ref();
@@ -325,8 +377,10 @@ class _MainMenuState extends State<MainMenu> {
     /*Future.delayed(const Duration(milliseconds: 1500),() async {
 
     });*/
-    await ref.child('players/${currentUser?.uid}/saveGame').get()
-        .then((snapshot){
+    await ref
+        .child('players/${currentUser?.uid}/saveGame')
+        .get()
+        .then((snapshot) {
       if (snapshot.exists) {
         list = [];
         for (var item in snapshot.children) {
@@ -343,8 +397,7 @@ class _MainMenuState extends State<MainMenu> {
           isLoading = false;
         });
         //check = false;
-      }
-      else{
+      } else {
         _isButtonDisabled = true;
         setState(() {
           isLoading = false;
@@ -353,5 +406,12 @@ class _MainMenuState extends State<MainMenu> {
       }
     });
     //return check;
+  }
+
+  void loadSound() async {
+    audioPlayer.setReleaseMode(ReleaseMode.loop);
+    final player = AudioCache(prefix: 'assets/audio/');
+    final url = await player.load('mainSong.mp3');
+    audioPlayer.setSourceUrl(url.path);
   }
 }
