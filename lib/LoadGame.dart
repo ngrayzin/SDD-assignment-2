@@ -15,6 +15,7 @@ import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import 'package:flutter/src/widgets/container.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'main.dart';
 
@@ -23,7 +24,12 @@ class LoadGame extends StatefulWidget{
   final int coin;
   final int level;
   final int point;
-  const LoadGame({super.key, required this.player, required this.coin, required this.level,required this.point});
+  const LoadGame(
+      {super.key,
+      required this.player,
+      required this.coin,
+      required this.level,
+      required this.point});
 
   @override
   State<LoadGame> createState() => _LoadGameState();
@@ -36,8 +42,9 @@ class LoadGame extends StatefulWidget{
 }
 
 class _LoadGameState extends State<LoadGame> {
-
-  late BoardSettings boardSettings = BoardSettings(cols: widget.level, rows: widget.level);
+  AudioPlayer audioPlayer = AudioPlayer();
+  late BoardSettings boardSettings =
+      BoardSettings(cols: widget.level, rows: widget.level);
 
   @override
   void initState() {
@@ -54,15 +61,11 @@ class _LoadGameState extends State<LoadGame> {
     LoadGame.row = widget.player.level;
 
     if (widget.player.coin <= 0 || widget.player.endGrid() == true) {
-      print("This is fcking stupid");
-      Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => EndGame(widget.player), //goes to about page
-          )
-      );
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => EndGame(widget.player), //goes to about page
+      ));
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +96,12 @@ class _LoadGameState extends State<LoadGame> {
                       iconSize: 40,
                       icon: const Icon(Icons.close),
                       color: colours.AppColor.main,
-                      onPressed: () =>
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return saveGameMsg();
-                            },
-                          ),
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return saveGameMsg();
+                        },
+                      ),
                     ),
                     const Spacer(
                       flex: 5,
@@ -124,11 +126,10 @@ class _LoadGameState extends State<LoadGame> {
                         color: colours.AppColor.main,
                         onPressed: () {
                           print("hello");
-                          Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    AboutPage(), //goes to about page
-                              ));
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                AboutPage(), //goes to about page
+                          ));
                         },
                       ),
                       maintainAnimation: true,
@@ -145,14 +146,8 @@ class _LoadGameState extends State<LoadGame> {
             ),
             body: SafeArea(
               child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                   //alignment: Alignment.center,
                   padding: EdgeInsets.fromLTRB(
                       MediaQuery
@@ -184,10 +179,10 @@ class _LoadGameState extends State<LoadGame> {
                               child: SizedBox(
                                 child: Padding(
                                   padding:
-                                  const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
                                         'assets/images/Point.png',
@@ -220,10 +215,10 @@ class _LoadGameState extends State<LoadGame> {
                             child: SizedBox(
                               child: Padding(
                                 padding:
-                                const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                    const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
                                       'TURN  ${widget.player.turn}',
@@ -249,10 +244,10 @@ class _LoadGameState extends State<LoadGame> {
                               child: SizedBox(
                                 child: Padding(
                                   padding:
-                                  const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                                      const EdgeInsets.fromLTRB(12, 10, 12, 10),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Image.asset(
                                         'assets/images/Coin.png',
@@ -398,10 +393,7 @@ class _LoadGameState extends State<LoadGame> {
         ),
       ),
       shape: RoundedRectangleBorder(
-          side: BorderSide(width: MediaQuery
-              .of(context)
-              .size
-              .width),
+          side: BorderSide(width: MediaQuery.of(context).size.width),
           borderRadius: BorderRadius.circular(12)),
       actionsAlignment: MainAxisAlignment.center,
       actions: <Widget>[
@@ -421,11 +413,11 @@ class _LoadGameState extends State<LoadGame> {
           style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(const Size(80, 50)),
             padding:
-            MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
+                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
             foregroundColor: MaterialStateProperty.all<Color>(
                 colours.AppColor.buttonBackground),
             backgroundColor:
-            MaterialStateProperty.all<Color>(colours.AppColor.main),
+                MaterialStateProperty.all<Color>(colours.AppColor.main),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             ),
@@ -447,7 +439,7 @@ class _LoadGameState extends State<LoadGame> {
               foregroundColor: MaterialStateProperty.all<Color>(
                   colours.AppColor.buttonBackground),
               backgroundColor:
-              MaterialStateProperty.all<Color>(colours.AppColor.main),
+                  MaterialStateProperty.all<Color>(colours.AppColor.main),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0)),
@@ -583,14 +575,8 @@ class _LoadGameState extends State<LoadGame> {
         });
       },
       child: SizedBox(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width * 0.37,
-        height: MediaQuery
-            .of(context)
-            .size
-            .width * 0.37,
+        width: MediaQuery.of(context).size.width * 0.37,
+        height: MediaQuery.of(context).size.width * 0.37,
         child: Card(
             elevation: 8,
             shadowColor: colours.AppColor.main,
@@ -648,7 +634,14 @@ class _LoadGameState extends State<LoadGame> {
     );
   }
 
+  void loadSound() async {
+    final player = AudioCache(prefix: 'assets/audio/');
+    final url = await player.load('lego.mp3');
+    audioPlayer.setSourceUrl(url.path);
+  }
+
   Widget returnBoardTile(int index) {
+    loadSound();
     bool exist = false;
     String name = "";
     List<String> building = [
@@ -665,6 +658,7 @@ class _LoadGameState extends State<LoadGame> {
                 ? true
                 : rules(widget.player.map, index);
             name = data.name;
+            exist ? audioPlayer.resume() : null;
             exist ? widget.player.addItemToMap(index, name) : null;
             exist ? widget.player.addTurn() : null;
             exist ? widget.player.minusCoin() : null;
@@ -714,11 +708,8 @@ class _LoadGameState extends State<LoadGame> {
             padding: const EdgeInsets.all(2.0),
             child: Center(
               child: Image.asset('assets/images/$name.png'),
-            )
-        )
-    );
+            )));
   }
-
 
   bool rules(List<String> map, int i) {
     List<String> building = [
@@ -732,16 +723,22 @@ class _LoadGameState extends State<LoadGame> {
     if (building.contains(map[i])) {
       return false;
     } else if (map.asMap().containsKey(i - LoadGame.row) &&
-        map[i - LoadGame.row] != "-") { //check if there is smt below
+        map[i - LoadGame.row] != "-") {
+      //check if there is smt below
       return true;
     } else if (map.asMap().containsKey(i + LoadGame.row) &&
-        map[i + LoadGame.row] != "-") { //check if there is smt on top
+        map[i + LoadGame.row] != "-") {
+      //check if there is smt on top
       return true;
-    } else if (map.asMap().containsKey(i - 1) && map[i - 1] != "-" &&
-        i % LoadGame.row != 0) { //check if there is smt on the left
+    } else if (map.asMap().containsKey(i - 1) &&
+        map[i - 1] != "-" &&
+        i % LoadGame.row != 0) {
+      //check if there is smt on the left
       return true;
-    } else if (map.asMap().containsKey(i + 1) && map[i + 1] != "-" &&
-        (i + 1) % LoadGame.row != 0) { //check if there is smt on the right
+    } else if (map.asMap().containsKey(i + 1) &&
+        map[i + 1] != "-" &&
+        (i + 1) % LoadGame.row != 0) {
+      //check if there is smt on the right
       return true;
     } else {
       return false;

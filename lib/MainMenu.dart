@@ -17,6 +17,7 @@ import 'Player.dart';
 import 'colours.dart' as colours;
 import 'Firebase_options.dart';
 import "Leaderboard.dart";
+import 'package:audioplayers/audioplayers.dart';
 import "Profile.dart";
 
 /*final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -33,6 +34,8 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
+  AudioPlayer audioPlayer = AudioPlayer();
+  bool menu = true;
   late bool _isButtonDisabled;
   var list = [];
   late Player player;
@@ -42,6 +45,7 @@ class _MainMenuState extends State<MainMenu> {
     super.initState();
     //returnSaveGame();
   }
+
   @override
   void setState(fn) {
     if(mounted) {
@@ -57,6 +61,8 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
+    loadSound();
+    audioPlayer.resume();
     WidgetsBinding.instance.addPostFrameCallback((_) => returnSaveGame());
     return Scaffold(
         backgroundColor: colours.AppColor.background,
@@ -438,5 +444,12 @@ class _MainMenuState extends State<MainMenu> {
       }
     });
     //return check;
+  }
+
+  void loadSound() async {
+    audioPlayer.setReleaseMode(ReleaseMode.loop);
+    final player = AudioCache(prefix: 'assets/audio/');
+    final url = await player.load('mainSong.mp3');
+    audioPlayer.setSourceUrl(url.path);
   }
 }
