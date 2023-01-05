@@ -1,4 +1,4 @@
-# sdd_assignment_2
+# Ngee Ann City
 
 ## Members
 - Yong Zong Han Ryan
