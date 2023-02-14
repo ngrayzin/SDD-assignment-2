@@ -9,19 +9,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flame/flame.dart'; // ADDED FLAME INTO DART FILE
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart'; // ADDED GOOGLE FONTS
 import 'package:sdd_assignment_2/About.dart';
 import 'package:sdd_assignment_2/BoardSettings.dart';
-import 'package:sdd_assignment_2/PopUpMessage.dart';
 import 'Building.dart';
 import 'EndGame.dart';
 import 'Login.dart';
 import 'Player.dart';
 import 'colours.dart' as colours;
-import 'Firebase_options.dart';
-import 'main.dart';
+
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -56,21 +53,26 @@ class _GamePageState extends State<GamePage> {
     super.initState();
     GamePage.player =
         Player(currentUser?.displayName, [], 0, GamePage.player.level);
-    //GamePage.randomizer();
     GamePage.row = GamePage.player.level;
     GamePage.col = GamePage.player.level;
     GamePage.player.nerf();
     for (var i = 0; i < boardSettings.totalTiles(); i++) {
       GamePage.player.map.add("-");
     }
-    //print(GamePage.player.map);
     GamePage.num1 = GamePage.randomNum();
     GamePage.num2 = GamePage.randomNum();
     while (GamePage.num1 == GamePage.num2) {
       GamePage.num1 = GamePage.randomNum();
     }
     //print(GamePage.player.level);
+    loadSound();
   }
+
+  void loadSound() async {
+    audioPlayer.setPlaybackRate(2);
+    audioPlayer.play(AssetSource("audio/lego.mp3"));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -610,14 +612,8 @@ class _GamePageState extends State<GamePage> {
     );
   }
 
-  void loadSound() async {
-    final player = AudioCache(prefix: 'assets/audio/');
-    final url = await player.load('lego.mp3');
-    audioPlayer.setSourceUrl(url.path);
-  }
 
   Widget returnBoardTile(int index) {
-    loadSound();
     bool exist = false;
     String name = "";
     List<String> building = [
@@ -633,11 +629,11 @@ class _GamePageState extends State<GamePage> {
             ? true
             : rules(GamePage.player.map, index);
         name = data.name;
+        exist ? loadSound() : null;
         exist ? GamePage.player.addItemToMap(index, name) : null;
         exist ? GamePage.player.addTurn() : null;
         exist ? GamePage.player.minusCoin() : null;
         exist ? GamePage.player.calculatePoints(GamePage.row) : null;
-        audioPlayer.resume();
         exist ? GamePage.player.nerf() : null;
         if (GamePage.player.coin == 0 || GamePage.player.endGrid() == true){
           Navigator.of(context).push(
@@ -654,20 +650,8 @@ class _GamePageState extends State<GamePage> {
             GamePage.num1 = GamePage.randomNum();
           }
         }
-        //print(GamePage.player.map);
       }),
       builder: (context, accept, reject) {
-        /*
-        while (GamePage.player.coin <= 0){
-          print("This is fcking stupid");
-          Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                const EndGame(), //goes to about page
-              ));
-        }
-
-         */
         if (exist) {
           return returnBuildingTile(name);
         } else {

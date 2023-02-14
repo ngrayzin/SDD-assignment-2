@@ -34,7 +34,7 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-  AudioPlayer audioPlayer = AudioPlayer();
+  //AudioPlayer audioPlayer = AudioPlayer();
   bool menu = true;
   late bool _isButtonDisabled;
   var list = [];
@@ -61,8 +61,8 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    loadSound();
-    audioPlayer.resume();
+    //loadSound();
+    //audioPlayer.resume();
     WidgetsBinding.instance.addPostFrameCallback((_) => returnSaveGame());
     return Scaffold(
         backgroundColor: colours.AppColor.background,
@@ -446,10 +446,10 @@ class _MainMenuState extends State<MainMenu> {
     //return check;
   }
 
-  void loadSound() async {
+/*  void loadSound() async {
     audioPlayer.setReleaseMode(ReleaseMode.loop);
     final player = AudioCache(prefix: 'assets/audio/');
     final url = await player.load('mainSong.mp3');
     audioPlayer.setSourceUrl(url.path);
-  }
+  }*/
 }
