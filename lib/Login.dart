@@ -478,9 +478,19 @@ class _LoginState extends State<Login>{
           final GoogleSignIn googleSignIn = GoogleSignIn();
           try {
             final GoogleSignInAccount? googleSignInAccount =
-            await googleSignIn.signIn();
+            await googleSignIn.signIn().catchError((error) {
+              print(error);
+              setState(() {
+                isLoading1 = false;
+              });
+            });
             final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount!.authentication;
+            await googleSignInAccount!.authentication.catchError((error) {
+              print(error);
+              setState(() {
+                isLoading1 = false;
+              });
+            });
             final AuthCredential credential = GoogleAuthProvider.credential(
               accessToken: googleSignInAuthentication.accessToken,
               idToken: googleSignInAuthentication.idToken,
