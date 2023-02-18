@@ -1,3 +1,5 @@
+![photo1676369867](https://user-images.githubusercontent.com/94064635/219866954-d4766312-44a4-4a8e-b4a2-577131071ffa.jpeg)
+
 # Ngee Ann City
 
 ## Team:
