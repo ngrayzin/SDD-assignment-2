@@ -460,6 +460,9 @@ class _LoadGameState extends State<LoadGame> {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
+      dragAnchorStrategy:
+          (Draggable<Object> _, BuildContext __, Offset ___) =>
+      const Offset(20, 20), // here
       feedback: SizedBox(
         width: 40,
         height: 40,
@@ -541,6 +544,9 @@ class _LoadGameState extends State<LoadGame> {
     Building building = Building(number);
     return Draggable<Building>(
       data: building,
+      dragAnchorStrategy:
+          (Draggable<Object> _, BuildContext __, Offset ___) =>
+      const Offset(20, 20), // here
       feedback: SizedBox(
         width: 40,
         height: 40,
